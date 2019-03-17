@@ -100,5 +100,13 @@
     "wir": "kennen",
     "ihr": "kennt",
     "Sie": "kennen"
+  },
+  "kommen": {
+    "ich": "komme",
+    "du": "kommst",
+    "es": "kommt",
+    "wir": "kommen",
+    "ihr": "kommt",
+    "Sie": "kommen"
   }
 }

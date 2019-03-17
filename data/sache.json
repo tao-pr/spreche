@@ -20,9 +20,10 @@
   "Fenster": ["das","Fenster"],
   "Laptop": ["der","Laptops"],
   "Tasche": ["die","Taschen"],
-  "Block": ["der","Blocks"],
+  "Block": ["der","Blöcke"],
   "Computer": ["der","Computers"],
   "Taschentuch": ["das","Taschentücher"],
   "Hamd": ["das","Hamde"],
-  "Kappe": ["die","Kappen"]
+  "Kappe": ["die","Kappen"],
+  "Buch": ["das","Bucher"]
 }
