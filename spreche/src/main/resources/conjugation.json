@@ -78,5 +78,13 @@
     "wir": "kommen",
     "ihr": "kommt",
     "Sie": "kommen"
+  },
+  "nehmen": {
+    "ich": "nehme",
+    "du": "nimmst",
+    "es": "nimmt",
+    "wir": "nehmen",
+    "ihr": "nehmt",
+    "Sie": "nehmen"
   }
 }
