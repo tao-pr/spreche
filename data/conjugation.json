@@ -1,0 +1,74 @@
+{
+  "heißen": {
+    "ich": "heiße",
+    "du": "heißt",
+    "es": "heißt",
+    "wir": "heißen",
+    "ihr": "heißt",
+    "sie": "heißen"
+  },
+  "sein": {
+    "ich": "bin",
+    "du": "bist",
+    "es": "ist",
+    "wir": "sind",
+    "ihr": "seid",
+    "sie": "sind"
+  },
+  "sagen": {
+    "ich": "sage",
+    "du": "sagst",
+    "es": "sagt",
+    "wir": "sagen",
+    "ihr": "sagt",
+    "sie": "sagen"
+  },
+  "wohen": {
+    "ich": "wohne",
+    "du": "wohnst",
+    "es": "wohnt",
+    "wir": "wohnen",
+    "ihr": "wohnt",
+    "sie": "wohnen"
+  },
+  "fahren": {
+    "ich": "fahre",
+    "du": "fährst",
+    "es": "fährt",
+    "wir": "fahren",
+    "ihr": "fahrt",
+    "sie": "fahren"
+  },
+  "gehen": {
+    "ich": "gehe",
+    "du": "gehst",
+    "es": "geht",
+    "wir": "gehen",
+    "ihr": "geht",
+    "sie": "gehen"
+  },
+  "sehen": {
+    "ich": "sehe",
+    "du": "siehst",
+    "es": "sieht",
+    "wir": "sehen",
+    "ihr": "seht",
+    "sie": "sehen"
+  },
+  "haben": {
+    "ich": "habe",
+    "du": "hast",
+    "es": "hat",
+    "wir": "haben",
+    "ihr": "habt",
+    "sie": "haben"
+  },
+  "kennen": {
+    "ich": "kenne",
+    "du": "kennst",
+    "es": "kennt",
+    "wir": "kennen",
+    "ihr": "kennt",
+    "sie": "kennen"
+  }
+}
