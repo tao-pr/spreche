@@ -1,0 +1,7 @@
+{
+  "wie-heißen-P": ["P-heißen-X"],
+  "wo-heißen-P": ["P-heißen-X"],
+  "was-haben-P": ["P-haben-AKKUSATIVARTIKEL-SACHE"],
+  "wie-viele-SACHE-haben-P": ["P-haben-AKKUSATIVARTIKEL-SACHE"],
+  "wohin-gehen-P": ["P-gehen-zu-ORT", "P-gehen-nach-ORT", "P-gehen-zu-P", "P-gehen-in-ORT"]
+}
