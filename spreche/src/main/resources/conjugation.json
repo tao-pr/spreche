@@ -1,34 +1,4 @@
 {
-  "POSSESSIV": {
-    "ich": "mein",
-    "du": "dein",
-    "er": "sein",
-    "sie": "ihr",
-    "es": "sein",
-    "wir": "unser",
-    "ihr": "euer",
-    "Sie": "ihr"
-  },
-  "AKKUSATIV": {
-    "ich": "mich",
-    "du": "dich",
-    "er": "ihn",
-    "sie": "sie",
-    "es": "es",
-    "wir": "uns",
-    "ihr": "euch",
-    "Sie": "Sie"
-  },
-  "DATIV": {
-    "ich": "mir",
-    "du": "dir",
-    "er": "ihm",
-    "sie": "ihnen",
-    "es": "ihm",
-    "wir": "uns",
-    "ihr": "euch",
-    "Sie": "Ihnen"
-  },
   "heißen": {
     "ich": "heiße",
     "du": "heißt",
