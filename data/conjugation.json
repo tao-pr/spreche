@@ -1,11 +1,41 @@
 {
+  "possession": {
+    "ich": "mein",
+    "du": "dein",
+    "er": "sein",
+    "sie": "ihr",
+    "es": "sein",
+    "wir": "unser",
+    "ihr": "euer",
+    "Sie": "ihr"
+  },
+  "akkusativ": {
+    "ich": "mich",
+    "du": "dich",
+    "er": "ihn",
+    "sie": "sie",
+    "es": "es",
+    "wir": "uns",
+    "ihr": "euch",
+    "Sie": "Sie"
+  },
+  "dativ": {
+    "ich": "mir",
+    "du": "dir",
+    "er": "ihm",
+    "sie": "ihnen",
+    "es": "ihm",
+    "wir": "uns",
+    "ihr": "euch",
+    "Sie": "Ihnen"
+  },
   "heißen": {
     "ich": "heiße",
     "du": "heißt",
     "es": "heißt",
     "wir": "heißen",
     "ihr": "heißt",
-    "sie": "heißen"
+    "Sie": "heißen"
   },
   "sein": {
     "ich": "bin",
@@ -13,7 +43,7 @@
     "es": "ist",
     "wir": "sind",
     "ihr": "seid",
-    "sie": "sind"
+    "Sie": "sind"
   },
   "sagen": {
     "ich": "sage",
@@ -21,7 +51,7 @@
     "es": "sagt",
     "wir": "sagen",
     "ihr": "sagt",
-    "sie": "sagen"
+    "Sie": "sagen"
   },
   "wohen": {
     "ich": "wohne",
@@ -29,7 +59,7 @@
     "es": "wohnt",
     "wir": "wohnen",
     "ihr": "wohnt",
-    "sie": "wohnen"
+    "Sie": "wohnen"
   },
   "fahren": {
     "ich": "fahre",
@@ -37,7 +67,7 @@
     "es": "fährt",
     "wir": "fahren",
     "ihr": "fahrt",
-    "sie": "fahren"
+    "Sie": "fahren"
   },
   "gehen": {
     "ich": "gehe",
@@ -45,7 +75,7 @@
     "es": "geht",
     "wir": "gehen",
     "ihr": "geht",
-    "sie": "gehen"
+    "Sie": "gehen"
   },
   "sehen": {
     "ich": "sehe",
@@ -53,7 +83,7 @@
     "es": "sieht",
     "wir": "sehen",
     "ihr": "seht",
-    "sie": "sehen"
+    "Sie": "sehen"
   },
   "haben": {
     "ich": "habe",
@@ -61,7 +91,7 @@
     "es": "hat",
     "wir": "haben",
     "ihr": "habt",
-    "sie": "haben"
+    "Sie": "haben"
   },
   "kennen": {
     "ich": "kenne",
@@ -69,6 +99,6 @@
     "es": "kennt",
     "wir": "kennen",
     "ihr": "kennt",
-    "sie": "kennen"
+    "Sie": "kennen"
   }
 }
