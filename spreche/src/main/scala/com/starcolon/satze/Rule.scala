@@ -46,6 +46,53 @@ case object Das extends Artikel{
   override def stemDativ(s: String) = s + "em"
 }
 
+trait Pronoun {
+  val s: String
+  val dativ: String 
+  val akkusativ: String
+  val possess: String
+}
+case object Ich extends Pronoun{
+  override val s = "ich"
+  override val akkusativ = "mich"
+  override val dativ = "mir"
+  override val possess = "mein"
+}
+case object Du extends Pronoun{
+  override val s = "idu"
+  override val akkusativ = "dich"
+  override val dativ = "dir"
+  override val possess = "dein"
+}
+case object Sie extends Pronoun{
+  override val s = "sie"
+  override val akkusativ = "sie"
+  override val dativ = "sie"
+  override val possess = "ihr"
+}
+case object Er extends Pronoun{
+  override val s = "er"
+  override val akkusativ = "ihn"
+  override val dativ = "ihm"
+  override val possess = "seid"
+}
+case object Es extends Pronoun{
+  override val s = "es"
+  override val akkusativ = "es"
+  override val dativ = "es"
+  override val possess = "ihr"
+}
+case object Wir extends Pronoun{
+  override val s = "wir"
+  override val akkusativ = "uns"
+  override val dativ = "uns"
+}
+case object Ihr extends Pronoun{
+  override val s = "ihr"
+  override val akkusativ = "euch"
+  override val dativ = "euch"
+}
+
 trait PMap extends Map[String, String]
 
 case class Ort(place: String, artikel: Artikel)
