@@ -1,5 +1,5 @@
 {
-  "possession": {
+  "POSSESSIV": {
     "ich": "mein",
     "du": "dein",
     "er": "sein",
@@ -9,7 +9,7 @@
     "ihr": "euer",
     "Sie": "ihr"
   },
-  "akkusativ": {
+  "AKKUSATIV": {
     "ich": "mich",
     "du": "dich",
     "er": "ihn",
@@ -19,7 +19,7 @@
     "ihr": "euch",
     "Sie": "Sie"
   },
-  "dativ": {
+  "DATIV": {
     "ich": "mir",
     "du": "dir",
     "er": "ihm",
