@@ -4,9 +4,11 @@ import org.json4s._
 import org.json4s.jackson.JsonMethods._
 import scala.io.Source
 
-case class Verb(v: String)
+trait Token
 
-trait Artikel { 
+case class Verb(v: String) extends Token
+
+trait Artikel extends Token { 
   val s: String
   val a: String
   val akkusativ: String
@@ -46,7 +48,7 @@ case object Das extends Artikel{
   override def stemDativ(s: String) = s + "em"
 }
 
-trait Pronoun {
+trait Pronoun extends Token {
   val s: String
   val dativ: String 
   val akkusativ: String
@@ -86,11 +88,13 @@ case object Wir extends Pronoun{
   override val s = "wir"
   override val akkusativ = "uns"
   override val dativ = "uns"
+  override val possess = "unser"
 }
 case object Ihr extends Pronoun{
   override val s = "ihr"
   override val akkusativ = "euch"
   override val dativ = "euch"
+  override val possess = "euer"
 }
 
 trait PMap extends Map[String, String]
