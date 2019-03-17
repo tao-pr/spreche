@@ -47,6 +47,15 @@ case object Das extends Artikel{
   override val in = "ins"
   override def stemDativ(s: String) = s + "em"
 }
+case object Plural extends Artikel{
+  override val s = "die"
+  override val a = "viele"
+  override val akkusativ = "eine"
+  override val dativ = "einer"
+  override val zu = "zu den"
+  override val in = "in die"
+  override def stemDativ(s: String) = s + "en"
+}
 
 trait Pronoun extends Token {
   val s: String
@@ -114,7 +123,10 @@ object Rule {
 
   def loadContext: Rule = {
     val j = parse(fromFile("conjugation.json"))
-    println(j)
+    for (JObject(child) <- j){
+      println(child)
+      println("===========")
+    }
 
     NullRule
   }
