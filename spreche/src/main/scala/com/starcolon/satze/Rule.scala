@@ -16,8 +16,12 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
     n.map{ case(p, v) => s"${p} ${v}"}.mkString(" | ") 
   }.mkString("\n")
 }
-sealed case class Sache(s: String, artikel: Artikel, plural: String) extends Rule
-case class SacheRule(m: Map[String, Sache]) extends Rule
+sealed case class Sache(s: String, artikel: Artikel, plural: String) extends Rule {
+  override def toString = s"${artikel.s} $s"
+}
+case class SacheRule(m: Map[String, Sache]) extends Rule {
+  override def toString = m.map{ case(_, sache) => sache.toString }.mkString("\n")
+}
 case class OrtRule(m: Map[String, Ort]) extends Rule
 case class MasterRule(conjugation: ConjugationRule, sache: SacheRule, ort: OrtRule) extends Rule
 
