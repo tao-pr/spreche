@@ -2,11 +2,23 @@ package com.starcolon.satze
 
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
+import org.json4s.Formats
 import scala.io.Source
 
 sealed trait Token
 
 case class Verb(v: String) extends Token
+
+trait FrageWort extends Token {
+  val s: String
+  override def toString = s
+  // TAOTODO: Dativ and Akkusativ form
+}
+case object Wie extends FrageWort { override val s = "wie" }
+case object Wo extends FrageWort { override val s = "wo" }
+case object Warum extends FrageWort { override val s = "warum" }
+case object Wann extends FrageWort { override val s = "wann" }
+case object Wer extends FrageWort { override val s = "wer" }
 
 trait Artikel extends Token { 
   val s: String
@@ -113,7 +125,12 @@ case class Ort(place: String, artikel: Artikel)
 trait Rule 
 
 object NullRule extends Rule
-case class ConjugationRule(m: Map[Verb, PMap]) extends Rule
+case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
+  def conjugateVerb(v: String, p: Pronoun) = m.getOrElse(v, Map(p.s -> v)).getOrElse(p.s, v)
+  override def toString = m.map{ case(_, n) => 
+    n.map{ case(p, v) => s"${p} ${v}"}.mkString(" | ") 
+  }.mkString("\n")
+}
 case class OrtRule(m: Map[String, Ort]) extends Rule
 
 object Rule {
@@ -121,13 +138,15 @@ object Rule {
     .fromInputStream(getClass.getResourceAsStream("/" + fname))
     .getLines().mkString("\n")
 
-  def loadContext: Rule = {
-    val j = parse(fromFile("conjugation.json"))
-    for (JObject(child) <- j){
-      println(child)
-      println("===========")
-    }
+  def loadConjugationRule: ConjugationRule = {
+    implicit val formats: Formats = DefaultFormats.withStrictOptionParsing.withStrictArrayExtraction
+    ConjugationRule(parse(fromFile("conjugation.json")).extract[Map[String, Map[String, String]]])
+  }
 
+  def loadContext: Rule = {
+    implicit val formats: Formats = DefaultFormats.withStrictOptionParsing.withStrictArrayExtraction
+    val ruleConjugation = loadConjugationRule
+    println(ruleConjugation)
     NullRule
   }
 }
