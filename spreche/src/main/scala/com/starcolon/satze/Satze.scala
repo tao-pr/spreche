@@ -3,15 +3,22 @@ package com.starcolon.satze
 import com.starcolon.satze.{Rule, FrageWort}
 import com.starcolon.satze.{Wie, Wo, Warum, Wann, Wer}
 
-class Satze(val tokens: Seq[Token]) {
-  override def toString: String = ???
+class Satze(
+  val subject: Pronoun,
+  val verb: Verb,
+  val directObject: Pronoun) {
+  
   def toFrage(frageWort: FrageWort): Frage = ???
+  def print: Unit = println(toString)
+
 }
 
 class Frage(override val tokens: Seq[Token], val frageWort: FrageWort) extends Satze(tokens) {
   override def toString = ???
   def toSatze: Satze = ???
 }
+
+trait Claus
 
 object Satze {
   def fromStringTokens(stringTokens: Seq[String])(implicit rule: Rule): Satze = ???

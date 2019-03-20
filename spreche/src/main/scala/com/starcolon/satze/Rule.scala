@@ -23,7 +23,11 @@ case class SacheRule(m: Map[String, Sache]) extends Rule {
   override def toString = m.map{ case(_, sache) => sache.toString }.mkString("\n")
 }
 case class OrtRule(m: Map[String, Ort]) extends Rule
-case class MasterRule(conjugation: ConjugationRule, sache: SacheRule, ort: OrtRule) extends Rule
+case class MasterRule(
+  conjugation: ConjugationRule, 
+  sache: SacheRule, 
+  ort: OrtRule) 
+extends Rule
 
 object Rule {
   private def fromFile(fname: String): String = Source
