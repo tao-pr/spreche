@@ -2,7 +2,9 @@ package com.starcolon.satze
 
 sealed trait Token
 
-case class Verb(v: String) extends Token
+case class Verb(v: String) extends Token {
+  override def toString = v
+}
 
 trait FrageWort extends Token {
   val s: String
@@ -113,11 +115,16 @@ case object Ihr extends Pronoun{
   override val dativ = "euch"
   override val possess = "euer"
 }
-case object Da extends Pronoun {
-  override val s = "das"
-  override val akkusativ = "das"
-  override val dativ = "das"
-  override val possess = ""
+// case object Da extends Pronoun {
+//   override val s = "das"
+//   override val akkusativ = "das"
+//   override val dativ = "das"
+//   override val possess = "ihr"
+// }
+case class Person(override val s: String, p: Pronoun) extends Pronoun {
+  override val akkusativ = p.akkusativ
+  override val dativ = p.dativ
+  override val possess = p.possess 
 }
 
 case class Ort(place: String, artikel: Artikel) extends Token
