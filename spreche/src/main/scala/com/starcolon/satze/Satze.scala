@@ -7,7 +7,7 @@ trait Claus {
   def render(prev: Claus, next: Claus)(implicit val rule: MasterRule): String = toString
 }
 
-case object NoneClaus extends Claus
+case object EmptyClaus extends Claus
 
 case class SubjectClaus(p: Pronoun, adj: Option[String] = None) extends Claus {
   override def render(prev: Claus, next: Claus)(implicit val rule: MasterRule) = p.toString
@@ -39,20 +39,7 @@ case class ObjectClaus(directNoun: Pronoun, dativNoun: Option[Pronoun] = None, a
   }
 }
 
-class Satze(s: None, v: None, o: None) extends Claus {
-  override def toString = ???
-}
-
-object Satze {
-  def fromStringTokens(stringTokens: Seq[String])(implicit rule: Rule): Satze = ???
-  def fromTokens(tokens: Seq[Token])(implicit rule: Rule): Satze = ???
-  def verify(s: Satze)(implicit rule: Rule): Satze = s match {
-    case f: Frage => ???
-    case _ => ???
-  }
-}
-
-object Frage {
-  def neu()(implicit rule: Rule): Frage = ???
+class Satze(clauses: Seq[Claus]) extends Claus {
+  override def render(prev: Claus, next: Claus)(implicit val rule: MasterRule) = ???
 }
 

@@ -73,7 +73,25 @@ case object Der extends c match {
     }
   }
 case object Plural extends Artikel
-case object Kein extends Artikel
+case object Kein extends Artikel {
+  override def renderWith(gender: String, c: Case) = c match {
+    case Nominativ => gender match {
+      case "der" => "kein"
+      case "die" => "keine"
+      case "das" => "kein"
+    }
+    case Akkusativ => gender match {
+      case "der" => "keinen"
+      case "die" => "keine"
+      case "das" => "kein"
+    }
+    case Dativ => gender match {
+      case "der" => "keinem"
+      case "die" => "keiner"
+      case "das" => "keinem"
+    }
+  }
+}
 
 trait Pronoun extends Token {
   val s: String
@@ -138,18 +156,3 @@ object Pronoun {
 }
 
 case class Ort(place: String, artikel: Artikel) extends Token
-
-class Preposition(s: String) extends Token {
-  def akkusativ(a: Artikel): String = a match {
-    case Der => s + " den"
-    case Die => s + " die"
-    case Das => s + " das"
-    case Plural => s
-  }
-  def dativ(a: Artikel): String = a match {
-    case Der => s + " dem"
-    case Die => s + " der"
-    case Das => s + " dem"
-    case Plural => s + " den"
-  }
-}
