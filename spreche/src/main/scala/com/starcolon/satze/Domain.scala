@@ -1,15 +1,29 @@
 package com.starcolon.satze
 
-sealed trait Token
+case object NoToken extends Token
 
 case class Verb(v: String) extends Token {
+  def isAkkusativ: Boolean = v != "sein"
   override def toString = v
 }
+
+object Verb {
+  /**
+   * Parse a string to verb (deconjugated)
+   */
+  def toVerb(s: String)(implicit rule: ConjugationRule): Verb = {
+    Verb(rule.deconjugateVerb(s))
+  }
+}
+
+trait Case 
+case object Nominativ extends Case
+case object Akkusativ extends Case
+case object Dativ extends Case
 
 trait FrageWort extends Token {
   val s: String
   override def toString = s
-  // TAOTODO: Dativ and Akkusativ form
 }
 case object Wie extends FrageWort { override val s = "wie" }
 case object Wo extends FrageWort { override val s = "wo" }
@@ -17,55 +31,49 @@ case object Warum extends FrageWort { override val s = "warum" }
 case object Wann extends FrageWort { override val s = "wann" }
 case object Wer extends FrageWort { override val s = "wer" }
 
-trait Artikel extends Token { 
-  val s: String
-  val a: String
-  val akkusativ: String
-  val dativ: String
-  val zu: String
-  val in: String
-  def stemAkkusativ(s: String) = s
-  def stemDativ(s: String) = s
-  // TAOTODO: Add possessive artikel modes
+trait Artikel extends Token {
+  def renderWith(gender: String, c: Case): String
 }
-case object Der extends Artikel{
-  override val s = "der"
-  override val a = "ein"
-  override val akkusativ = "einen"
-  override val dativ = "einem"
-  override val zu = "zum"
-  override val in = "im"
-  override def stemAkkusativ(s: String) = s + "en"
-  override def stemDativ(s: String) = s + "em"
+
+case object Ein extends Artikel {
+  override def renderWith(gender: String, c: Case) = c match {
+    case Nominativ => gender match {
+      case "der" => "ein"
+      case "die" => "eine"
+      case "das" => "ein"
+    }
+    case Akkusativ => gender match {
+      case "der" => "einen"
+      case "die" => "eine"
+      case "das" => "ein"
+    }
+    case Dativ => gender match {
+      case "der" => "einem"
+      case "die" => "einer"
+      case "das" => "einem"
+    }
+  }
 }
-case object Die extends Artikel{
-  override val s = "die"
-  override val a = "eine"
-  override val akkusativ = "eine"
-  override val dativ = "einen"
-  override val zu = "zu die"
-  override val in = "in die"
-  override def stemAkkusativ(s: String) = s + "e"
-  override def stemDativ(s: String) = s + "er"
-}
-case object Das extends Artikel{
-  override val s = "das"
-  override val a = "ein"
-  override val akkusativ = "ein"
-  override val dativ = "einem"
-  override val zu = "zum"
-  override val in = "ins"
-  override def stemDativ(s: String) = s + "em"
-}
-case object Plural extends Artikel{
-  override val s = "die"
-  override val a = "viele"
-  override val akkusativ = "eine"
-  override val dativ = "einer"
-  override val zu = "zu den"
-  override val in = "in die"
-  override def stemDativ(s: String) = s + "en"
-}
+
+case object Der extends c match {
+    case Nominativ => gender match {
+      case "der" => "der"
+      case "die" => "die"
+      case "das" => "das"
+    }
+    case Akkusativ => gender match {
+      case "der" => "den"
+      case "die" => "die"
+      case "das" => "das"
+    }
+    case Dativ => gender match {
+      case "der" => "dem"
+      case "die" => "der"
+      case "das" => "dem"
+    }
+  }
+case object Plural extends Artikel
+case object Kein extends Artikel
 
 trait Pronoun extends Token {
   val s: String
@@ -115,16 +123,18 @@ case object Ihr extends Pronoun{
   override val dativ = "euch"
   override val possess = "euer"
 }
-// case object Da extends Pronoun {
-//   override val s = "das"
-//   override val akkusativ = "das"
-//   override val dativ = "das"
-//   override val possess = "ihr"
-// }
-case class Person(override val s: String, p: Pronoun) extends Pronoun {
+
+case class Instance(override val s: String) extends Pronoun {
   override val akkusativ = p.akkusativ
   override val dativ = p.dativ
   override val possess = p.possess 
+}
+
+object Pronoun {
+  private lazy val infinitivPronouns = List(Ich, Du, Sie, Wir, Ihr, Er, Es)
+  private lazy val infinitivPronounStrings = infinitivPronouns.map(_.s)
+  def isInfinitiv(s: String) = infinitivPronounStrings.contains(s)
+  def isInfinitiv(p: Pronoun) = infinitivPronouns.contains(p)
 }
 
 case class Ort(place: String, artikel: Artikel) extends Token

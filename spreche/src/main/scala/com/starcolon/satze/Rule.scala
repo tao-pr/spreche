@@ -10,19 +10,35 @@ import Console.{CYAN,GREEN,YELLOW,RED,MAGENTA,RESET}
 sealed trait Rule 
 
 object NullRule extends Rule
+
 case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
+
+  lazy val reverseMap = m.toList.flatMap{ case (v, n) => 
+    n.map{ case(_,w) => (w, v) }
+  }.distinct.toMap
+  
+  def deconjugateVerb(v: String): String = {
+    reverseMap.getOrElse(v, v)
+  }
+  
   def conjugateVerb(v: String, p: Pronoun) = m.getOrElse(v, Map(p.s -> v)).getOrElse(p.s, v)
+
   override def toString = m.map{ case(_, n) => 
     n.map{ case(p, v) => s"${p} ${v}"}.mkString(" | ") 
   }.mkString("\n")
 }
+
 sealed case class Sache(s: String, artikel: Artikel, plural: String) extends Rule {
   override def toString = s"${artikel.s} $s"
 }
+
 case class SacheRule(m: Map[String, Sache]) extends Rule {
+  def findGender(s: String): String = m.getOrElse(s, "")
   override def toString = m.map{ case(_, sache) => sache.toString }.mkString("\n")
 }
+
 case class OrtRule(m: Map[String, Ort]) extends Rule
+
 case class MasterRule(
   conjugation: ConjugationRule, 
   sache: SacheRule, 
@@ -30,6 +46,7 @@ case class MasterRule(
 extends Rule
 
 object Rule {
+
   private def fromFile(fname: String): String = Source
     .fromInputStream(getClass.getResourceAsStream("/" + fname))
     .getLines().mkString("\n")
