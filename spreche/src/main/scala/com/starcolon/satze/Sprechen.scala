@@ -5,8 +5,7 @@ import com.starcolon.satze._
 
 object Sprechen {
   def conversation(implicit rule: Rule): Unit = {
-    // Generate a frage
-    val a = readLine("Sagen Sie > ")
+    val ein = readLine("Sagen Sie > ").split(" ").filter(_.trim.size > 0)
 
 
     conversation

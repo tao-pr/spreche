@@ -1,7 +1,7 @@
 package com.starcolon.satze
 
-import com.starcolon.satze.{Rule, FrageWort}
-import com.starcolon.satze.{Wie, Wo, Warum, Wann, Wer}
+import com.starcolon.satze._
+import com.starcolon.satze.Implicits._
 
 trait Claus {
   def render(prev: Claus, next: Claus)(implicit rule: MasterRule): String = toString
@@ -40,6 +40,24 @@ case class ObjectClaus(directNoun: Pronoun, dativNoun: Option[Pronoun] = None, a
 }
 
 class Satze(clauses: Seq[Claus]) extends Claus {
+
+  def isVerb(token: String)(implicit rule: MasterRule) = {
+    rule.conjugation.isVerb(token.toLowerCase)
+  }
+
+  def isPronoun(token: String)(implicit rule: MasterRule) = {
+    if (Pronoun.isInfinitiv(token.toLowerCase))
+      true
+    else
+      rule.sache.isSache(token.capInitial)
+  }
+
+  def parse(tokens: Seq[String], prevTokens: Seq[Claus] = Nil)(implicit rule: MasterRule): Satze = {
+    // The sentence can either begin with a pronoun or a verb (Frage)
+
+    ???
+  }
+
   override def render(prev: Claus, next: Claus)(implicit rule: MasterRule) = ???
 }
 
