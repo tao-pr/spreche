@@ -28,12 +28,12 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
   }.mkString("\n")
 }
 
-sealed case class Sache(s: String, artikel: Artikel, plural: String) extends Rule {
-  override def toString = s"${artikel.s} $s"
+sealed case class Sache(s: String, gender: String, plural: String) extends Rule {
+  override def toString = s"${gender} $s"
 }
 
 case class SacheRule(m: Map[String, Sache]) extends Rule {
-  def findGender(s: String): String = m.getOrElse(s, "")
+  def findGender(s: String): String = m.get(s).map(_.gender).getOrElse("")
   override def toString = m.map{ case(_, sache) => sache.toString }.mkString("\n")
 }
 
@@ -59,11 +59,7 @@ object Rule {
   def loadSacheRule: SacheRule = {
     implicit val formats: Formats = DefaultFormats.withStrictOptionParsing.withStrictArrayExtraction
     SacheRule(parse(fromFile("sache.json")).extract[Map[String, List[String]]].map{
-      case (sache, ns) => ns.head match {
-        case "der" => (sache, Sache(sache, Der, ns.last))
-        case "die" => (sache, Sache(sache, Die, ns.last))
-        case "das" => (sache, Sache(sache, Das, ns.last))
-      }
+      case (sache, ns) => (sache, Sache(sache, ns.head, ns.last))
     })
   }
 
