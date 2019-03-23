@@ -16,6 +16,8 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
   lazy val reverseMap = m.toList.flatMap{ case (v, n) => 
     n.map{ case(_,w) => (w, v) }
   }.distinct.toMap
+
+  def isVerb(s: String) = reverseMap.keySet.contains(s)
   
   def deconjugateVerb(v: String): String = {
     reverseMap.getOrElse(v, v)
@@ -33,6 +35,9 @@ sealed case class Sache(s: String, gender: String, plural: String) extends Rule 
 }
 
 case class SacheRule(m: Map[String, Sache]) extends Rule {
+  // TAOTODO: reverse map of plural -> singular
+  lazy val all = m.keys.toSet ++ m.map{ case(_, s) => s.plural }.toSet
+  def isSache(s: String) = all.contains(s)
   def findGender(s: String): String = m.get(s).map(_.gender).getOrElse("")
   override def toString = m.map{ case(_, sache) => sache.toString }.mkString("\n")
 }
