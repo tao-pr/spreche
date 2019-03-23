@@ -75,7 +75,11 @@ case object Der extends Artikel {
     }
   }
 }
-case object Plural extends Artikel
+
+case object Plural extends Artikel {
+  override def renderWith(gender: String, c: Case) = "viele"
+}
+
 case object Kein extends Artikel {
   override def renderWith(gender: String, c: Case) = c match {
     case Nominativ => gender match {
@@ -145,7 +149,12 @@ case object Ihr extends Pronoun{
   override val possess = "euer"
 }
 
-case class Instance(override val s: String) extends Pronoun
+case class Instance(override val s: String) extends Pronoun {
+  // TAOTODO: Following remain unused, need to be redesigned
+  override val akkusativ = ""
+  override val dativ = ""
+  override val possess = ""
+}
 
 object Pronoun {
   private lazy val infinitivPronouns = List(Ich, Du, Sie, Wir, Ihr, Er, Es)
