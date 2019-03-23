@@ -1,5 +1,6 @@
 package com.starcolon.satze
 
+sealed trait Token
 case object NoToken extends Token
 
 case class Verb(v: String) extends Token {
@@ -55,7 +56,8 @@ case object Ein extends Artikel {
   }
 }
 
-case object Der extends c match {
+case object Der extends Artikel {
+  override def renderWith(gender: String, c: Case) = c match {
     case Nominativ => gender match {
       case "der" => "der"
       case "die" => "die"
@@ -72,6 +74,7 @@ case object Der extends c match {
       case "das" => "dem"
     }
   }
+}
 case object Plural extends Artikel
 case object Kein extends Artikel {
   override def renderWith(gender: String, c: Case) = c match {
@@ -142,11 +145,7 @@ case object Ihr extends Pronoun{
   override val possess = "euer"
 }
 
-case class Instance(override val s: String) extends Pronoun {
-  override val akkusativ = p.akkusativ
-  override val dativ = p.dativ
-  override val possess = p.possess 
-}
+case class Instance(override val s: String) extends Pronoun
 
 object Pronoun {
   private lazy val infinitivPronouns = List(Ich, Du, Sie, Wir, Ihr, Er, Es)
