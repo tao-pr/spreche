@@ -261,6 +261,12 @@ trait Pronoun extends Token {
   val akkusativ: String
   val possess: String
 }
+case object NP extends Pronoun {
+  override val s = ""
+  override val akkusativ = ""
+  override val dativ = ""
+  override val possess = ""
+}
 case object Ich extends Pronoun{
   override val s = "ich"
   override val akkusativ = "mich"
