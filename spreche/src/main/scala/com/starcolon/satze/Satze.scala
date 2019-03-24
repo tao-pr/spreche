@@ -2,7 +2,7 @@ package com.starcolon.satze
 
 import com.starcolon.satze._
 import com.starcolon.satze.Implicits._
-import Console.{CYAN,GREEN,YELLOW,RED,MAGENTA,RESET}
+import Console._
 
 trait Claus {
   def render(satze: Satze)(implicit rule: MasterRule): String = toString
@@ -12,14 +12,14 @@ case object EmptyClaus extends Claus
 
 case class SubjectClaus(p: Pronoun, adj: Option[String] = None) extends Claus {
   override def render(satze: Satze)(implicit rule: MasterRule) = p.s.capInitial
-  override def toString = s"-${CYAN}S${RESET}:${p.s.capInitial}"
+  override def toString = s"-${CYAN_B}S${RESET}:${p.s.capInitial}"
 }
 
 case class VerbClaus(v: Verb) extends Claus {
   override def render(satze: Satze)(implicit rule: MasterRule) = satze.subject match {
     case SubjectClaus(p, _) => rule.conjugation.conjugateVerb(v.v, p)
   }
-  override def toString = s"-${YELLOW}V${RESET}:${v.v}"
+  override def toString = s"-${YELLOW_B}V${RESET}:${v.v}"
 }
 
 case class ObjectClaus(directNoun: Pronoun, dativNoun: Option[Pronoun] = None, artikel: Artikel = Ein) extends Claus {
@@ -30,7 +30,7 @@ case class ObjectClaus(directNoun: Pronoun, dativNoun: Option[Pronoun] = None, a
   }
 
   private def renderSache(c: Case)(implicit rule: MasterRule) = 
-    artikel.renderWith(rule.sache.findGender(directNoun.s), c) + " " + directNoun.s
+    artikel.renderWith(rule.sache.findGender(directNoun.s.capInitial), c) + " " + directNoun.s.capInitial
 
   override def render(satze: Satze)(implicit rule: MasterRule) = {
       satze.verb match {
@@ -41,7 +41,7 @@ case class ObjectClaus(directNoun: Pronoun, dativNoun: Option[Pronoun] = None, a
     }
   }
 
-  override def toString = s"-${CYAN}O${RESET}:${directNoun.s}"
+  override def toString = s"-${CYAN_B}O${RESET}:${directNoun.s}"
 }
 
 case class Satze(clauses: Seq[Claus]) extends Claus {
