@@ -65,7 +65,7 @@ object Satze {
   }
 
   def isArtikel(token: String)(implicit rule: MasterRule) = {
-    val artikels = (Seq("die","das","eine") ++ Seq("d","ein").flatMap{(a) => 
+    val artikels = (Seq("die","das","eine","ein") ++ Seq("d","ein").flatMap{(a) => 
       Seq("er","en","em").map(a + _)
     })
     def expand(p: Pronoun) = Seq("","e","en","em").map(p.possess + _)
@@ -95,12 +95,11 @@ object Satze {
         else if (isPronoun(s)) {
           // Akkusativ noun
           val p = Pronoun.toPronoun(s)
-          val claus = prevTokens match {
-            case Nil => SubjectClaus(p)
-            case _ :+ ObjectClaus(_,dativP,artikel) => ObjectClaus(p,dativP,artikel)
-            case _ => ObjectClaus(p)
+          val newTokens = prevTokens match {
+            case Nil => prevTokens ++ Seq(SubjectClaus(p))
+            case _ :+ ObjectClaus(_,dativP,artikel) => prevTokens.dropRight(1) ++ Seq(ObjectClaus(p,dativP,artikel))
+            case _ => prevTokens ++ Seq(ObjectClaus(p))
           }
-          val newTokens = prevTokens ++ Seq(claus)
           parse(others, newTokens)
         }
         else {
