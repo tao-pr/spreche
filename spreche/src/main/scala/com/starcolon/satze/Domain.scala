@@ -42,16 +42,19 @@ case object Ein extends Artikel {
       case "der" => "ein"
       case "die" => "eine"
       case "das" => "ein"
+      case _ => "???"
     }
     case Akkusativ => gender match {
       case "der" => "einen"
       case "die" => "eine"
       case "das" => "ein"
+      case _ => "???"
     }
     case Dativ => gender match {
       case "der" => "einem"
       case "die" => "einer"
       case "das" => "einem"
+      case _ => "???"
     }
   }
 }
@@ -113,7 +116,7 @@ case object Ich extends Pronoun{
   override val possess = "mein"
 }
 case object Du extends Pronoun{
-  override val s = "idu"
+  override val s = "du"
   override val akkusativ = "dich"
   override val dativ = "dir"
   override val possess = "dein"
