@@ -68,7 +68,7 @@ object Rule {
     })
   }
 
-  def loadContext: Rule = {
+  def loadContext: MasterRule = {
     implicit val formats: Formats = DefaultFormats.withStrictOptionParsing.withStrictArrayExtraction
     val conjugation = loadConjugationRule
     val sache = loadSacheRule

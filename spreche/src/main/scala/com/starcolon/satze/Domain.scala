@@ -159,8 +159,10 @@ case class Instance(override val s: String) extends Pronoun {
 object Pronoun {
   private lazy val infinitivPronouns = List(Ich, Du, Sie, Wir, Ihr, Er, Es)
   private lazy val infinitivPronounStrings = infinitivPronouns.map(_.s)
+  private lazy val map = infinitivPronouns.map(p => (p.s, p)).toMap
   def isInfinitiv(s: String) = infinitivPronounStrings.contains(s)
   def isInfinitiv(p: Pronoun) = infinitivPronouns.contains(p)
+  def toPronoun(s: String) = map.getOrElse(s, Instance(s))
 }
 
 case class Ort(place: String, artikel: Artikel) extends Token

@@ -2,6 +2,7 @@ package com.starcolon.satze
 
 import com.starcolon.satze._
 import com.starcolon.satze.Implicits._
+import Console.{CYAN,GREEN,YELLOW,RED,MAGENTA,RESET}
 
 trait Claus {
   def render(prev: Claus, next: Claus)(implicit rule: MasterRule): String = toString
@@ -10,13 +11,15 @@ trait Claus {
 case object EmptyClaus extends Claus
 
 case class SubjectClaus(p: Pronoun, adj: Option[String] = None) extends Claus {
-  override def render(prev: Claus, next: Claus)(implicit rule: MasterRule) = p.toString
+  override def render(prev: Claus, next: Claus)(implicit rule: MasterRule) = p.s.capInitial
+  override def toString = s"-${CYAN}S${RESET}:${p.s.capInitial}"
 }
 
 case class VerbClaus(v: Verb) extends Claus {
   override def render(prev: Claus, next: Claus)(implicit rule: MasterRule) = prev match {
     case SubjectClaus(p, _) => rule.conjugation.conjugateVerb(v.v, p)
   }
+  override def toString = s"-${YELLOW}V${RESET}:${v.v}"
 }
 
 case class ObjectClaus(directNoun: Pronoun, dativNoun: Option[Pronoun] = None, artikel: Artikel = Ein) extends Claus {
@@ -37,10 +40,16 @@ case class ObjectClaus(directNoun: Pronoun, dativNoun: Option[Pronoun] = None, a
         }
     }
   }
+
+  override def toString = s"-${CYAN}V${RESET}:${directNoun.s}"
 }
 
-class Satze(clauses: Seq[Claus]) extends Claus {
+case class Satze(clauses: Seq[Claus]) extends Claus {
+  override def render(prev: Claus, next: Claus)(implicit rule: MasterRule) = ???
+}
 
+object Satze {
+  // TAOTODO: All is__ functions can be made generic
   def isVerb(token: String)(implicit rule: MasterRule) = {
     rule.conjugation.isVerb(token.toLowerCase)
   }
@@ -52,12 +61,29 @@ class Satze(clauses: Seq[Claus]) extends Claus {
       rule.sache.isSache(token.capInitial)
   }
 
-  def parse(tokens: Seq[String], prevTokens: Seq[Claus] = Nil)(implicit rule: MasterRule): Satze = {
-    // The sentence can either begin with a pronoun or a verb (Frage)
-
-    ???
-  }
-
-  override def render(prev: Claus, next: Claus)(implicit rule: MasterRule) = ???
+  def isAdj(token: String)(implicit rule: MasterRule) = ???
+  def parse(tokens: Seq[String], prevTokens: Seq[Claus] = Nil)(implicit rule: MasterRule): Satze = 
+    tokens match {
+      case s :: others => 
+        if (isVerb(s)) {
+          implicit val r = rule.conjugation
+          val newTokens = prevTokens ++ Seq(VerbClaus(Verb.toVerb(s.toLowerCase)))
+          parse(others, newTokens)
+        }
+        else if (isPronoun(s)) {
+          val pro = Pronoun.toPronoun(s)
+          val claus = prevTokens match {
+            case Nil => SubjectClaus(pro)
+            case _ => ObjectClaus(pro)
+          }
+          val newTokens = prevTokens ++ Seq(claus)
+          parse(others, newTokens)
+        }
+        else {
+          println(YELLOW + "Unknown token : " + RESET + s)
+          parse(others, prevTokens)
+        }
+      case Nil => Satze(prevTokens)
+    }
 }
 
