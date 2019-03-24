@@ -41,11 +41,12 @@ case class ObjectClaus(directNoun: Pronoun, dativNoun: Option[Pronoun] = None, a
     }
   }
 
-  override def toString = s"-${CYAN}V${RESET}:${directNoun.s}"
+  override def toString = s"-${CYAN}O${RESET}:${directNoun.s}"
 }
 
 case class Satze(clauses: Seq[Claus]) extends Claus {
   override def render(prev: Claus, next: Claus)(implicit rule: MasterRule) = ???
+  override def toString = clauses.map(_.toString).mkString(" ")
 }
 
 object Satze {
