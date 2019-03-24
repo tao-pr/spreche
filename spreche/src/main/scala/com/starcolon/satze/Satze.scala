@@ -5,18 +5,18 @@ import com.starcolon.satze.Implicits._
 import Console.{CYAN,GREEN,YELLOW,RED,MAGENTA,RESET}
 
 trait Claus {
-  def render(prev: Claus, next: Claus)(implicit rule: MasterRule): String = toString
+  def render(satze: Satze)(implicit rule: MasterRule): String = toString
 }
 
 case object EmptyClaus extends Claus
 
 case class SubjectClaus(p: Pronoun, adj: Option[String] = None) extends Claus {
-  override def render(prev: Claus, next: Claus)(implicit rule: MasterRule) = p.s.capInitial
+  override def render(satze: Satze)(implicit rule: MasterRule) = p.s.capInitial
   override def toString = s"-${CYAN}S${RESET}:${p.s.capInitial}"
 }
 
 case class VerbClaus(v: Verb) extends Claus {
-  override def render(prev: Claus, next: Claus)(implicit rule: MasterRule) = prev match {
+  override def render(satze: Satze)(implicit rule: MasterRule) = satze.subject match {
     case SubjectClaus(p, _) => rule.conjugation.conjugateVerb(v.v, p)
   }
   override def toString = s"-${YELLOW}V${RESET}:${v.v}"
@@ -32,8 +32,8 @@ case class ObjectClaus(directNoun: Pronoun, dativNoun: Option[Pronoun] = None, a
   private def renderSache(c: Case)(implicit rule: MasterRule) = 
     artikel.renderWith(rule.sache.findGender(directNoun.s), c) + " " + directNoun.s
 
-  override def render(prev: Claus, next: Claus)(implicit rule: MasterRule) = {
-      prev match {
+  override def render(satze: Satze)(implicit rule: MasterRule) = {
+      satze.verb match {
         case VerbClaus(v) => Pronoun.isInfinitiv(directNoun) match {
           case true => renderInfinitiv(if (v.isAkkusativ) Akkusativ else Nominativ)
           case false => renderSache(if (v.isAkkusativ) Akkusativ else Nominativ)
@@ -45,7 +45,12 @@ case class ObjectClaus(directNoun: Pronoun, dativNoun: Option[Pronoun] = None, a
 }
 
 case class Satze(clauses: Seq[Claus]) extends Claus {
-  override def render(prev: Claus, next: Claus)(implicit rule: MasterRule) = ???
+  def subject: Claus = clauses.find(_.isInstanceOf[SubjectClaus]).getOrElse(EmptyClaus)
+  def verb: Claus = clauses.find(_.isInstanceOf[VerbClaus]).getOrElse(EmptyClaus)
+  def objekt: Claus = clauses.find(_.isInstanceOf[ObjectClaus]).getOrElse(EmptyClaus)
+  override def render(satze: Satze = this)(implicit rule: MasterRule) = {
+    clauses.map(_.render(this).trim).mkString(" ")
+  }
   override def toString = clauses.map(_.toString).mkString(" ")
 }
 

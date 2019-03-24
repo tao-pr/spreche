@@ -8,7 +8,7 @@ object Sprechen {
     val inputTokens = readLine("Sagen Sie > ").split(" ").filter(_.trim.size > 0).toList
     val inputSatze = Satze.parse(inputTokens)
     println(inputSatze)
-
+    inputSatze.render()
     conversation
   }
 }
