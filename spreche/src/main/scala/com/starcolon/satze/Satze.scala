@@ -41,7 +41,7 @@ case class ObjectClaus(directNoun: Pronoun, dativNoun: Option[Pronoun] = None, a
     }
   }
 
-  override def toString = s"-${CYAN_B}O${RESET}:${directNoun.s}"
+  override def toString = s"-${CYAN_B}O${RESET}:${artikel.toString} ${directNoun.s}"
 }
 
 case class Satze(clauses: Seq[Claus]) extends Claus {
@@ -61,32 +61,50 @@ object Satze {
   }
 
   def isPronoun(token: String)(implicit rule: MasterRule) = {
-    if (Pronoun.isInfinitiv(token.toLowerCase))
-      true
-    else
-      rule.sache.isSache(token.capInitial)
+    (Pronoun.isInfinitiv(token.toLowerCase)) || rule.sache.isSache(token.capInitial)
+  }
+
+  def isArtikel(token: String)(implicit rule: MasterRule) = {
+    val artikels = (Seq("die","das","eine") ++ Seq("d","ein").flatMap{(a) => 
+      Seq("er","en","em").map(a + _)
+    })
+    def expand(p: Pronoun) = Seq("","e","en","em").map(p.possess + _)
+    val possArtikels = Pronoun.infinitivPronouns.flatMap(expand)
+    artikels.contains(token.toLowerCase) || possArtikels.contains(token.toLowerCase)
   }
 
   def isAdj(token: String)(implicit rule: MasterRule) = ???
+
+  def isPreposition(token: String)(implicit rule: MasterRule) = ???
+
   def parse(tokens: Seq[String], prevTokens: Seq[Claus] = Nil)(implicit rule: MasterRule): Satze = 
     tokens match {
       case s :: others => 
+        // TAOTODO: Modularise following cases
         if (isVerb(s)) {
           implicit val r = rule.conjugation
           val newTokens = prevTokens ++ Seq(VerbClaus(Verb.toVerb(s.toLowerCase)))
           parse(others, newTokens)
         }
+        else if (isArtikel(s)){
+          // Artikel of an akkusativ noun
+          val a = Artikel.toArtikel(s)
+          val newTokens = prevTokens ++ Seq(ObjectClaus(Ich,None,a))
+          parse(others, newTokens)
+        }
         else if (isPronoun(s)) {
-          val pro = Pronoun.toPronoun(s)
+          // Akkusativ noun
+          val p = Pronoun.toPronoun(s)
           val claus = prevTokens match {
-            case Nil => SubjectClaus(pro)
-            case _ => ObjectClaus(pro)
+            case Nil => SubjectClaus(p)
+            case _ :+ ObjectClaus(_,dativP,artikel) => ObjectClaus(p,dativP,artikel)
+            case _ => ObjectClaus(p)
           }
           val newTokens = prevTokens ++ Seq(claus)
           parse(others, newTokens)
         }
         else {
-          println(YELLOW + "Unknown token : " + RESET + s)
+          println(YELLOW_B + "Unknown token : " + RESET + RED + s + RESET)
           parse(others, prevTokens)
         }
       case Nil => Satze(prevTokens)

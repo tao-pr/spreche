@@ -1,6 +1,6 @@
 package com.starcolon.satze
 
-sealed trait Token
+private[satze] trait Token
 case object NoToken extends Token
 
 case class Verb(v: String) extends Token {
@@ -17,26 +17,17 @@ object Verb {
   }
 }
 
-trait Case 
-case object Nominativ extends Case
-case object Akkusativ extends Case
-case object Dativ extends Case
-
-trait FrageWort extends Token {
-  val s: String
-  override def toString = s
-}
-case object Wie extends FrageWort { override val s = "wie" }
-case object Wo extends FrageWort { override val s = "wo" }
-case object Warum extends FrageWort { override val s = "warum" }
-case object Wann extends FrageWort { override val s = "wann" }
-case object Wer extends FrageWort { override val s = "wer" }
-
 trait Artikel extends Token {
   def renderWith(gender: String, c: Case): String
+  def matchWith(s: String): Boolean
+  override def toString = this.getClass.getName.dropRight(1)
 }
 
 case object Ein extends Artikel {
+  override def matchWith(s: String) = {
+    Seq("ein","eine","einer","einem","einen").contains(s.toLowerCase)
+  }
+
   override def renderWith(gender: String, c: Case) = c match {
     case Nominativ => gender match {
       case "der" => "ein"
@@ -60,6 +51,10 @@ case object Ein extends Artikel {
 }
 
 case object Der extends Artikel {
+  override def matchWith(s: String) = {
+    Seq("der","die","das","den","dem").contains(s.toLowerCase)
+  }
+
   override def renderWith(gender: String, c: Case) = c match {
     case Nominativ => gender match {
       case "der" => "der"
@@ -80,10 +75,17 @@ case object Der extends Artikel {
 }
 
 case object Plural extends Artikel {
+  override def matchWith(s: String) = {
+    Seq("viel","viele").contains(s.toLowerCase)
+  }
+
   override def renderWith(gender: String, c: Case) = "viele"
 }
 
 case object Kein extends Artikel {
+  override def matchWith(s: String) = {
+    Seq("kein","keine","keiner","keinem","keinen").contains(s.toLowerCase)
+  }
   override def renderWith(gender: String, c: Case) = c match {
     case Nominativ => gender match {
       case "der" => "kein"
@@ -100,6 +102,156 @@ case object Kein extends Artikel {
       case "die" => "keiner"
       case "das" => "keinem"
     }
+  }
+}
+
+case object Mein extends Artikel {
+  override def matchWith(s: String) = {
+    Seq("mein","meine","meiner","meinem","meinen").contains(s.toLowerCase)
+  }
+
+  override def renderWith(gender: String, c: Case) = c match {
+    case Nominativ => gender match {
+      case "der" => "mein"
+      case "die" => "meine"
+      case "das" => "mein"
+    }
+    case Akkusativ => gender match {
+      case "der" => "meinen"
+      case "die" => "meine"
+      case "das" => "mein"
+    }
+    case Dativ => gender match {
+      case "der" => "meinem"
+      case "die" => "meine"
+      case "das" => "meinem"
+    }
+  }
+}
+
+case object Dein extends Artikel {
+  override def matchWith(s: String) = {
+    Seq("dein","deine","deiner","deinem","deinen").contains(s.toLowerCase)
+  }
+
+  override def renderWith(gender: String, c: Case) = c match {
+    case Nominativ => gender match {
+      case "der" => "dein"
+      case "die" => "deine"
+      case "das" => "dein"
+    }
+    case Akkusativ => gender match {
+      case "der" => "deinen"
+      case "die" => "deine"
+      case "das" => "dein"
+    }
+    case Dativ => gender match {
+      case "der" => "deinem"
+      case "die" => "deine"
+      case "das" => "deinem"
+    }
+  }
+}
+
+case object Sein extends Artikel {
+  override def matchWith(s: String) = {
+    Seq("sein","seine","seiner","seinem","seinen").contains(s.toLowerCase)
+  }
+
+  override def renderWith(gender: String, c: Case) = c match {
+    case Nominativ => gender match {
+      case "der" => "sein"
+      case "die" => "seine"
+      case "das" => "sein"
+    }
+    case Akkusativ => gender match {
+      case "der" => "seinen"
+      case "die" => "seine"
+      case "das" => "sein"
+    }
+    case Dativ => gender match {
+      case "der" => "seinem"
+      case "die" => "seine"
+      case "das" => "seinem"
+    }
+  }
+}
+
+case object Ihre extends Artikel {
+  override def matchWith(s: String) = {
+    Seq("ihr","ihre","ihren","ihrem").contains(s.toLowerCase)
+  }
+
+  override def renderWith(gender: String, c: Case) = c match {
+    case Nominativ => gender match {
+      case "der" => "ihr"
+      case "die" => "ihre"
+      case "das" => "ihr"
+    }
+    case Akkusativ => gender match {
+      case "der" => "ihren"
+      case "die" => "ihre"
+      case "das" => "ihr"
+    }
+    case Dativ => gender match {
+      case "der" => "ihrem"
+      case "die" => "ihre"
+      case "das" => "ihrem"
+    }
+  }
+}
+
+case object Unser extends Artikel {
+  override def matchWith(s: String) = {
+    Seq("unser","unsere","unseren","unserem").contains(s.toLowerCase)
+  }
+
+  override def renderWith(gender: String, c: Case) = c match {
+    case Nominativ => gender match {
+      case "der" => "unser"
+      case "die" => "unsere"
+      case "das" => "unser"
+    }
+    case Akkusativ => gender match {
+      case "der" => "unseren"
+      case "die" => "unsere"
+      case "das" => "unser"
+    }
+    case Dativ => gender match {
+      case "der" => "unserem"
+      case "die" => "unser"
+      case "das" => "unserem"
+    }
+  }
+}
+
+case object Euer extends Artikel {
+  override def matchWith(s: String) = {
+    Seq("eure","euer","euren","eurem").contains(s.toLowerCase)
+  }
+
+  override def renderWith(gender: String, c: Case) = c match {
+    case Nominativ => gender match {
+      case "der" => "euer"
+      case "die" => "eure"
+      case "das" => "euer"
+    }
+    case Akkusativ => gender match {
+      case "der" => "euren"
+      case "die" => "eure"
+      case "das" => "euren"
+    }
+    case Dativ => gender match {
+      case "der" => "eurem"
+      case "die" => "eure"
+      case "das" => "eurem"
+    }
+  }
+}
+
+object Artikel {
+  def toArtikel(s: String)(implicit rule: MasterRule): Artikel = {
+    Seq(Ein,Der,Plural,Kein,Mein,Dein,Sein,Unser,Ihre).find(_.matchWith(s)).getOrElse(Ein)
   }
 }
 
@@ -160,7 +312,7 @@ case class Instance(override val s: String) extends Pronoun {
 }
 
 object Pronoun {
-  private lazy val infinitivPronouns = List(Ich, Du, Sie, Wir, Ihr, Er, Es)
+  lazy val infinitivPronouns = List(Ich, Du, Sie, Wir, Ihr, Er, Es)
   private lazy val infinitivPronounStrings = infinitivPronouns.map(_.s)
   private lazy val map = infinitivPronouns.map(p => (p.s, p)).toMap
   def isInfinitiv(s: String) = infinitivPronounStrings.contains(s)
