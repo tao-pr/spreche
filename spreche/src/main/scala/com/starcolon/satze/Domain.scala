@@ -20,7 +20,7 @@ object Verb {
 trait Artikel extends Token {
   def renderWith(gender: String, c: Case): String
   def matchWith(s: String): Boolean
-  override def toString = this.getClass.getName.dropRight(1)
+  override def toString = this.getClass.getName.dropRight(1).split('.').last
 }
 
 case object Ein extends Artikel {

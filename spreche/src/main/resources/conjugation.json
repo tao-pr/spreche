@@ -3,6 +3,8 @@
     "ich": "heiße",
     "du": "heißt",
     "es": "heißt",
+    "sie": "heißt",
+    "er": "heißt",
     "wir": "heißen",
     "ihr": "heißt",
     "Sie": "heißen"
@@ -11,6 +13,8 @@
     "ich": "bin",
     "du": "bist",
     "es": "ist",
+    "sie": "ist",
+    "er": "ist",
     "wir": "sind",
     "ihr": "seid",
     "Sie": "sind"
@@ -19,6 +23,8 @@
     "ich": "sage",
     "du": "sagst",
     "es": "sagt",
+    "sie": "sagt",
+    "er": "sagt",
     "wir": "sagen",
     "ihr": "sagt",
     "Sie": "sagen"
@@ -27,6 +33,8 @@
     "ich": "wohne",
     "du": "wohnst",
     "es": "wohnt",
+    "sie": "wohnt",
+    "er": "wohnt",
     "wir": "wohnen",
     "ihr": "wohnt",
     "Sie": "wohnen"
@@ -35,6 +43,8 @@
     "ich": "fahre",
     "du": "fährst",
     "es": "fährt",
+    "sie": "fährt",
+    "er": "fährt",
     "wir": "fahren",
     "ihr": "fahrt",
     "Sie": "fahren"
@@ -43,6 +53,8 @@
     "ich": "gehe",
     "du": "gehst",
     "es": "geht",
+    "sie": "geht",
+    "er": "geht",
     "wir": "gehen",
     "ihr": "geht",
     "Sie": "gehen"
@@ -51,6 +63,8 @@
     "ich": "sehe",
     "du": "siehst",
     "es": "sieht",
+    "sie": "sieht",
+    "er": "sieht",
     "wir": "sehen",
     "ihr": "seht",
     "Sie": "sehen"
@@ -59,6 +73,8 @@
     "ich": "habe",
     "du": "hast",
     "es": "hat",
+    "sie": "hat",
+    "er": "hat",
     "wir": "haben",
     "ihr": "habt",
     "Sie": "haben"
@@ -67,6 +83,8 @@
     "ich": "kenne",
     "du": "kennst",
     "es": "kennt",
+    "sie": "kennt",
+    "er": "kennt",
     "wir": "kennen",
     "ihr": "kennt",
     "Sie": "kennen"
@@ -75,6 +93,8 @@
     "ich": "komme",
     "du": "kommst",
     "es": "kommt",
+    "sie": "kommt",
+    "er": "kommt",
     "wir": "kommen",
     "ihr": "kommt",
     "Sie": "kommen"
@@ -83,6 +103,8 @@
     "ich": "nehme",
     "du": "nimmst",
     "es": "nimmt",
+    "sie": "nimmt",
+    "er": "nimmt",
     "wir": "nehmen",
     "ihr": "nehmt",
     "Sie": "nehmen"
