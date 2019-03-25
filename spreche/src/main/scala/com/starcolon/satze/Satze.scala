@@ -58,10 +58,13 @@ object Satze {
     val p = Pronoun.toPronoun(s)
     val newTokens = prevTokens match {
       // Pronoun at the beginning of the sazte
-      case Nil => prevTokens ++ Seq(SubjectClaus(p))
+      case Nil => prevTokens :+ SubjectClaus(p)
       // Pronoun after an artikel
       case _ :+ ObjectClaus(_,dativP,artikel) => 
         prevTokens.dropRight(1) :+ ObjectClaus(p,dativP,artikel)
+      // Pronoun after an artikel
+      case _ :+ SubjectClaus(_,adj,artikel) => 
+        prevTokens.dropRight(1) :+ SubjectClaus(p,adj,artikel)
       // Otherwise
       case _ => prevTokens :+ ObjectClaus(p)
     }
