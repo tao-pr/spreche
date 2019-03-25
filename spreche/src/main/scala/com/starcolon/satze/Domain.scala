@@ -23,6 +23,11 @@ trait Artikel extends Token {
   override def toString = this.getClass.getName.dropRight(1).split('.').last
 }
 
+case object NoArtikel extends Artikel {
+  override def matchWith(s: String) = s.trim.isEmpty
+  override def renderWith(gender: String, c: Case) = ""
+}
+
 case object Ein extends Artikel {
   override def matchWith(s: String) = {
     Seq("ein","eine","einer","einem","einen").contains(s.toLowerCase)
@@ -319,7 +324,7 @@ case class Instance(override val s: String) extends Pronoun {
 
 object Pronoun {
   lazy val infinitivPronouns = List(Ich, Du, Sie, Wir, Ihr, Er, Es)
-  private lazy val infinitivPronounStrings = infinitivPronouns.map(_.s)
+  private lazy val infinitivPronounStrings = infinitivPronouns.flatMap{ p => Seq(p.s, p.akkusativ, p.dativ)}
   private lazy val map = infinitivPronouns.map(p => (p.s, p)).toMap
   def isInfinitiv(s: String) = infinitivPronounStrings.contains(s)
   def isInfinitiv(p: Pronoun) = infinitivPronouns.contains(p)

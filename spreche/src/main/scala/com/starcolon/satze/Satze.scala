@@ -4,46 +4,6 @@ import com.starcolon.satze._
 import com.starcolon.satze.Implicits._
 import Console._
 
-trait Claus {
-  def render(satze: Satze)(implicit rule: MasterRule): String = toString
-}
-
-case object EmptyClaus extends Claus
-
-case class SubjectClaus(p: Pronoun, adj: Option[String] = None) extends Claus {
-  override def render(satze: Satze)(implicit rule: MasterRule) = p.s.capInitial
-  override def toString = s"-${CYAN_B}S${RESET}:${p.s.capInitial}"
-}
-
-case class VerbClaus(v: Verb) extends Claus {
-  override def render(satze: Satze)(implicit rule: MasterRule) = satze.subject match {
-    case SubjectClaus(p, _) => rule.conjugation.conjugateVerb(v.v, p)
-  }
-  override def toString = s"-${YELLOW_B}V${RESET}:${v.v}"
-}
-
-case class ObjectClaus(directNoun: Pronoun, dativNoun: Option[Pronoun] = None, artikel: Artikel = Ein) extends Claus {
-  private def renderInfinitiv(c: Case) = c match {
-    case Nominativ => directNoun.s
-    case Akkusativ => directNoun.akkusativ
-    case Dativ => directNoun.dativ
-  }
-
-  private def renderSache(c: Case)(implicit rule: MasterRule) = 
-    artikel.renderWith(rule.sache.findGender(directNoun.s.capInitial), c) + " " + directNoun.s.capInitial
-
-  override def render(satze: Satze)(implicit rule: MasterRule) = {
-      satze.verb match {
-        case VerbClaus(v) => Pronoun.isInfinitiv(directNoun) match {
-          case true => renderInfinitiv(if (v.isAkkusativ) Akkusativ else Nominativ)
-          case false => renderSache(if (v.isAkkusativ) Akkusativ else Nominativ)
-        }
-    }
-  }
-
-  override def toString = s"-${CYAN_B}O${RESET}:${artikel.toString} ${directNoun.s}"
-}
-
 case class Satze(clauses: Seq[Claus]) extends Claus {
   def subject: Claus = clauses.find(_.isInstanceOf[SubjectClaus]).getOrElse(EmptyClaus)
   def verb: Claus = clauses.find(_.isInstanceOf[VerbClaus]).getOrElse(EmptyClaus)
@@ -77,30 +37,62 @@ object Satze {
 
   def isPreposition(token: String)(implicit rule: MasterRule) = ???
 
+  private def parseVerb(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+    implicit val r = rule.conjugation
+    val newTokens = prevTokens match {
+      // Capture Ihr being previously captured as artikel
+      // then Ihr has to become a pronoun
+      case _ :+ SubjectClaus(NP, adj, Ihre) => 
+        prevTokens.dropRight(1) ++ Seq(SubjectClaus(Ihr, adj, NoArtikel), VerbClaus(Verb.toVerb(s.toLowerCase)))
+      // Any
+      case _ => 
+        prevTokens :+ VerbClaus(Verb.toVerb(s.toLowerCase))
+    }
+    parse(others, newTokens)
+  }
+
+  private def parsePronoun(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+    // Akkusativ noun
+    val p = Pronoun.toPronoun(s)
+    val newTokens = prevTokens match {
+      // Pronoun at the beginning of the sazte
+      case Nil => prevTokens ++ Seq(SubjectClaus(p))
+      // Pronoun after an artikel
+      case _ :+ ObjectClaus(_,dativP,artikel) => 
+        prevTokens.dropRight(1) :+ ObjectClaus(p,dativP,artikel)
+      // Otherwise
+      case _ => prevTokens :+ ObjectClaus(p)
+    }
+    parse(others, newTokens)
+  }
+
+  private def parseArtikel(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+    // Artikel of an akkusativ noun
+    val a = Artikel.toArtikel(s)
+    // NOTE: "Ihr" will also be counted as artikel initially
+    val newTokens = prevTokens match {
+      // Artikel of subject
+      case Nil  => SubjectClaus(NP,None,a) :: Nil
+      // Artikel of object
+      case _ => prevTokens :+ ObjectClaus(NP,None,a)
+    }
+    parse(others, newTokens)
+  }
+
   def parse(tokens: Seq[String], prevTokens: Seq[Claus] = Nil)(implicit rule: MasterRule): Satze = 
     tokens match {
       case s :: others => 
-        // TAOTODO: Modularise following cases
         if (isVerb(s)) {
-          implicit val r = rule.conjugation
-          val newTokens = prevTokens ++ Seq(VerbClaus(Verb.toVerb(s.toLowerCase)))
-          parse(others, newTokens)
+          parseVerb(prevTokens, others, s)
         }
         else if (isArtikel(s)){
-          // Artikel of an akkusativ noun
-          val a = Artikel.toArtikel(s)
-          val newTokens = prevTokens ++ Seq(ObjectClaus(Ich,None,a))
-          parse(others, newTokens)
+          parseArtikel(prevTokens, others, s)
         }
         else if (isPronoun(s)) {
-          // Akkusativ noun
-          val p = Pronoun.toPronoun(s)
-          val newTokens = prevTokens match {
-            case Nil => prevTokens ++ Seq(SubjectClaus(p))
-            case _ :+ ObjectClaus(_,dativP,artikel) => prevTokens.dropRight(1) ++ Seq(ObjectClaus(p,dativP,artikel))
-            case _ => prevTokens ++ Seq(ObjectClaus(p))
-          }
-          parse(others, newTokens)
+          parsePronoun(prevTokens, others, s)
         }
         else {
           println(YELLOW_B + "Unknown token : " + RESET + RED + s + RESET)
