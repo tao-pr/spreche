@@ -25,7 +25,7 @@ object Satze {
   }
 
   def isArtikel(token: String)(implicit rule: MasterRule) = {
-    val artikels = (Seq("die","das","eine","ein") ++ Seq("d","ein").flatMap{(a) => 
+    val artikels = (Seq("die","das","eine","ein","kein","keine") ++ Seq("d","ein","kein").flatMap{(a) => 
       Seq("er","en","em").map(a + _)
     })
     def expand(p: Pronoun) = Seq("","e","en","em").map(p.possess + _)
