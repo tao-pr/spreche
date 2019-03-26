@@ -38,19 +38,19 @@ case object Ein extends Artikel {
       case "der" => "ein"
       case "die" => "eine"
       case "das" => "ein"
-      case _ => "???"
+      case _ => ""
     }
     case Akkusativ => gender match {
       case "der" => "einen"
       case "die" => "eine"
       case "das" => "ein"
-      case _ => "???"
+      case _ => ""
     }
     case Dativ => gender match {
       case "der" => "einem"
       case "die" => "einer"
       case "das" => "einem"
-      case _ => "???"
+      case _ => ""
     }
   }
 }
@@ -316,19 +316,25 @@ case object Ihr extends Pronoun{
 }
 
 case class Instance(override val s: String) extends Pronoun {
-  // TAOTODO: Following remain unused, need to be redesigned
-  override val akkusativ = ""
-  override val dativ = ""
+  override val akkusativ = s
+  override val dativ = s
   override val possess = ""
 }
 
 object Pronoun {
   lazy val infinitivPronouns = List(Ich, Du, Sie, Wir, Ihr, Er, Es)
+  lazy val reverseMap = infinitivPronouns.flatMap{ p => 
+    Seq((p.s, p.s), (p.akkusativ, p.s), (p.dativ, p.s))
+  }.toMap
   private lazy val infinitivPronounStrings = infinitivPronouns.flatMap{ p => Seq(p.s, p.akkusativ, p.dativ)}
   private lazy val map = infinitivPronouns.map(p => (p.s, p)).toMap
+  
   def isInfinitiv(s: String) = infinitivPronounStrings.contains(s)
   def isInfinitiv(p: Pronoun) = infinitivPronouns.contains(p)
-  def toPronoun(s: String) = map.getOrElse(s, Instance(s))
+  def toPronoun(s: String) = {
+    val s_ = reverseMap.getOrElse(s, s)
+    map.getOrElse(s_, Instance(s_))
+  }
 }
 
 case class Ort(place: String, artikel: Artikel) extends Token
