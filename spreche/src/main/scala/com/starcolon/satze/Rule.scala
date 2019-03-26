@@ -16,7 +16,10 @@ case object PrepositionRule extends Rule {
   val mapCase = Map(
     "für" -> Akkusativ,
     "ohne" -> Akkusativ,
-    "gegen" -> Akkusativ
+    "gegen" -> Akkusativ,
+    "bis" -> Akkusativ,
+    "durch" -> Akkusativ,
+    "um" -> Akkusativ
   )
   def isPreposition(s: String) = mapCase.keySet.contains(s.toLowerCase)
 }
