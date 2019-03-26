@@ -17,6 +17,11 @@ object Verb {
   }
 }
 
+case class Preposition(s: String) extends Token
+object Preposition {
+  def getCase(s: String) = PrepositionRule.mapCase.getOrElse(s, Nominativ)
+}
+
 trait Artikel extends Token {
   def renderWith(gender: String, c: Case): String
   def matchWith(s: String): Boolean

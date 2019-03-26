@@ -24,9 +24,9 @@ sealed trait PronounClaus {
 }
 
 case class SubjectClaus(
-  override val p: Pronoun, 
-  adj: Option[String] = None, 
-  override val artikel: Artikel = Ein) 
+  override val artikel: Artikel = Ein,
+  override val p: Pronoun = NP
+) 
 extends Claus 
 with PronounClaus {
   override def render(satze: Satze)(implicit rule: MasterRule) = Pronoun.isInfinitiv(p) match {
@@ -38,12 +38,16 @@ with PronounClaus {
 
 case class VerbClaus(v: Verb) extends Claus {
   override def render(satze: Satze)(implicit rule: MasterRule) = satze.subject match {
-    case SubjectClaus(p, _, _) => rule.conjugation.conjugateVerb(v.v, p)
+    case SubjectClaus(_, p) => rule.conjugation.conjugateVerb(v.v, p)
   }
   override def toString = s"-${YELLOW_B}V${RESET}:${v.v}"
 }
 
-case class ObjectClaus(override val p: Pronoun, dativNoun: Option[Pronoun] = None, override val artikel: Artikel = Ein) 
+case class ObjectClaus(
+  val prep: Option[Preposition] = None,
+  override val artikel: Artikel = Ein,
+  override val p: Pronoun = NP
+) 
 extends Claus 
 with PronounClaus {
 
@@ -56,5 +60,5 @@ with PronounClaus {
     }
   }
 
-  override def toString = s"-${CYAN_B}O${RESET}:${artikel.toString} ${p.s}"
+  override def toString = s"-${CYAN_B}O${RESET}:${prep.map(_.s).getOrElse("")}${artikel.toString} ${p.s}"
 }
