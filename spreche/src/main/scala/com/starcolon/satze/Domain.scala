@@ -17,7 +17,10 @@ object Verb {
   }
 }
 
-case class Preposition(s: String) extends Token
+case class Preposition(s: String) extends Token {
+  def getCase = Preposition.getCase(s)
+}
+
 object Preposition {
   def getCase(s: String) = PrepositionRule.mapCase.getOrElse(s, Nominativ)
 }

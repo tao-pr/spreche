@@ -52,11 +52,14 @@ extends Claus
 with PronounClaus {
 
   override def render(satze: Satze)(implicit rule: MasterRule) = {
+      val masterCase = prep.map(_.getCase)
       prep.map(_.s + " ").getOrElse("") + (satze.verb match {
-        case VerbClaus(v) => Pronoun.isInfinitiv(p) match {
-          case true => renderInfinitiv(if (v.isAkkusativ) Akkusativ else Nominativ)
-          case false => renderSache(if (v.isAkkusativ) Akkusativ else Nominativ)
-        }
+        case VerbClaus(v) => 
+          val effectiveCase = masterCase.getOrElse(if (v.isAkkusativ) Akkusativ else Nominativ)
+          Pronoun.isInfinitiv(p) match {
+            case true => renderInfinitiv(effectiveCase)
+            case false => renderSache(effectiveCase)
+          }
     })
   }
 
