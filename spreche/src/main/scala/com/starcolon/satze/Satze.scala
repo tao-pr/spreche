@@ -35,7 +35,8 @@ object Satze {
 
   def isAdj(token: String)(implicit rule: MasterRule) = ???
 
-  def isPreposition(token: String)(implicit rule: MasterRule) = ???
+  def isPreposition(token: String)(implicit rule: MasterRule) = 
+    rule.preposition.isPreposition(token)
 
   private def parseVerb(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
@@ -90,6 +91,9 @@ object Satze {
       case s :: others => 
         if (isVerb(s)) {
           parseVerb(prevTokens, others, s)
+        }
+        else if (isPreposition(s)){
+          ???
         }
         else if (isArtikel(s)){
           parseArtikel(prevTokens, others, s)

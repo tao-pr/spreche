@@ -6,11 +6,20 @@ import org.json4s.Formats
 import scala.io.Source
 import com.starcolon.satze.Implicits._
 
-import Console.{CYAN,GREEN,YELLOW,RED,MAGENTA,RESET}
+import Console._
 
 sealed trait Rule 
 
 object NullRule extends Rule
+
+case object PrepositionRule extends Rule {
+  val mapCase = Map(
+    "für" -> Akkusativ,
+    "ohne" -> Akkusativ,
+    "gegen" -> Akkusativ
+  )
+  def isPreposition(s: String) = mapCase.keySet.contains(s.toLowerCase)
+}
 
 case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
 
@@ -58,9 +67,11 @@ case class OrtRule(m: Map[String, Ort]) extends Rule
 
 case class MasterRule(
   conjugation: ConjugationRule, 
-  sache: SacheRule, 
+  sache: SacheRule,
   ort: OrtRule) 
-extends Rule
+extends Rule {
+  val preposition = PrepositionRule
+}
 
 object Rule {
 

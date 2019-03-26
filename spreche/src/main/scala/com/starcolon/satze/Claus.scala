@@ -23,7 +23,10 @@ sealed trait PronounClaus {
   }
 }
 
-case class SubjectClaus(override val p: Pronoun, adj: Option[String] = None, override val artikel: Artikel = Ein) 
+case class SubjectClaus(
+  override val p: Pronoun, 
+  adj: Option[String] = None, 
+  override val artikel: Artikel = Ein) 
 extends Claus 
 with PronounClaus {
   override def render(satze: Satze)(implicit rule: MasterRule) = Pronoun.isInfinitiv(p) match {
