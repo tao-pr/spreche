@@ -69,9 +69,7 @@ case class MasterRule(
   conjugation: ConjugationRule, 
   sache: SacheRule,
   ort: OrtRule) 
-extends Rule {
-  val preposition = PrepositionRule
-}
+extends Rule 
 
 object Rule {
 

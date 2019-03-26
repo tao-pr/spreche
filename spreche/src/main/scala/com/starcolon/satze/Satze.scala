@@ -36,7 +36,7 @@ object Satze {
   def isAdj(token: String)(implicit rule: MasterRule) = ???
 
   def isPreposition(token: String)(implicit rule: MasterRule) = 
-    rule.preposition.isPreposition(token)
+    PrepositionRule.isPreposition(token)
 
   private def parseVerb(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
@@ -44,8 +44,8 @@ object Satze {
     val newTokens = prevTokens match {
       // Capture Ihr being previously captured as artikel
       // then Ihr has to become a pronoun
-      case _ :+ SubjectClaus(NP, adj, Ihre) => 
-        prevTokens.dropRight(1) ++ Seq(SubjectClaus(Ihr, adj, NoArtikel), VerbClaus(Verb.toVerb(s.toLowerCase)))
+      case _ :+ SubjectClaus(Ihre, NP) => 
+        prevTokens.dropRight(1) ++ Seq(SubjectClaus(NoArtikel, Ihr), VerbClaus(Verb.toVerb(s.toLowerCase)))
       // Any
       case _ => 
         prevTokens :+ VerbClaus(Verb.toVerb(s.toLowerCase))
@@ -59,29 +59,44 @@ object Satze {
     val p = Pronoun.toPronoun(s)
     val newTokens = prevTokens match {
       // Pronoun at the beginning of the sazte
-      case Nil => prevTokens :+ SubjectClaus(p)
-      // Pronoun after an artikel
-      case _ :+ ObjectClaus(_,dativP,artikel) => 
-        prevTokens.dropRight(1) :+ ObjectClaus(p,dativP,artikel)
-      // Pronoun after an artikel
-      case _ :+ SubjectClaus(_,adj,artikel) => 
-        prevTokens.dropRight(1) :+ SubjectClaus(p,adj,artikel)
+      case Nil => prevTokens :+ SubjectClaus(p=p)
+      // Pronoun after an artikel or preposition
+      case _ :+ ObjectClaus(prep, artikel, NP) => 
+        prevTokens.dropRight(1) :+ ObjectClaus(prep, artikel, p)
+      // Pronoun for a subject
+      case _ :+ SubjectClaus(artikel, NP) => 
+        prevTokens.dropRight(1) :+ SubjectClaus(artikel, p)
       // Otherwise
-      case _ => prevTokens :+ ObjectClaus(p)
+      case _ => prevTokens :+ ObjectClaus(p=p)
     }
     parse(others, newTokens)
   }
 
   private def parseArtikel(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
-    // Artikel of an akkusativ noun
     val a = Artikel.toArtikel(s)
     // NOTE: "Ihr" will also be counted as artikel initially
     val newTokens = prevTokens match {
       // Artikel of subject
-      case Nil  => SubjectClaus(NP,None,a) :: Nil
-      // Artikel of object
-      case _ => prevTokens :+ ObjectClaus(NP,None,a)
+      case Nil  => SubjectClaus(a, NP) :: Nil
+      // Artikel of a new object 
+      case _ :+ ObjectClaus(prep, _, NP) => prevTokens :+ ObjectClaus(prep, a, NP)
+      // Artikel of a new object
+      case _ => prevTokens :+ ObjectClaus(None, a, NP)
+    }
+    parse(others, newTokens)
+  }
+
+  private def parsePreposition(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+    val prep = Preposition(s.trim.toLowerCase)
+    val newTokens = prevTokens match {
+      // Sentence cannot start with a preposition
+      case Nil => 
+        println(RED + s"A new sentence cannot start with : $s" + RESET)
+        prevTokens
+      // Preposition of a new object
+      case _ => prevTokens :+ ObjectClaus(Some(prep), NoArtikel, NP)
     }
     parse(others, newTokens)
   }
@@ -93,7 +108,7 @@ object Satze {
           parseVerb(prevTokens, others, s)
         }
         else if (isPreposition(s)){
-          ???
+          parsePreposition(prevTokens, others, s)
         }
         else if (isArtikel(s)){
           parseArtikel(prevTokens, others, s)
