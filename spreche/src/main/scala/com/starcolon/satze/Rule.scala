@@ -4,6 +4,7 @@ import org.json4s._
 import org.json4s.jackson.JsonMethods._
 import org.json4s.Formats
 import scala.io.Source
+import com.starcolon.satze.Implicits._
 
 import Console.{CYAN,GREEN,YELLOW,RED,MAGENTA,RESET}
 
@@ -23,7 +24,18 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
     reverseMap.getOrElse(v, v)
   }
   
-  def conjugateVerb(v: String, p: Pronoun) = m.getOrElse(v, Map(p.s -> v)).getOrElse(p.s, v)
+  def conjugateVerb(v: String, p: Pronoun)(implicit rule: MasterRule) = p match {
+    case Instance(s) => 
+      val gender = rule.sache.findGender(s.capInitial)
+      val genderedPronoun = Map(
+        "der" -> Es, 
+        "die" -> Sie,
+        "das" -> Es,
+        "" -> Es
+      )(gender)
+      m.getOrElse(v, Map(genderedPronoun.s -> v)).getOrElse(genderedPronoun.s, v)
+    case _ => m.getOrElse(v, Map(p.s -> v)).getOrElse(p.s, v)
+  }
 
   override def toString = m.map{ case(_, n) => 
     n.map{ case(p, v) => s"${p} ${v}"}.mkString(" | ") 
