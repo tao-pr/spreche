@@ -52,12 +52,12 @@ extends Claus
 with PronounClaus {
 
   override def render(satze: Satze)(implicit rule: MasterRule) = {
-      satze.verb match {
+      prep.map(_.s + " ").getOrElse("") + (satze.verb match {
         case VerbClaus(v) => Pronoun.isInfinitiv(p) match {
           case true => renderInfinitiv(if (v.isAkkusativ) Akkusativ else Nominativ)
           case false => renderSache(if (v.isAkkusativ) Akkusativ else Nominativ)
         }
-    }
+    })
   }
 
   override def toString = s"-${CYAN_B}O${RESET}:${prep.map(_.s).getOrElse("")}${artikel.toString} ${p.s}"

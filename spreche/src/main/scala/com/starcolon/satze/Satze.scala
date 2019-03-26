@@ -80,7 +80,7 @@ object Satze {
       // Artikel of subject
       case Nil  => SubjectClaus(a, NP) :: Nil
       // Artikel of a new object 
-      case _ :+ ObjectClaus(prep, _, NP) => prevTokens :+ ObjectClaus(prep, a, NP)
+      case _ :+ ObjectClaus(prep, _, NP) => prevTokens.dropRight(1) :+ ObjectClaus(prep, a, NP)
       // Artikel of a new object
       case _ => prevTokens :+ ObjectClaus(None, a, NP)
     }
