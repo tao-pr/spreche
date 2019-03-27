@@ -19,7 +19,17 @@ case object PrepositionRule extends Rule {
     "gegen" -> Akkusativ,
     "bis" -> Akkusativ,
     "durch" -> Akkusativ,
-    "um" -> Akkusativ
+    "um" -> Akkusativ,
+    "zu" -> Dativ,
+    "in" -> Dativ,
+    "an" -> Dativ,
+    "vor" -> Dativ,
+    "über" -> Dativ,
+    "unter" -> Dativ,
+    "neben" -> Dativ,
+    "auf" -> Dativ,
+    "zwischen" -> Dativ,
+    "hinter" -> Dativ
   )
   def isPreposition(s: String) = mapCase.keySet.contains(s.toLowerCase)
 }
