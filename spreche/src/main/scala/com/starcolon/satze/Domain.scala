@@ -19,6 +19,16 @@ object Verb {
 
 case class Preposition(s: String) extends Token {
   def getCase = Preposition.getCase(s)
+
+  def akkusativForm(gender: String) = s match {
+    case "in" => gender match {
+      case "der" => "in"
+      case "die" => "in"
+      case "das" => "ins"
+    }
+    case otherwise => otherwise
+  }
+  
   def dativForm(gender: String) = s match {
     case "zu" => gender match {
       case "der" => "zum"
@@ -28,7 +38,7 @@ case class Preposition(s: String) extends Token {
     case "in" => gender match {
       case "der" => "im"
       case "die" => "in"
-      case "das" => "ins"
+      case "das" => "im"
     }
     case otherwise => otherwise
   }
