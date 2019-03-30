@@ -115,7 +115,11 @@ case object Plural extends Artikel {
     Seq("viel","viele").contains(s.toLowerCase)
   }
 
-  override def renderWith(gender: String, c: Case) = "viele"
+  override def renderWith(gender: String, c: Case) = c match {
+    case Nominativ => "viele"
+    case Akkusativ => "die"
+    case Dativ => "den"
+  }
 }
 
 case object Kein extends Artikel {

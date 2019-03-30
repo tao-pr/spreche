@@ -73,6 +73,7 @@ case class SacheRule(m: Map[String, Sache]) extends Rule {
   lazy val all = m.keys.toSet ++ m.map{ case(_, s) => s.plural }.toSet
   def isSache(s: String) = all.contains(s)
   def findGender(s: String): String = m.get(s).map(_.gender).getOrElse("")
+  def findPlural(s: String): String = m.get(s).map(_.plural).getOrElse(s)
   override def toString = m.map{ case(_, sache) => sache.toString }.mkString("\n")
 }
 
