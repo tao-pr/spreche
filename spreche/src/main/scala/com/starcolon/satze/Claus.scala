@@ -15,7 +15,7 @@ sealed trait PronounClaus {
   
   protected def renderSache(c: Case)(implicit rule: MasterRule) = 
     artikel.renderWith(rule.sache.findGender(p.s.capInitial), c) + " " + (artikel match {
-      case Plural => rule.sache.findPlural(p.s).capInitial
+      case Plural => rule.sache.findPlural(p.s.capInitial).capInitial
       case _ => p.s.capInitial
     })
 
@@ -36,12 +36,12 @@ with PronounClaus {
     case true => renderInfinitiv(Nominativ)
     case false => renderSache(Nominativ)
   }
-  override def toString = s"-${CYAN_B}S${RESET}:${p.s.capInitial}"
+  override def toString = s"-${CYAN_B}S${RESET}:${artikel.toString} ${p.s.capInitial}"
 }
 
 case class VerbClaus(v: Verb) extends Claus {
   override def render(satze: Satze)(implicit rule: MasterRule) = satze.subject match {
-    case SubjectClaus(_, p) => rule.conjugation.conjugateVerb(v.v, p)
+    case SubjectClaus(artikel, p) => rule.conjugation.conjugateVerb(v.v, p, artikel)
   }
   override def toString = s"-${YELLOW_B}V${RESET}:${v.v}"
 }
@@ -66,5 +66,5 @@ with PronounClaus {
     })
   }
 
-  override def toString = s"-${CYAN_B}O${RESET}:${prep.map(_.s).getOrElse("")}${artikel.toString} ${p.s}"
+  override def toString = s"-${CYAN_B}O${RESET}:${prep.map(_.s).getOrElse("")} ${artikel.toString} ${p.s}"
 }

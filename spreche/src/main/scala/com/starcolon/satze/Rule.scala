@@ -46,15 +46,16 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
     reverseMap.getOrElse(v, v)
   }
   
-  def conjugateVerb(v: String, p: Pronoun)(implicit rule: MasterRule) = p match {
+  def conjugateVerb(v: String, p: Pronoun, artikel: Artikel)(implicit rule: MasterRule) = p match {
     case Instance(s) => 
       val gender = rule.sache.findGender(s.capInitial)
-      val genderedPronoun = Map(
-        "der" -> Es, 
-        "die" -> Sie,
-        "das" -> Es,
-        "" -> Es
-      )(gender)
+      val genderedPronoun = (artikel, gender) match {
+        case (Plural,_) => Wir
+        case (_,"der") => Es
+        case (_,"die") => Sie
+        case (_,"das") => Es
+        case _ => Es
+      }
       m.getOrElse(v, Map(genderedPronoun.s -> v)).getOrElse(genderedPronoun.s, v)
     case _ => m.getOrElse(v, Map(p.s -> v)).getOrElse(p.s, v)
   }

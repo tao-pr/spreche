@@ -120,6 +120,8 @@ case object Plural extends Artikel {
     case Akkusativ => "die"
     case Dativ => "den"
   }
+
+  override def toString = "Plural"
 }
 
 case object Kein extends Artikel {
