@@ -34,6 +34,16 @@ case object PrepositionRule extends Rule {
   def isPreposition(s: String) = mapCase.keySet.contains(s.toLowerCase)
 }
 
+case object AbbrevRule {
+  val map = Map(
+    "in dem" -> "im",
+    "zu dem" -> "zum",
+    "zu der" -> "zur"
+  )
+  def foldLeft(sentence: String)(folder: (String, Tuple2[String, String]) => String) = 
+    map.foldLeft(sentence)(folder)
+}
+
 case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
 
   lazy val reverseMap = m.toList.flatMap{ case (v, n) => 
@@ -70,7 +80,6 @@ sealed case class Sache(s: String, gender: String, plural: String) extends Rule 
 }
 
 case class SacheRule(m: Map[String, Sache]) extends Rule {
-  // TAOTODO: reverse map of plural -> singular
   lazy val all = m.keys.toSet ++ m.map{ case(_, s) => s.plural }.toSet
   def isSache(s: String) = all.contains(s)
   def findGender(s: String): String = m.get(s).map(_.gender).getOrElse("")
