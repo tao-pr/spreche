@@ -8,13 +8,23 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
   def subject: Claus = clauses.find(_.isInstanceOf[SubjectClaus]).getOrElse(EmptyClaus)
   def verb: Claus = clauses.find(_.isInstanceOf[VerbClaus]).getOrElse(EmptyClaus)
   def objekt: Claus = clauses.find(_.isInstanceOf[ObjectClaus]).getOrElse(EmptyClaus)
+  
   override def render(satze: Satze = this)(implicit rule: MasterRule) = {
-    clauses.map(_.render(this).trim).mkString(" ")
+    Satze.abbrev(clauses.map(_.render(this).trim).mkString(" "))
   }
+  
   override def toString = clauses.map(_.toString).mkString(" ")
 }
 
 object Satze {
+
+  def abbrev(satze: String) = {
+    AbbrevRule.foldLeft(satze){ case(sat, pair) => 
+      val (a,b) = pair
+      sat.replace(a, b)
+    }
+  }
+
   // TAOTODO: All is__ functions can be made generic
   def isVerb(token: String)(implicit rule: MasterRule) = {
     rule.conjugation.isVerb(token.toLowerCase)
