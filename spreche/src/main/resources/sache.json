@@ -17,6 +17,7 @@
   "Glas": ["das","Gläser"],
   "Becher": ["das","Becher"],
   "Tasse": ["die","Tassen"],
+  "Tür": ["die","Türen"],
   "Fenster": ["das","Fenster"],
   "Laptop": ["der","Laptops"],
   "Tasche": ["die","Taschen"],
@@ -25,5 +26,8 @@
   "Taschentuch": ["das","Taschentücher"],
   "Hamd": ["das","Hamde"],
   "Kappe": ["die","Kappen"],
-  "Buch": ["das","Bucher"]
+  "Buch": ["das","Bucher"],
+  "Zimmer": ["das","Zimmer"],
+  "Haus": ["das","Hausen"],
+  "Shule": ["die","Shulen"]
 }
