@@ -14,7 +14,10 @@ sealed trait PronounClaus {
   val artikel: Artikel
   
   protected def renderSache(c: Case)(implicit rule: MasterRule) = 
-    artikel.renderWith(rule.sache.findGender(p.s.capInitial), c) + " " + p.s.capInitial
+    artikel.renderWith(rule.sache.findGender(p.s.capInitial), c) + " " + (artikel match {
+      case Plural => rule.sache.findPlural(p.s).capInitial
+      case _ => p.s.capInitial
+    })
 
   protected def renderInfinitiv(c: Case) = c match {
     case Nominativ => p.s
