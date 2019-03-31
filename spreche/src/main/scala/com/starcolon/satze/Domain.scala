@@ -20,6 +20,7 @@ object Verb {
 case class Preposition(s: String) extends Token {
   def getCase(v: Verb) = v match {
     case Verb("gehen") | Verb("kommen") => Akkusativ 
+    case Verb("sein") => Akkusativ
     case _ => Preposition.getCase(s)
   }
 }
