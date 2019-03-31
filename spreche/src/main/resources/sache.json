@@ -29,5 +29,10 @@
   "Buch": ["das","Bucher"],
   "Zimmer": ["das","Zimmer"],
   "Haus": ["das","Hausen"],
-  "Shule": ["die","Shulen"]
+  "Shule": ["die","Shulen"],
+  "Auto": ["das","Autos"],
+  "Raum": ["der","Räume"],
+  "Zug": ["der","Züge"],
+  "Tram": ["die","Trams"],
+  "Bahn": ["die","Bahnen"]
 }
