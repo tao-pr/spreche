@@ -55,7 +55,8 @@ extends Claus
 with PronounClaus {
 
   override def render(satze: Satze)(implicit rule: MasterRule) = {
-      val masterCase = prep.map(_.getCase)
+      val VerbClaus(v) = satze.verb.asInstanceOf[VerbClaus]
+      val masterCase = prep.map(_.getCase(v))
       prep.map(_.s + " ").getOrElse("") + (satze.verb match {
         case VerbClaus(v) => 
           val effectiveCase = masterCase.getOrElse(if (v.isAkkusativ) Akkusativ else Nominativ)
