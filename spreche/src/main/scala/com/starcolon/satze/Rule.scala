@@ -37,6 +37,7 @@ case object PrepositionRule extends Rule {
 case object AbbrevRule {
   val map = Map(
     "in dem" -> "im",
+    "in das" -> "ins",
     "zu dem" -> "zum",
     "zu der" -> "zur"
   )
