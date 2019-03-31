@@ -18,29 +18,9 @@ object Verb {
 }
 
 case class Preposition(s: String) extends Token {
-  def getCase = Preposition.getCase(s)
-
-  def akkusativForm(gender: String) = s match {
-    case "in" => gender match {
-      case "der" => "in"
-      case "die" => "in"
-      case "das" => "ins"
-    }
-    case otherwise => otherwise
-  }
-  
-  def dativForm(gender: String) = s match {
-    case "zu" => gender match {
-      case "der" => "zum"
-      case "die" => "zur"
-      case "das" => "zum"
-    }
-    case "in" => gender match {
-      case "der" => "im"
-      case "die" => "in"
-      case "das" => "im"
-    }
-    case otherwise => otherwise
+  def getCase(v: Verb) = v match {
+    case Verb("gehen") | Verb("kommen") => Akkusativ 
+    case _ => Preposition.getCase(s)
   }
 }
 
