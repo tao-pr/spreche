@@ -108,5 +108,45 @@
     "wir": "nehmen",
     "ihr": "nehmt",
     "Sie": "nehmen"
+  },
+  "finden": {
+    "ich": "finde",
+    "du": "findest",
+    "es": "findet",
+    "sie": "findet",
+    "er": "findet",
+    "wir": "finden",
+    "ihr": "findet",
+    "Sie": "finden"
+  },
+  "suchen": {
+    "ich": "suche",
+    "du": "suchst",
+    "es": "sucht",
+    "sie": "sucht",
+    "er": "sucht",
+    "wir": "suchen",
+    "ihr": "sucht",
+    "Sie": "suchen"
+  },
+  "benutzen": {
+    "ich": "benutze",
+    "du": "benutzt",
+    "es": "benutzt",
+    "sie": "benutzt",
+    "er": "benutzt",
+    "wir": "benutzen",
+    "ihr": "benutzt",
+    "Sie": "benutzen"
+  },
+  "stehen": {
+    "ich": "stehe",
+    "du": "stehst",
+    "es": "steht",
+    "sie": "steht",
+    "er": "steht",
+    "wir": "stehen",
+    "ihr": "steht",
+    "Sie": "stehen"
   }
 }
