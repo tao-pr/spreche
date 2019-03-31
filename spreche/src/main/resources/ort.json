@@ -1,13 +1,2 @@
 {
-  "Kino": ["das","Kinos"],
-  "Büro": ["das","Büro"],
-  "Bäckerei": ["das", "Bäckerei"],
-  "Museum": ["das", "Museum"],
-  "Theatre": ["das","Theatre"],
-  "Klassenzimmer": ["das", "Klassenzimmer"],
-  "Park": ["der","Parks"],
-  "Kirche": ["die","Kirchen"],
-  "Cafe": ["das","Cafe"],
-  "Disco": ["die","Disco"],
-  "Hause": ["das","Hausen"]
 }

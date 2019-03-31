@@ -27,12 +27,23 @@
   "Hamd": ["das","Hamde"],
   "Kappe": ["die","Kappen"],
   "Buch": ["das","Bucher"],
-  "Zimmer": ["das","Zimmer"],
-  "Haus": ["das","Hausen"],
-  "Shule": ["die","Shulen"],
   "Auto": ["das","Autos"],
   "Raum": ["der","Räume"],
   "Zug": ["der","Züge"],
   "Tram": ["die","Trams"],
-  "Bahn": ["die","Bahnen"]
+  "Bahn": ["die","Bahnen"],
+
+  "Zimmer": ["das","Zimmer"],
+  "Haus": ["das","Hausen"],
+  "Shule": ["die","Shulen"],
+  "Kino": ["das","Kinos"],
+  "Büro": ["das","Büro"],
+  "Bäckerei": ["das", "Bäckerei"],
+  "Museum": ["das", "Museum"],
+  "Theatre": ["das","Theatre"],
+  "Klassenzimmer": ["das", "Klassenzimmer"],
+  "Park": ["der","Parks"],
+  "Kirche": ["die","Kirchen"],
+  "Cafe": ["das","Cafe"],
+  "Disco": ["die","Disco"]
 }
