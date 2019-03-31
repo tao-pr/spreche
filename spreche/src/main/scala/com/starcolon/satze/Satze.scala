@@ -25,7 +25,6 @@ object Satze {
     }
   }
 
-  // TAOTODO: All is__ functions can be made generic
   def isVerb(token: String)(implicit rule: MasterRule) = {
     rule.conjugation.isVerb(token.toLowerCase)
   }
