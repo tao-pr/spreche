@@ -148,5 +148,25 @@
     "wir": "stehen",
     "ihr": "steht",
     "Sie": "stehen"
+  },
+  "sitzen": {
+    "ich": "sizte",
+    "du": "sizt",
+    "es": "sizt",
+    "sie": "sizt",
+    "er": "sizt",
+    "wir": "sitzen",
+    "ihr": "sizt",
+    "Sie": "sitzen"
+  },
+  "senden": {
+    "ich": "sende",
+    "du": "sendest",
+    "es": "sendet",
+    "sie": "sendet",
+    "er": "sendet",
+    "wir": "senden",
+    "ihr": "sendet",
+    "Sie": "senden"
   }
 }
