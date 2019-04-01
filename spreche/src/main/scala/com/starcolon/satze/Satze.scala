@@ -70,7 +70,7 @@ object Satze {
       // Pronoun at the beginning of the sazte
       case Nil => prevTokens :+ SubjectClaus(p=p)
       // Pronoun after an artikel or preposition
-      case _ :+ ObjectClaus(prep, artikel, NP) => 
+      case _ :+ ObjectClaus(prep, artikel, NP, _) => 
         prevTokens.dropRight(1) :+ ObjectClaus(prep, artikel, p)
       // Pronoun for a subject
       case _ :+ SubjectClaus(artikel, NP) => 
@@ -89,7 +89,7 @@ object Satze {
       // Artikel of subject
       case Nil  => SubjectClaus(a, NP) :: Nil
       // Artikel of a new object 
-      case _ :+ ObjectClaus(prep, _, NP) => prevTokens.dropRight(1) :+ ObjectClaus(prep, a, NP)
+      case _ :+ ObjectClaus(prep, _, NP, _) => prevTokens.dropRight(1) :+ ObjectClaus(prep, a, NP)
       // Artikel of a new object
       case _ => prevTokens :+ ObjectClaus(None, a, NP)
     }
@@ -105,7 +105,7 @@ object Satze {
         println(RED + s"A new sentence cannot start with : $s" + RESET)
         prevTokens
       // Preposition of a new object
-      case _ => prevTokens :+ ObjectClaus(Some(prep), NoArtikel, NP)
+      case _ => prevTokens :+ ObjectClaus(Some(prep), NoArtikel, NP, NP)
     }
     parse(others, newTokens)
   }
