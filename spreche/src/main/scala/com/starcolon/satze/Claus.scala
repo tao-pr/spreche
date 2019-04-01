@@ -49,7 +49,8 @@ case class VerbClaus(v: Verb) extends Claus {
 case class ObjectClaus(
   val prep: Option[Preposition] = None,
   override val artikel: Artikel = Ein,
-  override val p: Pronoun = NP
+  override val p: Pronoun = NP, // Direct noun
+  val pIndirekt: Pronoun = NP // Indirect noun
 ) 
 extends Claus 
 with PronounClaus {
