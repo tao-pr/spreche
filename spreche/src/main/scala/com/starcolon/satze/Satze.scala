@@ -51,11 +51,11 @@ object Satze {
   (implicit rule: MasterRule) = {
     implicit val r = rule.conjugation
     val newTokens = prevTokens match {
-      // Capture Ihr being previously captured as artikel
-      // then Ihr has to become a pronoun
+      // Ihr + [V]
       case _ :+ SubjectClaus(Ihre, NP) => 
         prevTokens.dropRight(1) ++ Seq(SubjectClaus(NoArtikel, Ihr), VerbClaus(Verb.toVerb(s.toLowerCase)))
-      // Any
+      
+      // Any + [V]
       case _ => 
         prevTokens :+ VerbClaus(Verb.toVerb(s.toLowerCase))
     }
@@ -67,15 +67,18 @@ object Satze {
     // Akkusativ noun
     val p = Pronoun.toPronoun(s)
     val newTokens = prevTokens match {
-      // Pronoun at the beginning of the sazte
+      // [P]
       case Nil => prevTokens :+ SubjectClaus(p=p)
-      // Pronoun after an artikel or preposition
+      
+      // _ + prep + artikel + [P]
       case _ :+ ObjectClaus(prep, artikel, NP, _) => 
         prevTokens.dropRight(1) :+ ObjectClaus(prep, artikel, p)
-      // Pronoun for a subject
+
+      // _ + artikel + [P]
       case _ :+ SubjectClaus(artikel, NP) => 
         prevTokens.dropRight(1) :+ SubjectClaus(artikel, p)
-      // Otherwise
+      
+      // _ + [P]
       case _ => prevTokens :+ ObjectClaus(p=p)
     }
     parse(others, newTokens)
@@ -86,11 +89,13 @@ object Satze {
     val a = Artikel.toArtikel(s)
     // NOTE: "Ihr" will also be counted as artikel initially
     val newTokens = prevTokens match {
-      // Artikel of subject
+      // [artikel]
       case Nil  => SubjectClaus(a, NP) :: Nil
-      // Artikel of a new object 
+      
+      // _ + prep + [artikel]
       case _ :+ ObjectClaus(prep, _, NP, _) => prevTokens.dropRight(1) :+ ObjectClaus(prep, a, NP)
-      // Artikel of a new object
+      
+      // _ + [artikel]
       case _ => prevTokens :+ ObjectClaus(None, a, NP)
     }
     parse(others, newTokens)
@@ -100,11 +105,12 @@ object Satze {
   (implicit rule: MasterRule) = {
     val prep = Preposition(s.trim.toLowerCase)
     val newTokens = prevTokens match {
-      // Sentence cannot start with a preposition
+      // [prep]
       case Nil => 
         println(RED + s"A new sentence cannot start with : $s" + RESET)
         prevTokens
-      // Preposition of a new object
+      
+      // _ + [prep]
       case _ => prevTokens :+ ObjectClaus(Some(prep), NoArtikel, NP, NP)
     }
     parse(others, newTokens)
