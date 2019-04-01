@@ -168,5 +168,45 @@
     "wir": "senden",
     "ihr": "sendet",
     "Sie": "senden"
+  },
+  "geben": {
+    "ich": "gebe",
+    "du": "gibst",
+    "es": "gibt",
+    "sie": "gibt",
+    "er": "gibt",
+    "wir": "geben",
+    "ihr": "gebt",
+    "Sie": "geben"
+  },
+  "sprechen": {
+    "ich": "spreche",
+    "du": "sprichst",
+    "es": "spricht",
+    "sie": "spricht",
+    "er": "spricht",
+    "wir": "sprechen",
+    "ihr": "sprecht",
+    "Sie": "sprechen"
+  },
+  "bringen": {
+    "ich": "bringe",
+    "du": "bringst",
+    "es": "bringt",
+    "sie": "bringt",
+    "er": "bringt",
+    "wir": "bringen",
+    "ihr": "bringt",
+    "Sie": "bringen"
+  },
+  "kaufen": {
+    "ich": "kaufe",
+    "du": "kaufst",
+    "es": "kauft",
+    "sie": "kauft",
+    "er": "kauft",
+    "wir": "kaufen",
+    "ihr": "kauft",
+    "Sie": "kaufen"
   }
 }
