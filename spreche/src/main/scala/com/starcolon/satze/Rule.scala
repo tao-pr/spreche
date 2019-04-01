@@ -29,7 +29,13 @@ case object PrepositionRule extends Rule {
     "neben" -> Dativ,
     "auf" -> Dativ,
     "zwischen" -> Dativ,
-    "hinter" -> Dativ
+    "hinter" -> Dativ,
+    "aus" -> Dativ,
+    "außer" -> Dativ,
+    "nach" -> Dativ,
+    "mit" -> Dativ,
+    "bei" -> Dativ,
+    "von" -> Dativ
   )
   def isPreposition(s: String) = mapCase.keySet.contains(s.toLowerCase)
 }
