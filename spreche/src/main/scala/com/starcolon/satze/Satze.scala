@@ -77,6 +77,9 @@ object Satze {
       // _ + artikel + [P]
       case _ :+ SubjectClaus(artikel, NP) => 
         prevTokens.dropRight(1) :+ SubjectClaus(artikel, p)
+
+      // _ + prep + artikel + P + [P]
+      case ???
       
       // _ + [P]
       case _ => prevTokens :+ ObjectClaus(p=p)
@@ -95,6 +98,9 @@ object Satze {
       // _ + prep + [artikel]
       case _ :+ ObjectClaus(prep, _, NP, _) => prevTokens.dropRight(1) :+ ObjectClaus(prep, a, NP)
       
+      // _ + prep + artikel + P + [artikel]
+      case ???
+
       // _ + [artikel]
       case _ => prevTokens :+ ObjectClaus(None, a, NP)
     }
@@ -109,9 +115,14 @@ object Satze {
       case Nil => 
         println(RED + s"A new sentence cannot start with : $s" + RESET)
         prevTokens
+
+      // _ + prep + artikel + P + [prep]
+      case Nil :+ obj@ObjectClaus(_,_,_,_) =>
+        prevTokens ++ Seq(obj, ObjectClaus(prep, NoArtikel, NP, NP))
       
       // _ + [prep]
-      case _ => prevTokens :+ ObjectClaus(Some(prep), NoArtikel, NP, NP)
+      case _ => 
+        prevTokens :+ ObjectClaus(Some(prep), NoArtikel, NP, NP)
     }
     parse(others, newTokens)
   }
