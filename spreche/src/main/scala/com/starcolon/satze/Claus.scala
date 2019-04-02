@@ -55,6 +55,11 @@ case class ObjectClaus(
 extends Claus 
 with PronounClaus {
 
+  def hasPrep = prep.isDefined
+  def hasArtikel = artikel != NoArtikel
+  def hasPronoun = p != NP
+  def hasIndirektPronoun = pIndirekt != NP
+
   override def render(satze: Satze)(implicit rule: MasterRule) = {
       val VerbClaus(v) = satze.verb.asInstanceOf[VerbClaus]
       val masterCase = prep.map(_.getCase(v))
