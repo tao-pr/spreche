@@ -305,7 +305,7 @@ case object Du extends Pronoun{
 case object Sie extends Pronoun{
   override val s = "sie"
   override val akkusativ = "sie"
-  override val dativ = "sie"
+  override val dativ = "ihr"
   override val possess = "ihr"
 }
 case object Er extends Pronoun{

@@ -32,10 +32,11 @@
   "Zug": ["der","Züge"],
   "Tram": ["die","Trams"],
   "Bahn": ["die","Bahnen"],
+  "Schuh": ["der","Schuhe"],
 
   "Zimmer": ["das","Zimmer"],
   "Haus": ["das","Hausen"],
-  "Shule": ["die","Shulen"],
+  "Schule": ["die","Schulen"],
   "Kino": ["das","Kinos"],
   "Büro": ["das","Büro"],
   "Bäckerei": ["das", "Bäckerei"],
