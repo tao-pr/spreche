@@ -9,8 +9,10 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
   def verb: Claus = clauses.find(_.isInstanceOf[VerbClaus]).getOrElse(EmptyClaus)
   def objekt: Claus = clauses.find(_.isInstanceOf[ObjectClaus]).getOrElse(EmptyClaus)
   
-  override def render(satze: Satze = this)(implicit rule: MasterRule) = {
-    Satze.abbrev(clauses.map(_.render(this).trim).mkString(" "))
+  override def render(satze: Satze = this, index: Int = -1)(implicit rule: MasterRule) = {
+    Satze.abbrev(clauses.zipWithIndex.map{
+      case(c,i) => c.render(this, i).trim
+    }.mkString(" "))
   }
   
   override def toString = clauses.map(_.toString).mkString(" ")
@@ -70,16 +72,17 @@ object Satze {
       // [P]
       case Nil => prevTokens :+ SubjectClaus(p=p)
       
-      // _ + prep + artikel + [P]
-      case _ :+ ObjectClaus(prep, artikel, NP, _) => 
-        prevTokens.dropRight(1) :+ ObjectClaus(prep, artikel, p)
-
       // _ + artikel + [P]
       case _ :+ SubjectClaus(artikel, NP) => 
         prevTokens.dropRight(1) :+ SubjectClaus(artikel, p)
 
+      // _ + prep + artikel + [P]
+      case ns :+ ObjectClaus(prep, artikel, NP) => 
+        ns :+ ObjectClaus(prep, artikel, p)
+
       // _ + prep + artikel + P + [P]
-      case ???
+      case _ :+ ObjectClaus(_,_,_) =>
+        prevTokens :+ ObjectClaus(None, NoArtikel, p)
       
       // _ + [P]
       case _ => prevTokens :+ ObjectClaus(p=p)
@@ -96,10 +99,12 @@ object Satze {
       case Nil  => SubjectClaus(a, NP) :: Nil
       
       // _ + prep + [artikel]
-      case _ :+ ObjectClaus(prep, _, NP, _) => prevTokens.dropRight(1) :+ ObjectClaus(prep, a, NP)
+      case ns :+ ObjectClaus(prep, _, NP) => 
+        ns :+ ObjectClaus(prep, a, NP)
       
       // _ + prep + artikel + P + [artikel]
-      case ???
+      case _ :+ (obj@ObjectClaus(_,_,_)) => 
+        prevTokens :+ ObjectClaus(None, a, NP)
 
       // _ + [artikel]
       case _ => prevTokens :+ ObjectClaus(None, a, NP)
@@ -117,12 +122,12 @@ object Satze {
         prevTokens
 
       // _ + prep + artikel + P + [prep]
-      case Nil :+ obj@ObjectClaus(_,_,_,_) =>
-        prevTokens ++ Seq(obj, ObjectClaus(prep, NoArtikel, NP, NP))
+      case _ :+ ObjectClaus(_,_,_) =>
+        prevTokens :+ ObjectClaus(Some(prep), NoArtikel, NP)
       
       // _ + [prep]
       case _ => 
-        prevTokens :+ ObjectClaus(Some(prep), NoArtikel, NP, NP)
+        prevTokens :+ ObjectClaus(Some(prep), NoArtikel, NP)
     }
     parse(others, newTokens)
   }
@@ -130,6 +135,7 @@ object Satze {
   def parse(tokens: Seq[String], prevTokens: Seq[Claus] = Nil)(implicit rule: MasterRule): Satze = 
     tokens match {
       case s :: others => 
+        // TAOTODO: Following can be written as pattern matching
         if (isVerb(s)) {
           parseVerb(prevTokens, others, s)
         }
