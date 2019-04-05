@@ -1,5 +1,7 @@
 package com.starcolon.satze
 
+import com.starcolon.satze.Implicits._
+
 // Traits
 
 sealed trait Token
@@ -18,6 +20,10 @@ sealed trait Pronoun extends Token {
   val possess: String
 }
 
+sealed trait TokenInstance {
+  def isInstance(token: String)(implicit rule: MasterRule): Boolean
+}
+
 
 // Classes and Objects
 
@@ -26,13 +32,16 @@ case class Verb(v: String) extends Token {
   override def toString = v
 }
 
-object Verb {
+object Verb extends TokenInstance {
   /**
    * Parse a string to verb (deconjugated)
    */
   def toVerb(s: String)(implicit rule: ConjugationRule): Verb = {
     Verb(rule.deconjugateVerb(s))
   }
+
+  override def isInstance(token: String)(implicit rule: MasterRule) = 
+    rule.conjugation.isVerb(token.toLowerCase)
 }
 
 case class ModalVerb(v: String) extends Token {
@@ -44,10 +53,15 @@ case class ModalVerb(v: String) extends Token {
   }
 }
 
-object ModalVerb {
+object ModalVerb extends TokenInstance {
   def getList = Seq(
     "möchten"
   )
+
+  override def isInstance(token: String)(implicit rule: MasterRule) =  
+    rule.conjugation.isVerb(token.toLowerCase) && ModalVerb.getList.contains(
+      rule.conjugation.deconjugateVerb(token.toLowerCase)
+    )
 }
 
 case class Preposition(s: String) extends Token {
@@ -58,8 +72,10 @@ case class Preposition(s: String) extends Token {
   }
 }
 
-object Preposition {
+object Preposition extends TokenInstance {
   def getCase(s: String) = PrepositionRule.mapCase.getOrElse(s, Nominativ)
+  override def isInstance(token: String)(implicit rule: MasterRule) =
+    PrepositionRule.isPreposition(token)
 }
 
 
@@ -300,9 +316,19 @@ case object Euer extends Artikel {
   }
 }
 
-object Artikel {
+object Artikel extends TokenInstance {
+  
   def toArtikel(s: String)(implicit rule: MasterRule): Artikel = {
     Seq(Ein,Der,Plural,Kein,Mein,Dein,Sein,Unser,Ihre).find(_.matchWith(s)).getOrElse(Ein)
+  }
+
+  override def isInstance(token: String)(implicit rule: MasterRule) = {
+    val artikels = (Seq("die","das","eine","ein","kein","keine") ++ Seq("d","ein","kein").flatMap{(a) => 
+      Seq("er","en","em").map(a + _)
+    }) ++ Seq("viel", "viele")
+    def expand(p: Pronoun) = Seq("","e","en","em").map(p.possess + _)
+    val possArtikels = Pronoun.infinitivPronouns.flatMap(expand)
+    artikels.contains(token.toLowerCase) || possArtikels.contains(token.toLowerCase)
   }
 }
 
@@ -362,7 +388,7 @@ case class Instance(override val s: String) extends Pronoun {
   override val possess = ""
 }
 
-object Pronoun {
+object Pronoun extends TokenInstance {
   lazy val infinitivPronouns = List(Ich, Du, Sie, Wir, Ihr, Er, Es)
   lazy val reverseMap = infinitivPronouns.flatMap{ p => 
     Seq((p.s, p.s), (p.akkusativ, p.s), (p.dativ, p.s))
@@ -375,5 +401,10 @@ object Pronoun {
   def toPronoun(s: String) = {
     val s_ = reverseMap.getOrElse(s, s)
     map.getOrElse(s_, Instance(s_))
+  }
+
+  override def isInstance(token: String)(implicit rule: MasterRule) = {
+    Pronoun.isInfinitiv(token.toLowerCase) || 
+    rule.sache.isSache(token.capInitial)
   }
 }
