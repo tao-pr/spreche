@@ -1,8 +1,5 @@
 package com.starcolon.satze
 
-private[satze] trait Token
-case object NoToken extends Token
-
 case class Verb(v: String) extends Token {
   def isAkkusativ: Boolean = v != "sein"
   override def toString = v
@@ -29,11 +26,6 @@ object Preposition {
   def getCase(s: String) = PrepositionRule.mapCase.getOrElse(s, Nominativ)
 }
 
-trait Artikel extends Token {
-  def renderWith(gender: String, c: Case): String
-  def matchWith(s: String): Boolean
-  override def toString = this.getClass.getName.dropRight(1).split('.').last
-}
 
 case object NoArtikel extends Artikel {
   override def matchWith(s: String) = s.trim.isEmpty
@@ -278,12 +270,7 @@ object Artikel {
   }
 }
 
-trait Pronoun extends Token {
-  val s: String
-  val dativ: String 
-  val akkusativ: String
-  val possess: String
-}
+
 case object NP extends Pronoun {
   override val s = ""
   override val akkusativ = ""
