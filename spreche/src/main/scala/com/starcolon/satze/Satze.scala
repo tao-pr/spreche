@@ -9,7 +9,31 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
   def verb: Claus = clauses.find(_.isInstanceOf[VerbClaus]).getOrElse(EmptyClaus)
   def objekt: Claus = clauses.find(_.isInstanceOf[ObjectClaus]).getOrElse(EmptyClaus)
   
+  def hasModalVerb = clauses.count{ 
+    case VerbClaus(_,Some(_)) => true 
+    case _ => false
+  } > 0
+
   override def render(satze: Satze = this, index: Int = -1)(implicit rule: MasterRule) = {
+    hasModalVerb match {
+      case true => renderMSVO()
+      case false => renderSVO()
+    }
+  }
+
+  private def renderMSVO()(implicit rule: MasterRule) = {
+    
+    val subjectClaus = subject.asInstanceOf[SubjectClaus]
+    val modalVerb = verb.asInstanceOf[VerbClaus].mv
+      .map(_.render(subjectClaus))
+      .getOrElse("")
+    
+    modalVerb + Satze.abbrev(clauses.zipWithIndex.map{
+      case(c,i) => c.render(this, i).trim
+    }.mkString(" "))
+  }
+
+  private def renderSVO()(implicit rule: MasterRule) = {
     Satze.abbrev(clauses.zipWithIndex.map{
       case(c,i) => c.render(this, i).trim
     }.mkString(" "))
