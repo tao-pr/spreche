@@ -1,4 +1,14 @@
 {
+  "möchten": {
+    "ich": "möchte",
+    "du": "möchtest",
+    "es": "möchtet",
+    "sie": "möchtet",
+    "er": "möchtet",
+    "wir": "möchten",
+    "ihr": "möchtet",
+    "Sie": "möchten"
+  },
   "heißen": {
     "ich": "heiße",
     "du": "heißt",
