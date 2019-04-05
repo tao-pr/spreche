@@ -37,6 +37,11 @@ object Verb {
 
 case class ModalVerb(v: String) extends Token {
   override def toString = v
+  def render(subject: SubjectClaus)(implicit rule: MasterRule) = {
+    rule.conjugation.conjugateVerb(
+      v, subject.p, subject.artikel
+    )
+  }
 }
 
 object ModalVerb {
