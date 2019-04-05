@@ -1,5 +1,26 @@
 package com.starcolon.satze
 
+// Traits
+
+sealed trait Token
+case object NoToken extends Token
+
+sealed trait Artikel extends Token {
+  def renderWith(gender: String, c: Case): String
+  def matchWith(s: String): Boolean
+  override def toString = this.getClass.getName.dropRight(1).split('.').last
+}
+
+sealed trait Pronoun extends Token {
+  val s: String
+  val dativ: String 
+  val akkusativ: String
+  val possess: String
+}
+
+
+// Classes and Objects
+
 case class Verb(v: String) extends Token {
   def isAkkusativ: Boolean = v != "sein"
   override def toString = v
@@ -12,6 +33,16 @@ object Verb {
   def toVerb(s: String)(implicit rule: ConjugationRule): Verb = {
     Verb(rule.deconjugateVerb(s))
   }
+}
+
+case class ModalVerb(v: String) extends Token {
+  override def toString = v
+}
+
+object ModalVerb {
+  def getList = Seq(
+    "möchten"
+  )
 }
 
 case class Preposition(s: String) extends Token {
@@ -341,5 +372,3 @@ object Pronoun {
     map.getOrElse(s_, Instance(s_))
   }
 }
-
-case class Ort(place: String, artikel: Artikel) extends Token

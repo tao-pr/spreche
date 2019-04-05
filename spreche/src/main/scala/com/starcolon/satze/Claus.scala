@@ -39,11 +39,15 @@ with PronounClaus {
   override def toString = s"-${CYAN_B}S${RESET}:${artikel.toString} ${p.s.capInitial}"
 }
 
-case class VerbClaus(v: Verb) extends Claus {
+case class VerbClaus(v: Verb, mv: Option[ModalVerb] = None) 
+extends Claus {
   override def render(satze: Satze, index: Int)(implicit rule: MasterRule) = satze.subject match {
     case SubjectClaus(artikel, p) => rule.conjugation.conjugateVerb(v.v, p, artikel)
   }
-  override def toString = s"-${YELLOW_B}V${RESET}:${v.v}"
+  override def toString = mv match {
+    case None => s"-${YELLOW_B}V${RESET}:${v.v}"
+    case Some(m) => s"-${YELLOW_B}V${RESET}:${m.v} + ${v.v}"
+  }
 }
 
 case class ObjectClaus(
@@ -58,11 +62,15 @@ with PronounClaus {
   def hasArtikel = artikel != NoArtikel
   def hasPronoun = p != NP
 
-  private def renderSoleObject(satze: Satze, masterCase: Option[Case])(implicit rule: MasterRule) = {
+  private def renderSoleObject(satze: Satze, masterCase: Option[Case])
+  (implicit rule: MasterRule) = {
     
     prep.map(_.s + " ").getOrElse("") + (satze.verb match {
-      case VerbClaus(v) => 
-        val effectiveCase = masterCase.getOrElse(if (v.isAkkusativ) Akkusativ else Nominativ)
+      case VerbClaus(v,_) => 
+        val effectiveCase = masterCase.getOrElse(
+          if (v.isAkkusativ) Akkusativ 
+          else Nominativ
+        )
         Pronoun.isInfinitiv(p) match {
           case true => renderInfinitiv(effectiveCase)
           case false => renderSache(effectiveCase)
@@ -104,7 +112,7 @@ with PronounClaus {
       .zipWithIndex
       .filter(_._1.isInstanceOf[ObjectClaus])
       .map{ case(c,i) => (c.asInstanceOf[ObjectClaus], i)}
-    val VerbClaus(v) = satze.verb.asInstanceOf[VerbClaus]
+    val VerbClaus(v,_) = satze.verb.asInstanceOf[VerbClaus]
     val masterCase = prep.map(_.getCase(v))
     
     // Multiple objects 

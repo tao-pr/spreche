@@ -58,6 +58,10 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
   }.distinct.toMap
 
   def isVerb(s: String) = reverseMap.keySet.contains(s)
+
+  def isModalVerb(s: String) = ModalVerb.getList.contains(
+    deconjugateVerb(s.toLowerCase)
+  )
   
   def deconjugateVerb(v: String): String = {
     reverseMap.getOrElse(v, v)

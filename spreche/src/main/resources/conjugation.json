@@ -1,10 +1,20 @@
 {
+  "mögen": {
+    "ich": "mag",
+    "du": "magst",
+    "es": "mag",
+    "sie": "mag",
+    "er": "mag",
+    "wir": "mögen",
+    "ihr": "mögt",
+    "Sie": "mögen"
+  },
   "möchten": {
     "ich": "möchte",
     "du": "möchtest",
-    "es": "möchtet",
-    "sie": "möchtet",
-    "er": "möchtet",
+    "es": "möchte",
+    "sie": "möchte",
+    "er": "möchte",
     "wir": "möchten",
     "ihr": "möchtet",
     "Sie": "möchten"
