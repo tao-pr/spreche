@@ -81,3 +81,18 @@ Sagen Sie > ihr gibt uns kein schuh
 Output > ihr gebt uns keinen Schuh
 
 ```
+
+<b>Modal verb</b>
+
+```
+Sagen Sie > ich will einen kugelschreiber kauft
+
+Output > ich will einen Kugelschreiber kaufen
+
+---
+
+Sagen Sie > wir muss er einen becher bringt
+
+Output > wir müssen ihm ein Becher bringen
+
+```
