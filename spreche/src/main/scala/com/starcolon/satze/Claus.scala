@@ -36,7 +36,7 @@ with PronounClaus {
     case true => renderInfinitiv(Nominativ)
     case false => renderSache(Nominativ)
   }
-  override def toString = s"+ ${CYAN_B}S${RESET}:${artikel.toString} ${p.s.capInitial}"
+  override def toString = s"+ ${CYAN_B + BLACK}S${RESET}:${artikel.toString} ${p.s.capInitial}"
 }
 
 case class VerbClaus(v: Verb) 
@@ -44,7 +44,7 @@ extends Claus {
   override def render(satze: Satze, index: Int)(implicit rule: MasterRule) = satze.subject match {
     case SubjectClaus(artikel, p) => rule.conjugation.conjugateVerb(v.v, p, artikel)
   }
-  override def toString = s"+ ${YELLOW_B}V${RESET}:${v.v}"
+  override def toString = s"+ ${YELLOW_B + BLACK}V${RESET}:${v.v}"
 }
 
 case class ModalVerbClaus(v: ModalVerb)
@@ -53,7 +53,7 @@ extends Claus {
     case SubjectClaus(artikel, p) => rule.conjugation.conjugateVerb(v.v, p, artikel)
   }
 
-  override def toString = s"+ ${YELLOW_B}V${RESET}:${v.v}"
+  override def toString = s"+ ${GREEN_B + BLACK}MV${RESET}:${v.v}"
 }
 
 case class ObjectClaus(
@@ -132,5 +132,5 @@ with PronounClaus {
     }
   }
 
-  override def toString = s"-${CYAN_B}O${RESET}:${prep.map(_.s).getOrElse("")} ${artikel.toString} ${p.s}"
+  override def toString = s"-${CYAN_B + BLACK}O${RESET}:${prep.map(_.s).getOrElse("")} ${artikel.toString} ${p.s}"
 }

@@ -19,6 +19,56 @@
     "ihr": "möchtet",
     "Sie": "möchten"
   },
+  "dürfen": {
+    "ich": "darf",
+    "du": "darfst",
+    "es": "darf",
+    "sie": "darf",
+    "er": "darf",
+    "wir": "dürfen",
+    "ihr": "dürft",
+    "Sie": "dürfen"
+  },
+  "können": {
+    "ich": "kann",
+    "du": "kannst",
+    "es": "kann",
+    "sie": "kann",
+    "er": "kann",
+    "wir": "können",
+    "ihr": "könnt",
+    "Sie": "können"
+  },
+  "müssen": {
+    "ich": "muss",
+    "du": "musst",
+    "es": "muss",
+    "sie": "muss",
+    "er": "muss",
+    "wir": "müssen",
+    "ihr": "müsst",
+    "Sie": "müssen"
+  },
+  "sollen": {
+    "ich": "soll",
+    "du": "sollst",
+    "es": "soll",
+    "sie": "soll",
+    "er": "soll",
+    "wir": "sollen",
+    "ihr": "sollt",
+    "Sie": "sollen"
+  },
+  "wollen": {
+    "ich": "will",
+    "du": "willst",
+    "es": "will",
+    "sie": "will",
+    "er": "will",
+    "wir": "wollen",
+    "ihr": "wollt",
+    "Sie": "wollen"
+  },
   "heißen": {
     "ich": "heiße",
     "du": "heißt",

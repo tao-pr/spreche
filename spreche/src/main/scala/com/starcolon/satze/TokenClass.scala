@@ -55,7 +55,12 @@ case class ModalVerb(v: String) extends Token {
 
 object ModalVerb extends TokenInstance {
   def getList = Seq(
-    "möchten"
+    "möchten",
+    "wollen",
+    "sollen",
+    "müssen",
+    "können",
+    "dürfen"
   )
 
   override def isInstance(token: String)(implicit rule: MasterRule) =  
