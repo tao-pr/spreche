@@ -13,19 +13,23 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
   override def render(satze: Satze = this, index: Int = -1)(implicit rule: MasterRule) = {
     modalVerb match {
       case EmptyClaus => renderSVO()
-      case m@ModalVerbClaus(_) => renderMSVO(m)
+      case ModalVerbClaus(_) => renderSMOV()
     }
   }
 
-  private def renderMSVO(mv: ModalVerbClaus)
+  private def renderSMOV()
   (implicit rule: MasterRule) = {
     
-    val subjectClaus = subject.asInstanceOf[SubjectClaus]
-    val modalVerb = mv.v.render(subjectClaus)
+    val verbClaus = verb.asInstanceOf[VerbClaus]
+
+    val clausesNoVerb = clauses.filterNot(_.isInstanceOf[VerbClaus])
+    val endingVerb = rule.conjugation.conjugateVerb(
+      verbClaus.v.v, Wir, NoArtikel
+    )
     
-    modalVerb + Satze.abbrev(clauses.zipWithIndex.map{
+    Satze.abbrev(clausesNoVerb.zipWithIndex.map{
       case(c,i) => c.render(this, i).trim
-    }.mkString(" "))
+    }.mkString(" ")) + " " + endingVerb
   }
 
   private def renderSVO()(implicit rule: MasterRule) = {
@@ -164,7 +168,10 @@ object Satze {
   def parse(tokens: Seq[String], prevTokens: Seq[Claus] = Nil)(implicit rule: MasterRule): Satze = 
     tokens match {
       case s :: others => 
-        if (Verb.isInstance(s)) {
+        if (ModalVerb.isInstance(s)){
+          parseModalVerb(prevTokens, others, s)
+        }
+        else if (Verb.isInstance(s)) {
           parseVerb(prevTokens, others, s)
         }
         else if (Preposition.isInstance(s)){
@@ -175,9 +182,6 @@ object Satze {
         }
         else if (Pronoun.isInstance(s)) {
           parsePronoun(prevTokens, others, s)
-        }
-        else if (ModalVerb.isInstance(s)){
-          parseModalVerb(prevTokens, others, s)
         }
         else {
           println(YELLOW_B + "Unknown token : " + RESET + RED + s + RESET)
