@@ -62,6 +62,13 @@ object ModalVerb extends TokenInstance {
     rule.conjugation.isVerb(token.toLowerCase) && ModalVerb.getList.contains(
       rule.conjugation.deconjugateVerb(token.toLowerCase)
     )
+
+  /**
+   * Parse a string to verb (deconjugated)
+   */
+  def toVerb(s: String)(implicit rule: ConjugationRule): ModalVerb = {
+    ModalVerb(rule.deconjugateVerb(s))
+  }
 }
 
 case class Preposition(s: String) extends Token {
