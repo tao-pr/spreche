@@ -278,5 +278,25 @@
     "wir": "kaufen",
     "ihr": "kauft",
     "Sie": "kaufen"
+  },
+  "treffen": {
+    "ich": "treffe",
+    "du": "triffst",
+    "es": "trifft",
+    "sie": "trifft",
+    "er": "trifft",
+    "wir": "treffen",
+    "ihr": "trifft",
+    "Sie": "treffen"
+  },
+  "brauchen": {
+    "ich": "brauche",
+    "du": "brauchst",
+    "es": "braucht",
+    "sie": "braucht",
+    "er": "braucht",
+    "wir": "brauchen",
+    "ihr": "braucht",
+    "Sie": "brauchen"
   }
 }

@@ -35,6 +35,13 @@
   "Bahn": ["die","Bahnen"],
   "Schuh": ["der","Schuhe"],
 
+  "Freund": ["der","Freunde"],
+  "Arzt": ["der","Ärzte"],
+  "Kollege": ["der","Kollegen"],
+  "Nachbar": ["der","Nachbarn"],
+  "Benutzer": ["der","Benutzer"],
+  "Gast": ["der","Gäste"],
+
   "Zimmer": ["das","Zimmer"],
   "Haus": ["das","Hausen"],
   "Schule": ["die","Schulen"],
