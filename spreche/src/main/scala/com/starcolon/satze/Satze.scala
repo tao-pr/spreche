@@ -29,8 +29,10 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
   }
 
   private def renderSVO()(implicit rule: MasterRule) = {
-    Satze.abbrev(clauses.zipWithIndex.map{
-      case(c,i) => c.render(this, i).trim
+    val clausesWithoutModalVerb = clauses.filterNot(_.isInstanceOf[ModalVerbClaus])
+    val satzeWithoutModalVerb = Satze(clausesWithoutModalVerb)
+    Satze.abbrev(clausesWithoutModalVerb.zipWithIndex.map{
+      case(c,i) => c.render(satzeWithoutModalVerb, i).trim
     }.mkString(" "))
   }
   
@@ -46,27 +48,35 @@ object Satze {
     }
   }
 
-  // def isVerb(token: String)(implicit rule: MasterRule) = {
-  //   rule.conjugation.isVerb(token.toLowerCase)
-  // }
+  private def parseModalVerb(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+    implicit val r = rule.conjugation
 
-  // def isPronoun(token: String)(implicit rule: MasterRule) = {
-  //   (Pronoun.isInfinitiv(token.toLowerCase)) || rule.sache.isSache(token.capInitial)
-  // }
+    val newModalVerb = ModalVerbClaus(ModalVerb.toVerb(s.toLowerCase))
+    val newTokens = prevTokens match {
+      // [MV]
+      case Nil => 
+        newModalVerb :: Nil
 
-  // def isArtikel(token: String)(implicit rule: MasterRule) = {
-  //   val artikels = (Seq("die","das","eine","ein","kein","keine") ++ Seq("d","ein","kein").flatMap{(a) => 
-  //     Seq("er","en","em").map(a + _)
-  //   }) ++ Seq("viel", "viele")
-  //   def expand(p: Pronoun) = Seq("","e","en","em").map(p.possess + _)
-  //   val possArtikels = Pronoun.infinitivPronouns.flatMap(expand)
-  //   artikels.contains(token.toLowerCase) || possArtikels.contains(token.toLowerCase)
-  // }
+      // P + [MV]
+      case ns :+ (subj@SubjectClaus(_, _)) => subj match {
+        // Ihr + [MV]
+        case SubjectClaus(Ihre, NP) =>
+          ns ++ Seq(SubjectClaus(NoArtikel, Ihr), newModalVerb)
 
-  // def isAdj(token: String)(implicit rule: MasterRule) = ???
+        // _ + P + [MV]
+        case _ =>
+          prevTokens :+ newModalVerb
+      }
+    
+      // otherwise
+      case _ =>
+        println(s"Misplaced modal verb : ${s}")
+        prevTokens
+    }
 
-  // def isPreposition(token: String)(implicit rule: MasterRule) = 
-  //   PrepositionRule.isPreposition(token)
+    parse(others, newTokens)
+  }
 
   private def parseVerb(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
@@ -165,6 +175,9 @@ object Satze {
         }
         else if (Pronoun.isInstance(s)) {
           parsePronoun(prevTokens, others, s)
+        }
+        else if (ModalVerb.isInstance(s)){
+          parseModalVerb(prevTokens, others, s)
         }
         else {
           println(YELLOW_B + "Unknown token : " + RESET + RED + s + RESET)
