@@ -138,6 +138,11 @@ object Satze {
       case Nil  => 
         SubjectClaus(newPs) :: Nil
 
+      // Multiple subjects
+      // P + [P]
+      case ns :+ SubjectClaus(ps,c) =>
+        ns :+ SubjectClaus(ps :+ ((a,NP)), c)
+
       // _ + prep + [artikel]
       case ns :+ ObjectClaus(prep, ps, c) => ps match {
 
@@ -179,6 +184,27 @@ object Satze {
     parse(others, newTokens)
   }
 
+  private def parseConnector(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+    val c = Connector.toConnector(s)
+    val newTokens = prevTokens match {
+
+      // _ + P + [con]
+      case ns :+ SubjectClaus(ps,_) =>
+        ns :+ SubjectClaus(ps, c)
+
+      // _ + P + [con]
+      case ns :+ ObjectClaus(prep,ps,_) =>
+        ns :+ ObjectClaus(prep, ps, c)
+
+      case _ =>
+        println(s"$s is misplaced, will be ignored")
+        prevTokens
+    }
+
+    parse(others, newTokens)
+  }
+
   def parse(tokens: Seq[String], prevTokens: Seq[Claus] = Nil)(implicit rule: MasterRule): Satze = 
     tokens match {
       case s :: others => 
@@ -196,6 +222,9 @@ object Satze {
         }
         else if (Pronoun.isInstance(s)) {
           parsePronoun(prevTokens, others, s)
+        }
+        else if (Connector.isInstance(s)) {
+          parseConnector(prevTokens, others, s)
         }
         else {
           println(YELLOW_B + "Unknown token : " + RESET + RED + s + RESET)
