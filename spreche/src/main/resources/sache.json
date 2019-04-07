@@ -34,7 +34,13 @@
   "Tram": ["die","Trams"],
   "Bahn": ["die","Bahnen"],
   "Schuh": ["der","Schuhe"],
+  "Papier": ["das","Papier"],
 
+  "Mann": ["der","Männer"],
+  "Frau": ["die","Fräuen"],
+  "Kind": ["das","Kinder"],
+  "Vader": ["der","Väder"],
+  "Mutter": ["die","Mütter"],
   "Freund": ["der","Freunde"],
   "Arzt": ["der","Ärzte"],
   "Kollege": ["der","Kollegen"],

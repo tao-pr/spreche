@@ -298,5 +298,25 @@
     "wir": "brauchen",
     "ihr": "braucht",
     "Sie": "brauchen"
+  },
+  "laden": {
+    "ich": "lade",
+    "du": "lädst",
+    "es": "lädt",
+    "sie": "lädt",
+    "er": "lädt",
+    "wir": "laden",
+    "ihr": "ladet",
+    "Sie": "laden"
+  },
+  "besuchen": {
+    "ich": "besuche",
+    "du": "besuchst",
+    "es": "besucht",
+    "sie": "besucht",
+    "er": "besucht",
+    "wir": "besuchen",
+    "ihr": "besucht",
+    "Sie": "besuchen"
   }
 }
