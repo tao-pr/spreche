@@ -318,5 +318,25 @@
     "wir": "besuchen",
     "ihr": "besucht",
     "Sie": "besuchen"
-  }
+  },
+  "essen": {
+    "ich": "esse",
+    "du": "isst",
+    "es": "isst",
+    "sie": "isst",
+    "er": "isst",
+    "wir": "essen",
+    "ihr": "esst",
+    "Sie": "essen"
+  },
+  "trinken": {
+    "ich": "trinke",
+    "du": "trinkst",
+    "es": "trinkt",
+    "sie": "trinkt",
+    "er": "trinkt",
+    "wir": "trinken",
+    "ihr": "trinkt",
+    "Sie": "trinken"
+  },
 }
