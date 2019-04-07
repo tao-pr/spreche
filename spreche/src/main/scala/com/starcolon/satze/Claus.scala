@@ -92,7 +92,7 @@ extends Claus {
 case class ObjectClaus(
   val prep: Option[Preposition] = None,
   override val ps: Seq[(Artikel,Pronoun)] = Nil,
-  override val connector: Connector = Und
+  override val connector: Connector = Space
 ) 
 extends Claus 
 with PronounClaus {
