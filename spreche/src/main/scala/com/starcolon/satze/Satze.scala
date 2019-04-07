@@ -110,11 +110,13 @@ object Satze {
 
         // _ + artikel + [P]
         case ps0 :+ ((a0,NP)) => 
+          println(s"adding new pronoun ${p.s} after ${a0.toString}") // TAODEBUG:
           ns :+ ObjectClaus(prep, ps0 :+ ((a0,p)), c)
 
         // 2nd object
         // _ + artikel + P + [P]
         case _ =>
+          println(s"adding new pronoun ${p.s}") // TAODEBUG:
           prevTokens :+ ObjectClaus(prep, ps :+ (Ein,p), c)
       }
       
@@ -135,15 +137,19 @@ object Satze {
       // [artikel]
       case Nil  => 
         SubjectClaus(newPs) :: Nil
-      
+
       // _ + prep + [artikel]
-      case ns :+ ObjectClaus(prep, _, _) => 
-        ns :+ ObjectClaus(prep, newPs)
-      
-      // 2nd object
-      // _ + prep + artikel + P + [artikel]
-      case _ :+ ObjectClaus(_,_,_) => 
-        prevTokens :+ ObjectClaus(None, newPs)
+      case ns :+ ObjectClaus(prep, ps, c) => ps match {
+
+        // _ + prep + [artikel]
+        case Nil => 
+          ns :+ ObjectClaus(prep, newPs, c)
+
+        // 2nd object
+        // _ + prep + artikel + P + [artikel]
+        case _ =>
+          prevTokens :+ ObjectClaus(None, newPs)
+      }
 
       // _ + [artikel]
       case _ => 
