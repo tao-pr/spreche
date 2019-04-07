@@ -67,7 +67,7 @@ extends Claus {
         rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel)
     }
   }
-  
+
   override def toString = s"+ ${YELLOW_B + BLACK}V${RESET}:${v.v}"
 }
 
@@ -131,12 +131,12 @@ with PronounClaus {
       objs.last.prep match {
         
         // __ + [this] + prep + other
-        // This is a direct object
-        case None => renderSoleObject(satze, Some(Akkusativ))
+        // This is an indirect object
+        case None => renderSoleObject(satze, Some(Dativ))
           
         // __ + [this] + other
-        // Another is a direct object
-        case _ => renderSoleObject(satze, Some(Dativ))
+        // This is a direct object
+        case _ => renderSoleObject(satze, Some(Akkusativ))
       }
     }
     else {
