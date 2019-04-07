@@ -37,6 +37,12 @@ case object Space extends Connector { override val s = " " }
 object Connector extends TokenInstance {
   override def isInstance(token: String)(implicit rule: MasterRule) = 
     Seq("und","oder").contains(token.toLowerCase)
+
+  def toConnector(s: String): Connector = s.toLowerCase.trim match {
+    case "und" => Und
+    case "oder" => Oder
+    case _ => Space
+  }
 }
 
 case class Verb(v: String) extends Token {
