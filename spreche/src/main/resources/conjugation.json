@@ -338,5 +338,25 @@
     "wir": "trinken",
     "ihr": "trinkt",
     "Sie": "trinken"
+  },
+  "warten": {
+    "ich": "warte",
+    "du": "wartest",
+    "es": "wartet",
+    "sie": "wartet",
+    "er": "wartet",
+    "wir": "warten",
+    "ihr": "wartet",
+    "Sie": "warten"
+  },
+  "helfen": {
+    "ich": "helfe",
+    "du": "hilfst",
+    "es": "hilft",
+    "sie": "hilft",
+    "er": "hilft",
+    "wir": "helfen",
+    "ihr": "helft",
+    "Sie": "helfen"
   }
 }
