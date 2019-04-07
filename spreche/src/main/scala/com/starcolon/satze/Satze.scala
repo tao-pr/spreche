@@ -110,18 +110,25 @@ object Satze {
 
         // _ + artikel + [P]
         case ps0 :+ ((a0,NP)) => 
-          println(s"adding new pronoun ${p.s} after ${a0.toString}") // TAODEBUG:
           ns :+ ObjectClaus(prep, ps0 :+ ((a0,p)), c)
 
-        // 2nd object
-        // _ + artikel + P + [P]
-        case _ =>
-          println(s"adding new pronoun ${p.s}") // TAODEBUG:
-          prevTokens :+ ObjectClaus(prep, ps :+ (Ein,p), c)
+        // _ + P + [P]
+        case _ => c match {
+          // 2nd object
+          // _ + artikel + P + [P]
+          case Space =>
+            prevTokens :+ ObjectClaus(None, ((Ein,p)) :: Nil, c)
+
+          // Multiple objects
+          // _ + P + und + [P]
+          case _ =>
+            ns :+ ObjectClaus(prep, ps :+ ((Ein,p)), c)
+        }
       }
       
       // _ + [P]
-      case _ => prevTokens :+ ObjectClaus(ps = (Ein,p) :: Nil)
+      case _ => 
+        prevTokens :+ ObjectClaus(ps = (Ein,p) :: Nil)
     }
     parse(others, newTokens)
   }
@@ -140,7 +147,7 @@ object Satze {
 
       // Multiple subjects
       // P + [P]
-      case ns :+ SubjectClaus(ps,c) =>
+      case ns :+ SubjectClaus(ps, c) =>
         ns :+ SubjectClaus(ps :+ ((a,NP)), c)
 
       // _ + prep + [artikel]
@@ -150,10 +157,18 @@ object Satze {
         case Nil => 
           ns :+ ObjectClaus(prep, newPs, c)
 
-        // 2nd object
-        // _ + prep + artikel + P + [artikel]
-        case _ =>
-          prevTokens :+ ObjectClaus(None, newPs)
+        
+        case _ => c match {
+          // 2nd object
+          // _ + prep + artikel + P + [artikel]
+          case Space => 
+            prevTokens :+ ObjectClaus(None, newPs)
+
+          // multiple objects
+          // _ P + und + [artikel]
+          case _ =>
+            ns :+ ObjectClaus(prep, newPs :+ ((a,NP)), c)
+        }
       }
 
       // _ + [artikel]
