@@ -7,6 +7,10 @@ import com.starcolon.satze.Implicits._
 sealed trait Token
 case object NoToken extends Token
 
+sealed trait Connector extends Token {
+  def s: String
+}
+
 sealed trait Artikel extends Token {
   def renderWith(gender: String, c: Case): String
   def matchWith(s: String): Boolean
@@ -26,6 +30,14 @@ sealed trait TokenInstance {
 
 
 // Classes and Objects
+case object Und extends Connector { override val s = " und " }
+case object Oder extends Connector { override val s =" oder "}
+case object Space extends Connector { override val s = " " }
+
+object Connector extends TokenInstance {
+  override def isInstance(token: String)(implicit rule: MasterRule) = 
+    Seq("und","oder").contains(token.toLowerCase)
+}
 
 case class Verb(v: String) extends Token {
   def isAkkusativ: Boolean = v != "sein"
@@ -46,12 +58,6 @@ object Verb extends TokenInstance {
 
 case class ModalVerb(v: String) extends Token {
   override def toString = v
-  def render(subject: SubjectClaus)(implicit rule: MasterRule) = {
-    rule.conjugation.conjugateVerb(
-      v, subject.p, subject.artikel
-    )
-  }
-
   def toVerb = Verb(v)
 }
 
@@ -345,7 +351,6 @@ object Artikel extends TokenInstance {
     artikels.contains(token.toLowerCase) || possArtikels.contains(token.toLowerCase)
   }
 }
-
 
 case object NP extends Pronoun {
   override val s = ""
