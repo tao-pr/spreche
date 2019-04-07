@@ -70,43 +70,14 @@ object Satze {
     implicit val r = rule.conjugation
 
     val newModalVerb = ModalVerbClaus(ModalVerb.toVerb(s.toLowerCase))
-    val newTokens = prevTokens match {
-      // [MV]
-      case Nil => 
-        newModalVerb :: Nil
-
-      // P + [MV]
-      case ns :+ (subj@SubjectClaus(_, _)) => subj match {
-        // Ihr + [MV]
-        case SubjectClaus(Ihre, NP) =>
-          ns ++ Seq(SubjectClaus(NoArtikel, Ihr), newModalVerb)
-
-        // _ + P + [MV]
-        case _ =>
-          prevTokens :+ newModalVerb
-      }
-    
-      // otherwise
-      case _ =>
-        println(s"Misplaced modal verb : ${s}")
-        prevTokens
-    }
-
+    val newTokens = prevTokens :+ newModalVerb
     parse(others, newTokens)
   }
 
   private def parseVerb(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
     implicit val r = rule.conjugation
-    val newTokens = prevTokens match {
-      // Ihr + [V]
-      case _ :+ SubjectClaus(Ihre, NP) => 
-        prevTokens.dropRight(1) ++ Seq(SubjectClaus(NoArtikel, Ihr), VerbClaus(Verb.toVerb(s.toLowerCase)))
-      
-      // Any + [V]
-      case _ => 
-        prevTokens :+ VerbClaus(Verb.toVerb(s.toLowerCase))
-    }
+    val newTokens = prevTokens :+ VerbClaus(Verb.toVerb(s.toLowerCase))
     parse(others, newTokens)
   }
 
@@ -116,44 +87,67 @@ object Satze {
     val p = Pronoun.toPronoun(s)
     val newTokens = prevTokens match {
       // [P]
-      case Nil => prevTokens :+ SubjectClaus(p=p)
-      
-      // _ + artikel + [P]
-      case _ :+ SubjectClaus(artikel, NP) => 
-        prevTokens.dropRight(1) :+ SubjectClaus(artikel, p)
+      case Nil => SubjectClaus((Ein,p) :: Nil) :: Nil
 
-      // _ + prep + artikel + [P]
-      case ns :+ ObjectClaus(prep, artikel, NP) => 
-        ns :+ ObjectClaus(prep, artikel, p)
+      // Continuous subject
+      case ns :+ SubjectClaus(ps,c) => ps match {
+        
+        // _ + artikel + [P]
+        case ps0 :+ ((a0,NP)) => 
+          ns :+ SubjectClaus(ps0 :+ ((a0,p)), c)
 
-      // _ + prep + artikel + P + [P]
-      case _ :+ ObjectClaus(_,_,_) =>
-        prevTokens :+ ObjectClaus(None, NoArtikel, p)
+        // _ + artikel + P + [P] -- missing connector
+        case _ => 
+          ns :+ SubjectClaus(ps :+ ((Ein,p)), c)
+      }
+
+      // Continuous object
+      case ns :+ ObjectClaus(prep,ps,c) => ps match {
+
+        // prep + [P]
+        case Nil => 
+          ns :+ ObjectClaus(prep, ((Ein,p)) :: Nil, c)
+
+        // _ + artikel + [P]
+        case ps0 :+ ((a0,NP)) => 
+          ns :+ ObjectClaus(prep, ps0 :+ ((a0,p)), c)
+
+        // 2nd object
+        // _ + artikel + P + [P]
+        case _ =>
+          prevTokens :+ ObjectClaus(prep, ps :+ (Ein,p), c)
+      }
       
       // _ + [P]
-      case _ => prevTokens :+ ObjectClaus(p=p)
+      case _ => prevTokens :+ ObjectClaus(ps = (Ein,p) :: Nil)
     }
     parse(others, newTokens)
   }
 
   private def parseArtikel(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
+
     val a = Artikel.toArtikel(s)
+    val newPs = ((a,NP)) :: Nil
+
     // NOTE: "Ihr" will also be counted as artikel initially
     val newTokens = prevTokens match {
       // [artikel]
-      case Nil  => SubjectClaus(a, NP) :: Nil
+      case Nil  => 
+        SubjectClaus(newPs) :: Nil
       
       // _ + prep + [artikel]
-      case ns :+ ObjectClaus(prep, _, NP) => 
-        ns :+ ObjectClaus(prep, a, NP)
+      case ns :+ ObjectClaus(prep, _, _) => 
+        ns :+ ObjectClaus(prep, newPs)
       
+      // 2nd object
       // _ + prep + artikel + P + [artikel]
-      case _ :+ (obj@ObjectClaus(_,_,_)) => 
-        prevTokens :+ ObjectClaus(None, a, NP)
+      case _ :+ ObjectClaus(_,_,_) => 
+        prevTokens :+ ObjectClaus(None, newPs)
 
       // _ + [artikel]
-      case _ => prevTokens :+ ObjectClaus(None, a, NP)
+      case _ => 
+        prevTokens :+ ObjectClaus(None, newPs)
     }
     parse(others, newTokens)
   }
@@ -167,13 +161,14 @@ object Satze {
         println(RED + s"A new sentence cannot start with : $s" + RESET)
         prevTokens
 
+      // 2nd object
       // _ + prep + artikel + P + [prep]
       case _ :+ ObjectClaus(_,_,_) =>
-        prevTokens :+ ObjectClaus(Some(prep), NoArtikel, NP)
+        prevTokens :+ ObjectClaus(Some(prep))
       
       // _ + [prep]
       case _ => 
-        prevTokens :+ ObjectClaus(Some(prep), NoArtikel, NP)
+        prevTokens :+ ObjectClaus(Some(prep))
     }
     parse(others, newTokens)
   }
