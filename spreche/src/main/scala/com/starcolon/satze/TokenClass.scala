@@ -51,6 +51,8 @@ case class ModalVerb(v: String) extends Token {
       v, subject.p, subject.artikel
     )
   }
+
+  def toVerb = Verb(v)
 }
 
 object ModalVerb extends TokenInstance {

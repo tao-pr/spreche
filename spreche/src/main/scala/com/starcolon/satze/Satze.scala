@@ -12,8 +12,21 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
   
   override def render(satze: Satze = this, index: Int = -1)(implicit rule: MasterRule) = {
     modalVerb match {
+      // Without modal verb
       case EmptyClaus => renderSVO()
-      case ModalVerbClaus(_) => renderSMOV()
+      case ModalVerbClaus(_) => 
+        // Modal verb but without verb, 
+        // modal verb will become a verb itself
+        verb match {
+          
+          case EmptyClaus => 
+            Satze(clauses.map{
+              case ModalVerbClaus(v) => VerbClaus(v.toVerb)
+              case any => any
+            }).render(this)
+
+          case _ => renderSMOV()
+        }
     }
   }
 
