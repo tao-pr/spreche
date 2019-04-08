@@ -345,7 +345,9 @@ case object Euer extends Artikel {
 object Artikel extends TokenInstance {
   
   def toArtikel(s: String)(implicit rule: MasterRule): Artikel = {
-    Seq(Ein,Der,Plural,Kein,Mein,Dein,Sein,Unser,Ihre).find(_.matchWith(s)).getOrElse(Ein)
+    Seq(Ein,Der,Plural,Kein,Mein,Dein,Sein,Unser,Ihre,Euer).find(
+      _.matchWith(s)
+    ).getOrElse(Ein)
   }
 
   override def isInstance(token: String)(implicit rule: MasterRule) = {
