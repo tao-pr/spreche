@@ -163,7 +163,7 @@ object Satze {
       // Multiple subjects
       // P + [P]
       case ns :+ SubjectClaus(ps, c) =>
-        ns :+ SubjectClaus(ps :+ ((a,NP)), c)
+        ns :+ SubjectClaus(ps ++ newPs, c)
 
       // _ + prep + [artikel]
       case ns :+ ObjectClaus(prep, ps, c) => ps match {
@@ -182,7 +182,7 @@ object Satze {
           // multiple objects
           // _ P + und + [artikel]
           case _ =>
-            ns :+ ObjectClaus(prep, newPs :+ ((a,NP)), c)
+            ns :+ ObjectClaus(prep, ps ++ newPs, c)
         }
       }
 
