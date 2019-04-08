@@ -65,6 +65,21 @@ object Satze {
     }
   }
 
+  def from(clauses: Seq[Claus]) = {
+
+    def correctIhr(ps: Seq[(Artikel,Pronoun)]) = ps.map{ 
+      case (Ihre,NP) => (NoArtikel,Ihr)
+      case any => any
+    }
+
+    // Correction of confusing "Ihr" (if any)
+    Satze(clauses.map{ 
+      case SubjectClaus(ps,c) => SubjectClaus(correctIhr(ps),c)
+      case ObjectClaus(prep,ps,c) => ObjectClaus(prep,correctIhr(ps),c)
+      case any => any
+    })
+  }
+
   private def parseModalVerb(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
     implicit val r = rule.conjugation
@@ -245,7 +260,7 @@ object Satze {
           println(YELLOW_B + "Unknown token : " + RESET + RED + s + RESET)
           parse(others, prevTokens)
         }
-      case Nil => Satze(prevTokens)
+      case Nil => Satze.from(prevTokens)
     }
 }
 
