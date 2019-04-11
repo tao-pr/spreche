@@ -5,21 +5,21 @@ import com.starcolon.satze.Implicits._
 import Console._
 
 case class Satze(clauses: Seq[Claus]) extends Claus {
-  def subject: Claus = clauses.find(_.isInstanceOf[SubjectClaus]).getOrElse(EmptyClaus)
-  def verb: Claus = clauses.find(_.isInstanceOf[VerbClaus]).getOrElse(EmptyClaus)
-  def modalVerb: Claus = clauses.find(_.isInstanceOf[ModalVerbClaus]).getOrElse(EmptyClaus)
-  def objekt: Claus = clauses.find(_.isInstanceOf[ObjectClaus]).getOrElse(EmptyClaus)
+  def subject: Option[SubjectClaus]     = clauses.find(_.isInstanceOf[SubjectClaus]).map(_.asInstanceOf[SubjectClaus])
+  def verb: Option[VerbClaus]           = clauses.find(_.isInstanceOf[VerbClaus]).map(_.asInstanceOf[VerbClaus])
+  def modalVerb: Option[ModalVerbClaus] = clauses.find(_.isInstanceOf[ModalVerbClaus]).map(_.asInstanceOf[ModalVerbClaus])
+  def objekt: Option[ObjectClaus]       = clauses.find(_.isInstanceOf[ObjectClaus]).map(_.asInstanceOf[ObjectClaus])
   
   override def render(satze: Satze = this, index: Int = -1)(implicit rule: MasterRule) = {
     modalVerb match {
       // Without modal verb
-      case EmptyClaus => renderSVO()
-      case ModalVerbClaus(_) => 
+      case None => renderSVO()
+      case Some(ModalVerbClaus(_)) => 
         // Modal verb but without verb, 
         // modal verb will become a verb itself
         verb match {
           
-          case EmptyClaus => 
+          case None => 
             Satze(clauses.map{
               case ModalVerbClaus(v) => VerbClaus(v.toVerb)
               case any => any
@@ -33,7 +33,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
   private def renderSMOV()
   (implicit rule: MasterRule) = {
     
-    val verbClaus = verb.asInstanceOf[VerbClaus]
+    val verbClaus = verb.get
 
     val clausesNoVerb = clauses.filterNot(_.isInstanceOf[VerbClaus])
     val endingVerb = rule.conjugation.conjugateVerb(
