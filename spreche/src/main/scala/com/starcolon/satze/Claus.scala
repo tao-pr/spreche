@@ -12,6 +12,22 @@ case object EmptyClaus extends Claus
 sealed trait PronounClaus {
   val ps: Seq[(Artikel,Pronoun)]
   val connector: Connector
+
+  def isPlural = ps match {
+    case ((a,p)) :: Nil => a match {
+      case Plural => true
+      case _ => false
+    }
+
+    case _ => true
+  }
+
+  def isPositional = ps match {
+    case ((a,p)) :: Nil => 
+      p.isInstanceOf[PositionalPronoun]
+
+    case _ => false
+  }
   
   protected def renderSache(c: Case)(pair: (Artikel, Pronoun))
   (implicit rule: MasterRule) = {
@@ -56,16 +72,28 @@ with PronounClaus {
 case class VerbClaus(v: Verb) 
 extends Claus {
   override def render(satze: Satze, index: Int)
-  (implicit rule: MasterRule) = satze.subject match {
-    case SubjectClaus(ps,_) => ps match {
-      // Single subject
-      case ((a,p)) :: Nil =>
-        rule.conjugation.conjugateVerb(v.v, p, a)
+  (implicit rule: MasterRule) = {//satze.subject match {
+    val subj = satze.subject.get
+    val obj = satze.objekt
 
-      // Multiple subjects
-      case _ =>
-        rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel)
+    if (subj.isPlural || 
+        (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
+      rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel)
     }
+    else { 
+      val (a,p) = subj.ps.head
+      rule.conjugation.conjugateVerb(v.v, p, a)
+    }
+
+    
+    // case SubjectClaus(ps,_) => ps match {
+    //   // Single subject
+    //   case ((a,p)) :: Nil => rule.conjugation.conjugateVerb(v.v, p, a)
+
+    //   // Multiple subjects
+    //   case _ =>
+    //     rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel)
+    //}
   }
 
   override def toString = s"+ ${YELLOW_B + BLACK}V${RESET}:${v.v}"
@@ -74,7 +102,7 @@ extends Claus {
 case class ModalVerbClaus(v: ModalVerb)
 extends Claus {
   override def render(satze: Satze, index: Int)
-  (implicit rule: MasterRule) = satze.subject match {
+  (implicit rule: MasterRule) = satze.subject.get match {
     case SubjectClaus(ps,_) => ps match {
       // Single subject
       case ((a,p)) :: Nil => 
@@ -100,7 +128,7 @@ with PronounClaus {
   private def renderSoleObject(satze: Satze, masterCase: Option[Case])
   (implicit rule: MasterRule) = {
     
-    prep.map(_.s + " ").getOrElse("") + (satze.verb match {
+    prep.map(_.s + " ").getOrElse("") + (satze.verb.get match {
       case VerbClaus(v) => 
         val effectiveCase = masterCase.getOrElse(
           if (v.isAkkusativ) Akkusativ 
@@ -151,7 +179,7 @@ with PronounClaus {
       .zipWithIndex
       .filter(_._1.isInstanceOf[ObjectClaus])
       .map{ case(c,i) => (c.asInstanceOf[ObjectClaus], i)}
-    val VerbClaus(v) = satze.verb.asInstanceOf[VerbClaus]
+    val VerbClaus(v) = satze.verb.get
     val masterCase = prep.map(_.getCase(v))
     
     // Multiple objects 

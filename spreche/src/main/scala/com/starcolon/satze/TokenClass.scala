@@ -366,6 +366,20 @@ case object NP extends Pronoun {
   override val dativ = ""
   override val possess = ""
 }
+
+/**
+ * Positional pronoun can be either singular or plural 
+ * given the value of the counterpart
+ */
+trait PositionalPronoun extends Pronoun {
+  override val akkusativ = ""
+  override val dativ = ""
+  override val possess = ""
+}
+case object Das extends PositionalPronoun { override val s = "Das" }
+case object Da extends PositionalPronoun { override val s = "Da" }
+case object Dort extends PositionalPronoun { override val s = "Dort" }
+
 case object Ich extends Pronoun{
   override val s = "ich"
   override val akkusativ = "mich"
