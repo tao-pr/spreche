@@ -402,7 +402,7 @@ case object Er extends Pronoun{
   override val s = "er"
   override val akkusativ = "ihn"
   override val dativ = "ihm"
-  override val possess = "seid"
+  override val possess = "sein"
 }
 case object Es extends Pronoun{
   override val s = "es"
@@ -430,7 +430,7 @@ case class Instance(override val s: String) extends Pronoun {
 }
 
 object Pronoun extends TokenInstance {
-  lazy val infinitivPronouns = List(Ich, Du, Sie, Wir, Ihr, Er, Es)
+  lazy val infinitivPronouns = List(Ich, Du, Sie, Wir, Ihr, Er, Es, Da, Dort, Das)
   lazy val reverseMap = infinitivPronouns.flatMap{ p => 
     Seq((p.s, p.s), (p.akkusativ, p.s), (p.dativ, p.s))
   }.toMap
