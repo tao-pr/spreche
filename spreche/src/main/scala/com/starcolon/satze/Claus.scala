@@ -84,16 +84,6 @@ extends Claus {
       val (a,p) = subj.ps.head
       rule.conjugation.conjugateVerb(v.v, p, a)
     }
-
-    
-    // case SubjectClaus(ps,_) => ps match {
-    //   // Single subject
-    //   case ((a,p)) :: Nil => rule.conjugation.conjugateVerb(v.v, p, a)
-
-    //   // Multiple subjects
-    //   case _ =>
-    //     rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel)
-    //}
   }
 
   override def toString = s"+ ${YELLOW_B + BLACK}V${RESET}:${v.v}"
@@ -177,8 +167,10 @@ with PronounClaus {
   override def render(satze: Satze, index: Int)(implicit rule: MasterRule) = {
     val objects = satze.clauses
       .zipWithIndex
-      .filter(_._1.isInstanceOf[ObjectClaus])
-      .map{ case(c,i) => (c.asInstanceOf[ObjectClaus], i)}
+      .collect{ 
+        case(c,i) if c.isInstanceOf[ObjectClaus] => 
+          (c.asInstanceOf[ObjectClaus], i)
+        }
     val VerbClaus(v) = satze.verb.get
     val masterCase = prep.map(_.getCase(v))
     
