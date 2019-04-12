@@ -46,7 +46,7 @@ object Connector extends TokenInstance {
 }
 
 case class Verb(v: String) extends Token {
-  def isAkkusativ: Boolean = v != "sein"
+  def isAkkusativ: Boolean = v != "seid"
   override def toString = v
 }
 
