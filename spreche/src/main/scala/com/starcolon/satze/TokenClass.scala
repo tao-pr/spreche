@@ -372,13 +372,13 @@ case object NP extends Pronoun {
  * given the value of the counterpart
  */
 trait PositionalPronoun extends Pronoun {
-  override val akkusativ = ""
-  override val dativ = ""
-  override val possess = ""
+  override val akkusativ = s
+  override val dativ = s
+  override val possess = s
 }
-case object Das extends PositionalPronoun { override val s = "Das" }
-case object Da extends PositionalPronoun { override val s = "Da" }
-case object Dort extends PositionalPronoun { override val s = "Dort" }
+case object Das extends PositionalPronoun { override val s = "das" }
+case object Da extends PositionalPronoun { override val s = "da" }
+case object Dort extends PositionalPronoun { override val s = "dort" }
 
 case object Ich extends Pronoun{
   override val s = "ich"
@@ -434,7 +434,11 @@ object Pronoun extends TokenInstance {
   lazy val reverseMap = infinitivPronouns.flatMap{ p => 
     Seq((p.s, p.s), (p.akkusativ, p.s), (p.dativ, p.s))
   }.toMap
-  private lazy val infinitivPronounStrings = infinitivPronouns.flatMap{ p => Seq(p.s, p.akkusativ, p.dativ)}
+  
+  private lazy val infinitivPronounStrings = infinitivPronouns.flatMap{ p => 
+    Seq(p.s, p.akkusativ, p.dativ)
+  }.toSet
+
   private lazy val map = infinitivPronouns.map(p => (p.s, p)).toMap
   
   def isInfinitiv(s: String) = infinitivPronounStrings.contains(s)
