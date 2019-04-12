@@ -68,8 +68,8 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
   }
   
   def conjugateVerb(v: String, p: Pronoun, artikel: Artikel)(implicit rule: MasterRule) = p match {
-    case Instance(s) => 
-      val gender = rule.sache.findGender(s.capInitial)
+    case _:Instance | _:PositionalPronoun => 
+      val gender = rule.sache.findGender(p.s.capInitial)
       val genderedPronoun = (artikel, gender) match {
         case (Plural,_) => Wir
         case (_,"der") => Es
