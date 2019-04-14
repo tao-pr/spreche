@@ -67,15 +67,16 @@ object Satze {
 
   def from(clauses: Seq[Claus]) = {
 
-    def correctIhr(ps: Seq[(Artikel,Pronoun)]) = ps.map{ 
+    def correctIhrDas(ps: Seq[(Artikel,Pronoun)]) = ps.map{ 
       case (Ihre,NP) => (NoArtikel,Ihr)
+      case (Der,NP) => (NoArtikel,Das)
       case any => any
     }
 
-    // Correction of confusing "Ihr" (if any)
+    // Correction of confusing "Ihr" and "Das" (if any)
     Satze(clauses.map{ 
-      case SubjectClaus(ps,c) => SubjectClaus(correctIhr(ps),c)
-      case ObjectClaus(prep,ps,c) => ObjectClaus(prep,correctIhr(ps),c)
+      case SubjectClaus(ps,c) => SubjectClaus(correctIhrDas(ps),c)
+      case ObjectClaus(prep,ps,c) => ObjectClaus(prep,correctIhrDas(ps),c)
       case any => any
     })
   }

@@ -180,7 +180,6 @@ with PronounClaus {
       renderMultiObjects(satze, masterCase, index, objects)
     }
     else {
-      // TAOTODO: This is incorrect for [Da ist mein haus]
       // Single object, or with preposition
       println(s"master case determined by preprosition: ${masterCase}")
       renderSoleObject(satze, masterCase)
