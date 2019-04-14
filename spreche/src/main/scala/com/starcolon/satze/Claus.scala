@@ -72,7 +72,7 @@ with PronounClaus {
 case class VerbClaus(v: Verb) 
 extends Claus {
   override def render(satze: Satze, index: Int)
-  (implicit rule: MasterRule) = {//satze.subject match {
+  (implicit rule: MasterRule) = {
     val subj = satze.subject.get
     val obj = satze.objekt
 
