@@ -96,3 +96,19 @@ Sagen Sie > wir muss er einen becher bringt
 Output > wir müssen ihm ein Becher bringen
 
 ```
+
+<b>Negation</b>
+
+```
+Sagen Sie > wir mag nicht die musik
+
+Output > wir mögen die Musik nicht
+
+---
+
+Sagen Sie > ein freund soll in das cafe kommen nicht
+
+Output > ein Freund soll ins Cafe nicht kommen
+
+
+```
