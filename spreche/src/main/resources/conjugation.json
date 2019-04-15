@@ -358,5 +358,35 @@
     "wir": "helfen",
     "ihr": "helft",
     "Sie": "helfen"
+  },
+  "putzen": {
+    "ich": "putze",
+    "du": "putzt",
+    "es": "putzt",
+    "sie": "putzt",
+    "er": "putzt",
+    "wir": "putzen",
+    "ihr": "putzt",
+    "Sie": "putzen"
+  },
+  "anhalten": {
+    "ich": "anhalte",
+    "du": "anhältst",
+    "es": "anhält",
+    "sie": "anhält",
+    "er": "anhält",
+    "wir": "anhalten",
+    "ihr": "anhaltet",
+    "Sie": "anhalten"
+  },
+  "einsteigen": {
+    "ich": "einsteige",
+    "du": "einsteigst",
+    "es": "einsteigt",
+    "sie": "einsteigt",
+    "er": "einsteigt",
+    "wir": "einsteigen",
+    "ihr": "einsteigt",
+    "Sie": "einsteigen"
   }
 }

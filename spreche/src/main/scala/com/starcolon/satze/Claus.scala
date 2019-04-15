@@ -7,7 +7,10 @@ trait Claus {
   def render(satze: Satze, index: Int)(implicit rule: MasterRule): String = toString
 }
 
-case object EmptyClaus extends Claus
+case object NegateClaus extends Claus {
+  override def render(satze: Satze, index: Int)(implicit rule: MasterRule): String = "" 
+  override def toString = "nicht"
+}
 
 sealed trait PronounClaus {
   val ps: Seq[(Artikel,Pronoun)]
