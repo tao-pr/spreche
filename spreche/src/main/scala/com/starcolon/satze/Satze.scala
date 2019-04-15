@@ -39,18 +39,25 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
     val endingVerb = rule.conjugation.conjugateVerb(
       verbClaus.v.v, Wir, NoArtikel
     )
+
+    val isNegate = clausesNoVerb.headOption == Some(NegateClaus)
+    val preVerbToken = if (isNegate) " nicht " else " "
     
     Satze.abbrev(clausesNoVerb.zipWithIndex.map{
       case(c,i) => c.render(this, i).trim
-    }.mkString(" ")) + " " + endingVerb
+    }.mkString(" ")) + preVerbToken + endingVerb
   }
 
   private def renderSVO()(implicit rule: MasterRule) = {
     val clausesWithoutModalVerb = clauses.filterNot(_.isInstanceOf[ModalVerbClaus])
     val satzeWithoutModalVerb = Satze(clausesWithoutModalVerb)
+    
+    val isNegate = clausesWithoutModalVerb.headOption == Some(NegateClaus)
+    val ending = if (isNegate) " nicht" else ""
+
     Satze.abbrev(clausesWithoutModalVerb.zipWithIndex.map{
       case(c,i) => c.render(satzeWithoutModalVerb, i).trim
-    }.mkString(" "))
+    }.mkString(" ")) + ending
   }
   
   override def toString = clauses.map(_.toString).mkString(" ")
@@ -236,19 +243,31 @@ object Satze {
     parse(others, newTokens)
   }
 
+  private def parseNegation(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+    // Negation will always remain at the beginning of the sentence
+    val newTokens = prevTokens match {
+      case Nil               => NegateClaus :: Nil
+      case NegateClaus :: _  => prevTokens
+      case _                 => NegateClaus +: prevTokens
+    }
+
+    parse(others, newTokens)
+  }
+
   def parse(tokens: Seq[String], prevTokens: Seq[Claus] = Nil)(implicit rule: MasterRule): Satze = 
     tokens match {
       case s :: others => 
-        if (ModalVerb.isInstance(s)){
+        if (ModalVerb.isInstance(s)) {
           parseModalVerb(prevTokens, others, s)
         }
         else if (Verb.isInstance(s)) {
           parseVerb(prevTokens, others, s)
         }
-        else if (Preposition.isInstance(s)){
+        else if (Preposition.isInstance(s)) {
           parsePreposition(prevTokens, others, s)
         }
-        else if (Artikel.isInstance(s)){
+        else if (Artikel.isInstance(s)) {
           parseArtikel(prevTokens, others, s)
         }
         else if (Pronoun.isInstance(s)) {
@@ -256,6 +275,9 @@ object Satze {
         }
         else if (Connector.isInstance(s)) {
           parseConnector(prevTokens, others, s)
+        }
+        else if (Negation.isInstance(s)) {
+          parseNegation(prevTokens, others, s)
         }
         else {
           println(YELLOW_B + "Unknown token : " + RESET + RED + s + RESET)

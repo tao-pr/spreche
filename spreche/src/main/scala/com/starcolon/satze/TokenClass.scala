@@ -45,6 +45,12 @@ object Connector extends TokenInstance {
   }
 }
 
+object Negation extends TokenInstance {
+  override def isInstance(token: String)(implicit rule: MasterRule) = {
+    token.toLowerCase == "nicht"
+  }
+}
+
 case class Verb(v: String) extends Token {
   def isAkkusativ: Boolean = v != "seid"
   override def toString = v
