@@ -5,8 +5,6 @@ import com.starcolon.satze.Implicits._
 // Traits
 
 sealed trait Token
-case object NoToken extends Token
-
 sealed trait Connector extends Token {
   def s: String
 }
