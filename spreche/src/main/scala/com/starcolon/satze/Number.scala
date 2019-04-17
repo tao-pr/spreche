@@ -47,7 +47,7 @@ object NumberSet {
       }
   }
 
-  def toString(n: Int) = {
-    map.getOrElse(n, translateToString(n.toString.split("").toSeq.map(_.toInt)))
+  def toString(n: Int): String = {
+    map.getOrElse(n, translateToString(n.toString.split("").map(_.toInt).toList))
   }
 }
