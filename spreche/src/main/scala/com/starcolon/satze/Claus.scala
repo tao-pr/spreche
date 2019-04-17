@@ -171,7 +171,7 @@ with PronounClaus {
     val objects = satze.clauses
       .zipWithIndex
       .collect{ 
-        case(c: ObjectClaus, i) => //if c.isInstanceOf[ObjectClaus] => 
+        case(c: ObjectClaus, i) =>
           (c.asInstanceOf[ObjectClaus], i)
         }
     val VerbClaus(v) = satze.verb.get
