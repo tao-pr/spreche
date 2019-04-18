@@ -4,7 +4,7 @@ trait Number
 
 object NumberSet {
   val map = Map(
-    0   -> "null",
+    0   -> "",
     1   -> "eins",
     2   -> "zwei",
     3   -> "drei",
@@ -24,27 +24,36 @@ object NumberSet {
 
   val power = Map(
     0 -> "",
-    1 -> "zehn",
+    1 -> "zig",
     2 -> "hundert",
     3 -> "tausend"
   )
 
-  private def translateToString(ns: Seq[Int]): String = ns match {
-    case Nil      => ""
-    case 0 :: nns => translateToString(nns)
-    case n :: nns =>
-      nns match {
-        case Nil => map(n)
-        case _   => 
-          val remain = nns.map(_.toString).mkString("").toInt
-          map.get(remain) match {
-            // remaining number matches some special predefined
-            case Some(s) => map(n) + s
-            case None => 
-              val leftDigit = map(n) + power(nns.length)
-              leftDigit + translateToString(nns)
-          }
-      }
+  private def abbrevNumber(sNum: String) = sNum match {
+    case "eins" => "ein"
+    case "seiben" => "sieb"
+    case _ => sNum
+  }
+
+  private def translateToString(ns: Seq[Int]): String = {
+    lazy val nsAsNum = ns.map(_.toString).mkString("").toInt
+    ns match {
+      case Nil      => ""
+      case _ if map.keySet.contains(nsAsNum) => map(nsAsNum)
+      case 0 :: nns => translateToString(nns)
+      case a :: b :: Nil => 
+        val right = b match {
+          case 0 => ""
+          case _ => map(b) + "und"
+        }
+        a match {
+          case 1 => map(b) + "zehn"
+          case 2 => right + "zwanzig"
+          case _ => right + abbrevNumber(map(a)) + "zig"
+        }
+      case n :: nns =>
+        abbrevNumber(map(n)) + power(nns.length) + translateToString(nns)
+    }
   }
 
   def toString(n: Int): String = {
