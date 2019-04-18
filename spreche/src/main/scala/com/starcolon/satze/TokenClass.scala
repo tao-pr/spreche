@@ -457,3 +457,9 @@ object Pronoun extends TokenInstance {
     rule.sache.isSache(token.capInitial)
   }
 }
+
+trait Time extends Token {
+  val t: String
+}
+case class Um(override val t: String) extends Time
+case class Am(override val t: String) extends Time
