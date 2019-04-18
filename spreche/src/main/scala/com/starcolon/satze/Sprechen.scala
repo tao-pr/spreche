@@ -7,6 +7,8 @@ import com.starcolon.satze._
 import com.starcolon.satze.Implicits._
 
 object Sprechen {
+  val voiceOn = false
+
   def conversation(implicit rule: MasterRule): Unit = {
     readLine("Sagen Sie > ").split(" ").filter(_.trim.size > 0).toList match {
       // Single numeric input token
@@ -15,7 +17,10 @@ object Sprechen {
           case Success(num) => 
             val parsedNum = NumberSet.toString(num)
             println(s"${MAGENTA}${parsedNum}${RESET}")
-            parsedNum.speak
+            
+            if (voiceOn)
+              parsedNum.speak
+            
             conversation
 
           case _ => println(YELLOW + s"Unsupported token : $n" + RESET)
