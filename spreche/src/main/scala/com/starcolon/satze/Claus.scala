@@ -191,3 +191,8 @@ with PronounClaus {
 
   override def toString = s"-${CYAN_B + BLACK}O${RESET}:${prep.map(_.s).getOrElse("")} ${psToString}"
 }
+
+case class TimeClaus(am: Option[Am], um: Option[Um])
+extends Claus {
+  
+}
