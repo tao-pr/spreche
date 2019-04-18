@@ -34,7 +34,10 @@ object Sprechen {
         println(inputSatze)
         val out = inputSatze.render()
         println(s"${MAGENTA}${out}${RESET}")
-        out.speak
+        
+        if (voiceOn)
+          out.speak
+        
         conversation
     } 
   }
