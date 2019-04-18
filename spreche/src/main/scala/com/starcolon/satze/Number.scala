@@ -36,7 +36,7 @@ object NumberSet {
       nns match {
         case Nil => map(n)
         case _   => 
-          val remain = ns.map(_.toString).mkString("").toInt
+          val remain = nns.map(_.toString).mkString("").toInt
           map.get(remain) match {
             // remaining number matches some special predefined
             case Some(s) => s
