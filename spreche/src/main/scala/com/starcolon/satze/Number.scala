@@ -39,7 +39,7 @@ object NumberSet {
           val remain = nns.map(_.toString).mkString("").toInt
           map.get(remain) match {
             // remaining number matches some special predefined
-            case Some(s) => s
+            case Some(s) => map(n) + s
             case None => 
               val leftDigit = map(n) + power(nns.length)
               leftDigit + translateToString(nns)
