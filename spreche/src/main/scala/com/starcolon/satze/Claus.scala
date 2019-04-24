@@ -194,5 +194,7 @@ with PronounClaus {
 
 case class TimeClaus(am: Option[Am], um: Option[Um])
 extends Claus {
-  
+  override def render(satze: Satze, index: Int)(implicit rule: MasterRule) = {
+    Seq(am, um).map(_.flatMap(_.toString)).mkString(" ")
+  }
 }
