@@ -222,6 +222,11 @@ object Satze {
     parse(others, newTokens)
   }
 
+  private def parseTime(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+    ???
+  }
+
   private def parseConnector(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
     val c = Connector.toConnector(s)
@@ -279,9 +284,16 @@ object Satze {
         else if (Negation.isInstance(s)) {
           parseNegation(prevTokens, others, s)
         }
+        else if (Time.isInstance(s)){
+          parseTime(prevTokens, others, s)
+        }
         else {
-          println(YELLOW_B + "Unknown token : " + RESET + RED + s + RESET)
-          parse(others, prevTokens)
+          prevTokens match {
+            case _ :+ TimeClaus(_,_) => parseTime(prevTokens, others, s)
+            case _ => 
+              println(YELLOW_B + "Unknown token : " + RESET + RED + s + RESET)
+              parse(others, prevTokens)
+          }
         }
       case Nil => Satze.from(prevTokens)
     }

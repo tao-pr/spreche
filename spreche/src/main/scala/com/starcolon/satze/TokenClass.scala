@@ -26,6 +26,10 @@ sealed trait TokenInstance {
   def isInstance(token: String)(implicit rule: MasterRule): Boolean
 }
 
+sealed trait Time extends Token {
+  val t: String
+}
+
 
 // Classes and Objects
 case object Und extends Connector { override val s = " und " }
@@ -458,8 +462,26 @@ object Pronoun extends TokenInstance {
   }
 }
 
-trait Time extends Token {
-  val t: String
+case class Um(override val t: String) extends Time {
+  override def toString: String = {
+    t.split(":") match {
+      case h::m::Nil => 
+        "um " + NumberSet.toString(h.toInt) + " Uhr " + NumberSet.toString(m.toInt)
+
+      case h::Nil =>
+        "um " + NumberSet.toString(h.toInt) + " Uhr"
+    }
+  }
 }
-case class Um(override val t: String) extends Time
-case class Am(override val t: String) extends Time
+
+case class Am(override val t: String) extends Time {
+  override def toString: String = {
+    "am " + t
+  }
+}
+
+object Time extends TokenInstance {
+  override def isInstance(token: String)(implicit rule: MasterRule) = {
+    Seq("um","am").contains(token.toLowerCase)
+  }
+}
