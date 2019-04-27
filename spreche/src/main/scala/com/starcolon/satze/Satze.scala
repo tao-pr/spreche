@@ -224,7 +224,29 @@ object Satze {
 
   private def parseTime(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
-    ???
+
+    val newTokens = prevTokens match {
+
+      // _ + T + [__]
+      case ns :+ TimeClaus(am,um) => 
+        if (s.toLowerCase.trim == "um")
+          ns :+ TimeClaus(am, Some(Um("")))
+        else if (s.toLowerCase.trim == "am")
+          ns :+ TimeClaus(Some(Am("")), um)
+        else if (am == Some(Am("")))
+          ns :+ TimeClaus(Some(Am(s)), um)
+        else if (um == Some(Um("")))
+          ns :+ TimeClaus(am, Some(Um(s)))
+        else 
+          prevTokens
+
+      // _ + [__]
+      case _ => s.trim.toLowerCase match {
+        case "am" => prevTokens :+ TimeClaus(Some(Am("")), None)
+        case "um" => prevTokens :+ TimeClaus(None, Some(Um("")))
+      }
+    }
+    parse(others, newTokens)
   }
 
   private def parseConnector(prevTokens: Seq[Claus], others: Seq[String], s: String)
@@ -269,6 +291,11 @@ object Satze {
         else if (Verb.isInstance(s)) {
           parseVerb(prevTokens, others, s)
         }
+        // Time has to be examined before preposition
+        // since there are some overlapping 
+        else if (Time.isInstance(s)){
+          parseTime(prevTokens, others, s)
+        }
         else if (Preposition.isInstance(s)) {
           parsePreposition(prevTokens, others, s)
         }
@@ -283,9 +310,6 @@ object Satze {
         }
         else if (Negation.isInstance(s)) {
           parseNegation(prevTokens, others, s)
-        }
-        else if (Time.isInstance(s)){
-          parseTime(prevTokens, others, s)
         }
         else {
           prevTokens match {
