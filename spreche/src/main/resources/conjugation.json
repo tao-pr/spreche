@@ -209,6 +209,16 @@
     "ihr": "benutzt",
     "Sie": "benutzen"
   },
+  "liegen": {
+    "ich": "liege",
+    "du": "liegst",
+    "es": "liegt",
+    "sie": "liegt",
+    "er": "liegt",
+    "wir": "liegen",
+    "ihr": "liegt",
+    "Sie": "liegen"
+  },
   "stehen": {
     "ich": "stehe",
     "du": "stehst",
