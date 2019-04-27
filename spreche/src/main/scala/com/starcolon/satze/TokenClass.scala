@@ -464,7 +464,7 @@ object Pronoun extends TokenInstance {
 
 case class Um(override val t: String) extends Time {
   override def toString: String = {
-    t.split(":") match {
+    t.split(":").toSeq match {
       case h::m::Nil => 
         "um " + NumberSet.toString(h.toInt) + " Uhr " + NumberSet.toString(m.toInt)
 
