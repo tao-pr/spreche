@@ -482,6 +482,6 @@ case class Am(override val t: String) extends Time {
 
 object Time extends TokenInstance {
   override def isInstance(token: String)(implicit rule: MasterRule) = {
-    Seq("um","am").contains(token.toLowerCase)
+    Seq("um","am").contains(token.toLowerCase.trim)
   }
 }

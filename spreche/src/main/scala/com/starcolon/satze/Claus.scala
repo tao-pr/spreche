@@ -197,4 +197,6 @@ extends Claus {
   override def render(satze: Satze, index: Int)(implicit rule: MasterRule) = {
     Seq(am, um).map(_.map(_.toString).getOrElse("")).mkString(" ").trim
   }
+
+  override def toString = s"-${RED_B + BLACK}T${RESET}:am=${am},um=${um}"
 }
