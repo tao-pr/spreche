@@ -398,5 +398,15 @@
     "wir": "einsteigen",
     "ihr": "einsteigt",
     "Sie": "einsteigen"
+  },
+  "bewerten": {
+    "ich": "bewerte",
+    "du": "bewertest",
+    "es": "bewertet",
+    "sie": "bewertet",
+    "er": "bewertet",
+    "wir": "bewerten",
+    "ihr": "bewertet",
+    "Sie": "bewerten"
   }
 }
