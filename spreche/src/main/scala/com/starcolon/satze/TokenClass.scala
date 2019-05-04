@@ -464,13 +464,16 @@ object Pronoun extends TokenInstance {
 
 case class Um(override val t: String) extends Time {
   override def toString: String = {
-    t.split(":").toSeq match {
-      case h::m::Nil => 
-        "um " + NumberSet.toString(h.toInt) + " Uhr " + NumberSet.toString(m.toInt)
-
-      case h::Nil =>
-        "um " + NumberSet.toString(h.toInt) + " Uhr"
-    }
+    // TAOTODO: Parse time more naturally (like halbzehn, viertel, ...)
+    val timeTokens = t.split(":").toSeq
+    timeTokens.headOption.map {
+      case hh =>
+        val t = "um " + NumberSet.toString(hh.toInt) + " Uhr "
+        if (timeTokens.length > 1){
+          t + NumberSet.toString(timeTokens.last.toInt)
+        }
+        else t.trim()
+    }.getOrElse("")
   }
 }
 
