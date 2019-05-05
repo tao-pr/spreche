@@ -487,7 +487,10 @@ case class Um(override val t: String) extends Time {
 case class Am(override val t: String) extends Time {
   val ohnePrefix = Seq("heute","morgen")
   override def toString: String = {
-    "am " + t
+    ohnePrefix.contains(t) match {
+      case true => t.capInitial
+      case false => "am " + t.capInitial
+    }
   }
 }
 

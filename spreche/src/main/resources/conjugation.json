@@ -129,6 +129,16 @@
     "ihr": "geht",
     "Sie": "gehen"
   },
+  "laufen": {
+    "ich": "laufe",
+    "du": "läufst",
+    "es": "läuft",
+    "sie": "läuft",
+    "er": "läuft",
+    "wir": "laufen",
+    "ihr": "lauft",
+    "Sie": "laufen"
+  },
   "sehen": {
     "ich": "sehe",
     "du": "siehst",
@@ -138,6 +148,26 @@
     "wir": "sehen",
     "ihr": "seht",
     "Sie": "sehen"
+  },
+  "beginnen": {
+    "ich": "beginne",
+    "du": "beginnst",
+    "es": "beginnt",
+    "sie": "beginnt",
+    "er": "beginnt",
+    "wir": "beginnen",
+    "ihr": "beginnt",
+    "Sie": "beginnen"
+  },
+  "schließen": {
+    "ich": "schließe",
+    "du": "schließt",
+    "es": "schließt",
+    "sie": "schließt",
+    "er": "schließt",
+    "wir": "schließen",
+    "ihr": "schließt",
+    "Sie": "schließen"
   },
   "haben": {
     "ich": "habe",
@@ -309,15 +339,15 @@
     "ihr": "braucht",
     "Sie": "brauchen"
   },
-  "laden": {
-    "ich": "lade",
-    "du": "lädst",
-    "es": "lädt",
-    "sie": "lädt",
-    "er": "lädt",
-    "wir": "laden",
-    "ihr": "ladet",
-    "Sie": "laden"
+  "einladen": {
+    "ich": "einlade",
+    "du": "einlädst",
+    "es": "einlädt",
+    "sie": "einlädt",
+    "er": "einlädt",
+    "wir": "einladen",
+    "ihr": "einladet",
+    "Sie": "einladen"
   },
   "besuchen": {
     "ich": "besuche",
@@ -408,5 +438,15 @@
     "wir": "bewerten",
     "ihr": "bewertet",
     "Sie": "bewerten"
+  },
+  "gefallen": {
+    "ich": "gefalle",
+    "du": "gefällst",
+    "es": "gefällt",
+    "sie": "gefällt",
+    "er": "gefällt",
+    "wir": "gefallen",
+    "ihr": "gefallt",
+    "Sie": "gefallen"
   }
 }

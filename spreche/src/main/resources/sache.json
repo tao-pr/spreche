@@ -73,6 +73,7 @@
 
   "Zimmer": ["das","Zimmer"],
   "Haus": ["das","Hausen"],
+  "Wohnung": ["die", "Wohnung"],
   "Schule": ["die","Schulen"],
   "Kino": ["das","Kinos"],
   "Büro": ["das","Büro"],
