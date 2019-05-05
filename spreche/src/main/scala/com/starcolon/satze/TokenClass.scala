@@ -468,16 +468,25 @@ case class Um(override val t: String) extends Time {
     val timeTokens = t.split(":").toSeq
     timeTokens.headOption.map {
       case hh =>
-        val t = "um " + NumberSet.toString(hh.toInt) + " Uhr "
+        lazy val t = NumberSet.toString(hh.toInt)
         if (timeTokens.length > 1){
-          t + NumberSet.toString(timeTokens.last.toInt)
+          val parsedNum = timeTokens.last.toInt match {
+            case 0 => t
+            case 15 => "viertel nach " + t
+            case 30 => "halb" + NumberSet.toString(hh.toInt + 1)
+            case 45 => "viertel vor " + t
+            case mm => t + NumberSet.toString(mm)
+          }
+
+          "um " + parsedNum.trim + " Uhr"
         }
-        else t.trim()
+        else "um " + t.trim + " Uhr"
     }.getOrElse("")
   }
 }
 
 case class Am(override val t: String) extends Time {
+  val ohnePrefix = Seq("heute","morgen")
   override def toString: String = {
     "am " + t
   }
@@ -485,6 +494,7 @@ case class Am(override val t: String) extends Time {
 
 object Time extends TokenInstance {
   override def isInstance(token: String)(implicit rule: MasterRule) = {
-    Seq("um","am").contains(token.toLowerCase.trim)
+    Seq("um","am","heute","morgen","wochenende","jetzt")
+      .contains(token.toLowerCase.trim)
   }
 }

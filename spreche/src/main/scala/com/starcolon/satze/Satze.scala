@@ -41,7 +41,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
     val putModalVerbInFront = time.isDefined
     val verbClaus = verb.get
 
-    // TAOTODO: Put modal verb in front if needed
+    // Put modal verb in front if needed
     val clausesToRender = if (putModalVerbInFront)
         clauses.filterNot{ c =>
         c.isInstanceOf[VerbClaus] ||
