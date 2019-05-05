@@ -464,7 +464,6 @@ object Pronoun extends TokenInstance {
 
 case class Um(override val t: String) extends Time {
   override def toString: String = {
-    // TAOTODO: Parse time more naturally (like halbzehn, viertel, ...)
     val timeTokens = t.split(":").toSeq
     timeTokens.headOption.map {
       case hh =>
