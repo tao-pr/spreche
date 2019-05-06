@@ -97,9 +97,17 @@ case class SacheRule(m: Map[String, Sache]) extends Rule {
   override def toString = m.map{ case(_, sache) => sache.toString }.mkString("\n")
 }
 
+case class Adj(mean: String) extends Rule
+case class Adv(mean: String) extends Rule
+
+case class AdjRule(adj: Map[String, Adj], adv: Map[String, Adv]) extends Rule {
+  override def toString = ???
+}
+
 case class MasterRule(
   conjugation: ConjugationRule, 
-  sache: SacheRule) 
+  sache: SacheRule,
+  adj: AdjRule) 
 extends Rule 
 
 object Rule {
@@ -119,6 +127,8 @@ object Rule {
       case (sache, ns) => (sache, Sache(sache, ns.head, ns.last))
     })
   }
+
+  def loadAdjRule: AdjRule = ???
 
   def loadContext: MasterRule = {
     implicit val formats: Formats = DefaultFormats.withStrictOptionParsing.withStrictArrayExtraction
