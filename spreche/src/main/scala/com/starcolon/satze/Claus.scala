@@ -171,7 +171,7 @@ with PronounClaus {
     val objects = satze.clauses
       .zipWithIndex
       .collect{ 
-        case(c,i) if c.isInstanceOf[ObjectClaus] => 
+        case(c: ObjectClaus, i) =>
           (c.asInstanceOf[ObjectClaus], i)
         }
     val VerbClaus(v) = satze.verb.get
@@ -190,4 +190,13 @@ with PronounClaus {
   }
 
   override def toString = s"-${CYAN_B + BLACK}O${RESET}:${prep.map(_.s).getOrElse("")} ${psToString}"
+}
+
+case class TimeClaus(am: Option[Am], um: Option[Um])
+extends Claus {
+  override def render(satze: Satze, index: Int)(implicit rule: MasterRule) = {
+    Seq(am, um).map(_.map(_.toString).getOrElse("")).mkString(" ").trim
+  }
+
+  override def toString = s"-${RED_B + BLACK}T${RESET}:am=${am},um=${um}"
 }

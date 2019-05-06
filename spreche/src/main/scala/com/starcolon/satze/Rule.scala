@@ -19,7 +19,6 @@ case object PrepositionRule extends Rule {
     "gegen" -> Akkusativ,
     "bis" -> Akkusativ,
     "durch" -> Akkusativ,
-    "um" -> Akkusativ,
     "zu" -> Dativ,
     "in" -> Dativ,
     "an" -> Dativ,
