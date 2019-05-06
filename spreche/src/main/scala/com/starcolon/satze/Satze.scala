@@ -281,6 +281,10 @@ object Satze {
       case _ => s.trim.toLowerCase match {
         case "am" => prevTokens :+ TimeClaus(Some(Am("")), None)
         case "um" => prevTokens :+ TimeClaus(None, Some(Um("")))
+        case n if (Time.days.contains(n)) => 
+          prevTokens :+ TimeClaus(Some(Am(n)), None)
+        case n if (Time.times.contains(n)) => 
+          prevTokens :+ TimeClaus(None, Some(Um(n)))
       }
     }
     parse(others, newTokens)

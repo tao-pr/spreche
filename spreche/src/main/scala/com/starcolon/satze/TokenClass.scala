@@ -465,6 +465,8 @@ object Pronoun extends TokenInstance {
 case class Um(override val t: String) extends Time {
   override def toString: String = {
     val timeTokens = t.split(":").toSeq
+    val (prefix, suffix) = if (Time.allPredef.contains(t)) 
+      ("","") else ("um "," Uhr")
     timeTokens.headOption.map {
       case hh =>
         lazy val t = NumberSet.toString(hh.toInt)
@@ -477,17 +479,16 @@ case class Um(override val t: String) extends Time {
             case mm => t + NumberSet.toString(mm)
           }
 
-          "um " + parsedNum.trim + " Uhr"
+          prefix + parsedNum.trim + suffix
         }
-        else "um " + t.trim + " Uhr"
+        else prefix + t.trim + suffix
     }.getOrElse("")
   }
 }
 
 case class Am(override val t: String) extends Time {
-  val ohnePrefix = Seq("heute","morgen")
   override def toString: String = {
-    ohnePrefix.contains(t) match {
+    Time.allPredef.contains(t) match {
       case true => t.capInitial
       case false => "am " + t.capInitial
     }
@@ -495,8 +496,16 @@ case class Am(override val t: String) extends Time {
 }
 
 object Time extends TokenInstance {
+
+  val days = Set(
+    "heute","morgen","gestern","wochenende","arbeittags",
+    "montag","dienstag","mittwoch","donnerstag","freitag",
+    "samstag","sonntag")
+  val times = Set("jetzt")
+  val allPredef = days ++ times
+
   override def isInstance(token: String)(implicit rule: MasterRule) = {
-    Seq("um","am","heute","morgen","wochenende","jetzt")
+    (Seq("um","am") ++ days ++ times)
       .contains(token.toLowerCase.trim)
   }
 }
