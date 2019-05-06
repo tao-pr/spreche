@@ -9,9 +9,14 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
   def verb: Option[VerbClaus]           = clauses.find(_.isInstanceOf[VerbClaus]).map(_.asInstanceOf[VerbClaus])
   def modalVerb: Option[ModalVerbClaus] = clauses.find(_.isInstanceOf[ModalVerbClaus]).map(_.asInstanceOf[ModalVerbClaus])
   def objekt: Option[ObjectClaus]       = clauses.find(_.isInstanceOf[ObjectClaus]).map(_.asInstanceOf[ObjectClaus])
+  def time: Option[TimeClaus]           = clauses.find(_.isInstanceOf[TimeClaus]).map(_.asInstanceOf[TimeClaus])
   
   override def render(satze: Satze = this, index: Int = -1)(implicit rule: MasterRule) = {
-    modalVerb match {
+    
+    // Render time at the beginning of the satze (if any)
+    val timePrefix = time.map(_.render(satze,-1) + " ").getOrElse("")
+    
+    timePrefix + (modalVerb match {
       // Without modal verb
       case None => renderSVO()
       case Some(ModalVerbClaus(_)) => 
@@ -27,37 +32,69 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
 
           case _ => renderSMOV()
         }
-    }
+    })
   }
 
   private def renderSMOV()
   (implicit rule: MasterRule) = {
     
+    val putModalVerbInFront = time.isDefined
     val verbClaus = verb.get
 
-    val clausesNoVerb = clauses.filterNot(_.isInstanceOf[VerbClaus])
+    // Put modal verb in front if needed
+    val clausesToRender = if (putModalVerbInFront)
+        clauses.filterNot{ c =>
+        c.isInstanceOf[VerbClaus] ||
+        c.isInstanceOf[TimeClaus] ||
+        c.isInstanceOf[ModalVerbClaus]
+      }
+      else
+        clauses.filterNot{ c =>
+          c.isInstanceOf[VerbClaus] ||
+          c.isInstanceOf[TimeClaus]
+        }
+    val beginning = if (putModalVerbInFront){
+      modalVerb.map(_.render(this, -1)).getOrElse("") + " "
+    }
+    else ""
+
     val endingVerb = rule.conjugation.conjugateVerb(
       verbClaus.v.v, Wir, NoArtikel
     )
 
-    val isNegate = clausesNoVerb.headOption == Some(NegateClaus)
+    val isNegate = clausesToRender.headOption == Some(NegateClaus)
     val preVerbToken = if (isNegate) " nicht " else " "
     
-    Satze.abbrev(clausesNoVerb.zipWithIndex.map{
+    beginning + Satze.abbrev(clausesToRender.zipWithIndex.map{
       case(c,i) => c.render(this, i).trim
     }.mkString(" ")) + preVerbToken + endingVerb
   }
 
   private def renderSVO()(implicit rule: MasterRule) = {
-    val clausesWithoutModalVerb = clauses.filterNot(_.isInstanceOf[ModalVerbClaus])
-    val satzeWithoutModalVerb = Satze(clausesWithoutModalVerb)
+    val putVerbInFront = time.isDefined
+    val (clausesToRender, beginning): (Seq[Claus], String) =
+      if (!putVerbInFront)
+        (clauses, "")
+      else{
+        val clausesNoVerb: Seq[Claus] = clauses.filterNot(_.isInstanceOf[VerbClaus])
+        val verbStr = clauses.filter(_.isInstanceOf[VerbClaus])
+          .headOption
+          // NOTE: Following render has to supply the full sentence with verbs
+          .map(_.render(Satze(clauses),-1) + " ")
+          .getOrElse("")
+
+        (clausesNoVerb, verbStr)
+      }
+    val satzeRef = this
     
-    val isNegate = clausesWithoutModalVerb.headOption == Some(NegateClaus)
+    val isNegate = clausesToRender.headOption == Some(NegateClaus)
     val ending = if (isNegate) " nicht" else ""
 
-    Satze.abbrev(clausesWithoutModalVerb.zipWithIndex.map{
-      case(c,i) => c.render(satzeWithoutModalVerb, i).trim
-    }.mkString(" ")) + ending
+    beginning + Satze.abbrev(clausesToRender
+      .filterNot(_.isInstanceOf[TimeClaus])
+      .zipWithIndex.map{
+        case(c,i) => c.render(satzeRef, i).trim
+      }.mkString(" ")) + ending
   }
   
   override def toString = clauses.map(_.toString).mkString(" ")
@@ -222,6 +259,37 @@ object Satze {
     parse(others, newTokens)
   }
 
+  private def parseTime(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+
+    val newTokens = prevTokens match {
+
+      // _ + T + [__]
+      case ns :+ TimeClaus(am,um) => 
+        if (s.toLowerCase.trim == "um")
+          ns :+ TimeClaus(am, Some(Um("")))
+        else if (s.toLowerCase.trim == "am")
+          ns :+ TimeClaus(Some(Am("")), um)
+        else if (am == Some(Am("")))
+          ns :+ TimeClaus(Some(Am(s)), um)
+        else if (um == Some(Um("")))
+          ns :+ TimeClaus(am, Some(Um(s)))
+        else 
+          prevTokens
+
+      // _ + [__]
+      case _ => s.trim.toLowerCase match {
+        case "am" => prevTokens :+ TimeClaus(Some(Am("")), None)
+        case "um" => prevTokens :+ TimeClaus(None, Some(Um("")))
+        case n if (Time.days.contains(n)) => 
+          prevTokens :+ TimeClaus(Some(Am(n)), None)
+        case n if (Time.times.contains(n)) => 
+          prevTokens :+ TimeClaus(None, Some(Um(n)))
+      }
+    }
+    parse(others, newTokens)
+  }
+
   private def parseConnector(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
     val c = Connector.toConnector(s)
@@ -264,6 +332,11 @@ object Satze {
         else if (Verb.isInstance(s)) {
           parseVerb(prevTokens, others, s)
         }
+        // Time has to be examined before preposition
+        // since there are some overlapping 
+        else if (Time.isInstance(s)){
+          parseTime(prevTokens, others, s)
+        }
         else if (Preposition.isInstance(s)) {
           parsePreposition(prevTokens, others, s)
         }
@@ -280,8 +353,12 @@ object Satze {
           parseNegation(prevTokens, others, s)
         }
         else {
-          println(YELLOW_B + "Unknown token : " + RESET + RED + s + RESET)
-          parse(others, prevTokens)
+          prevTokens match {
+            case _ :+ TimeClaus(_,_) => parseTime(prevTokens, others, s)
+            case _ => 
+              println(YELLOW_B + "Unknown token : " + RESET + RED + s + RESET)
+              parse(others, prevTokens)
+          }
         }
       case Nil => Satze.from(prevTokens)
     }

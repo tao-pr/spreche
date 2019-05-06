@@ -5,8 +5,6 @@ import com.starcolon.satze.Implicits._
 // Traits
 
 sealed trait Token
-case object NoToken extends Token
-
 sealed trait Connector extends Token {
   def s: String
 }
@@ -26,6 +24,10 @@ sealed trait Pronoun extends Token {
 
 sealed trait TokenInstance {
   def isInstance(token: String)(implicit rule: MasterRule): Boolean
+}
+
+sealed trait Time extends Token {
+  val t: String
 }
 
 
@@ -457,5 +459,53 @@ object Pronoun extends TokenInstance {
   override def isInstance(token: String)(implicit rule: MasterRule) = {
     Pronoun.isInfinitiv(token.toLowerCase) || 
     rule.sache.isSache(token.capInitial)
+  }
+}
+
+case class Um(override val t: String) extends Time {
+  override def toString: String = {
+    val timeTokens = t.split(":").toSeq
+    val (prefix, suffix) = if (Time.allPredef.contains(t)) 
+      ("","") else ("um "," Uhr")
+    timeTokens.headOption.map {
+      case hh =>
+        lazy val t = NumberSet.toString(hh.toInt)
+        if (timeTokens.length > 1){
+          val parsedNum = timeTokens.last.toInt match {
+            case 0 => t
+            case 15 => "viertel nach " + t
+            case 30 => "halb" + NumberSet.toString(hh.toInt + 1)
+            case 45 => "viertel vor " + t
+            case mm => t + NumberSet.toString(mm)
+          }
+
+          prefix + parsedNum.trim + suffix
+        }
+        else prefix + t.trim + suffix
+    }.getOrElse("")
+  }
+}
+
+case class Am(override val t: String) extends Time {
+  override def toString: String = {
+    Time.allPredef.contains(t) match {
+      case true => t.capInitial
+      case false => "am " + t.capInitial
+    }
+  }
+}
+
+object Time extends TokenInstance {
+
+  val days = Set(
+    "heute","morgen","gestern","wochenende","arbeittags",
+    "montag","dienstag","mittwoch","donnerstag","freitag",
+    "samstag","sonntag")
+  val times = Set("jetzt")
+  val allPredef = days ++ times
+
+  override def isInstance(token: String)(implicit rule: MasterRule) = {
+    (Seq("um","am") ++ days ++ times)
+      .contains(token.toLowerCase.trim)
   }
 }

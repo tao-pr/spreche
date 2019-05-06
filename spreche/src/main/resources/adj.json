@@ -1,0 +1,46 @@
+{
+  "adv": {
+    "wirklich": {"mean": "really"},
+    "bestimmt": {"mean": "of course"},
+    "endlich": {"mean": "finally"}
+  },  
+  "adj" : {
+    "vorbei": {"mean": "is over"},
+    "fleißig": {"mean": "busy"},
+    "faul": {"mean": "lazy"},
+    "wichtig": {"mean": "important"},
+    
+    "neu": {"mean": "new"},
+    "alt": {"mean": "old"},
+    "schön": {"mean": "nice"},
+    "wenig": {"mean": "little"},
+    "gut": {"mean": "good"},
+    "lang": {"mean": "long"},
+    "kurz": {"mean": "short"},
+    "klein": {"mean": "small"},
+    "groß": {"mean": "big"},
+    "kalt": {"mean": "cold"},
+    "kuhl": {"mean": "cool"},
+    "heiß": {"mean": "hot"},
+    "warm": {"mean": "warm"},
+    "lecker": {"mean": "tasty"},
+    "fett": {"mean": "fat"},
+    "dünn": {"mean": "thin"},
+    "nass": {"mean": "wet"},
+    "bequem": {"mean": "convenient"},
+    "weit": {"mean": "wide"},
+    "eng": {"mean": "tight"},
+
+    "schwarz": {"mean": "black"},
+    "weiß": {"mean": "white"},
+    "gelb": {"mean": "yellow"},
+    "grün": {"mean": "green"},
+    "blau": {"mean": "blue"},
+    "rot": {"mean": "red"},
+    "grau": {"mean": "gray"},
+    "lila": {"mean": "purple"},
+    "orange": {"mean": "orange"},
+    "braun": {"mean": "brown"},
+    "bunt": {"mean": "colourful"}
+  }
+}
