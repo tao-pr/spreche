@@ -509,3 +509,11 @@ object Time extends TokenInstance {
       .contains(token.toLowerCase.trim)
   }
 }
+
+object Adj extends TokenInstance {
+  override def isInstance(token: String)(implicit rule: MasterRule) = {
+    // TAOTODO: Check with unstemmed version too
+    rule.adj.contains(token.toLowerCase.trim) ||
+    rule.adv.contains(token.toLowerCase.trim)
+  }
+}

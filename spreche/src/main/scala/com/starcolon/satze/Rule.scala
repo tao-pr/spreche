@@ -101,7 +101,7 @@ case class Adj(mean: String) extends Rule
 case class Adv(mean: String) extends Rule
 
 case class AdjRule(adj: Map[String, Adj], adv: Map[String, Adv]) extends Rule {
-  override def toString = ???
+  override def toString = s"Adj : ${adj.keySet}\n,Adv: ${adv.keySet}"
 }
 
 case class MasterRule(
@@ -149,8 +149,8 @@ object Rule {
     println(RESET)
 
     println(adj)
-    println(conjugation)
-    println(sache)
+    //println(conjugation)
+    //println(sache)
     
     MasterRule(conjugation, sache, adj)
   }
