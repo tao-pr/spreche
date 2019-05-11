@@ -38,6 +38,7 @@
   "Wand": ["die","Wände"],
   "Musik": ["die","Musik"],
   "Buchung": ["die","Buchungen"],
+  "Termin": ["der","Termine"],
 
   "Mann": ["der","Männer"],
   "Frau": ["die","Fräuen"],
