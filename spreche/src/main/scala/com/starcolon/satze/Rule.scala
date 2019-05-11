@@ -128,20 +128,30 @@ object Rule {
     })
   }
 
-  def loadAdjRule: AdjRule = ???
+  def loadAdjRule: AdjRule = {
+    implicit val formats: Formats = DefaultFormats.withStrictOptionParsing.withStrictArrayExtraction
+    val raw = parse(fromFile("adj.json")).extract[Map[String, Map[String, Map[String, String]]]]
+
+    val adj = raw("adj").map{ case (w,attr) => (w, Adj(attr.getOrElse("mean", "")))}
+    val adv = raw("adv").map{ case (w,attr) => (w, Adv(attr.getOrElse("mean", "")))}
+
+    AdjRule(adj, adv)
+  }
 
   def loadContext: MasterRule = {
     implicit val formats: Formats = DefaultFormats.withStrictOptionParsing.withStrictArrayExtraction
     val conjugation = loadConjugationRule
     val sache = loadSacheRule
+    val adj = loadAdjRule
     
     println(GREEN)
     println("Rules loaded")
     println(RESET)
 
+    println(adj)
     println(conjugation)
     println(sache)
     
-    MasterRule(conjugation, sache)
+    MasterRule(conjugation, sache, adj)
   }
 }
