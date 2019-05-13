@@ -111,9 +111,9 @@ object Satze {
 
   def from(clauses: Seq[Claus]) = {
 
-    def correctIhrDas(ps: Seq[(Artikel,Pronoun)]) = ps.map{ 
-      case (Ihre,NP) => (NoArtikel,Ihr)
-      case (Der,NP) => (NoArtikel,Das)
+    def correctIhrDas(ps: Seq[(Artikel,Adj,Pronoun)]) = ps.map{ 
+      case (Ihre,j,NP) => (NoArtikel,j,Ihr)
+      case (Der,j,NP) => (NoArtikel,j,Das)
       case any => any
     }
 
@@ -147,18 +147,18 @@ object Satze {
     val p = Pronoun.toPronoun(s)
     val newTokens = prevTokens match {
       // [P]
-      case Nil => SubjectClaus((Ein,p) :: Nil) :: Nil
+      case Nil => SubjectClaus((Ein,Adj(Nil),p) :: Nil) :: Nil
 
       // Continuous subject
       case ns :+ SubjectClaus(ps,c) => ps match {
         
         // _ + artikel + [P]
-        case ps0 :+ ((a0,NP)) => 
-          ns :+ SubjectClaus(ps0 :+ ((a0,p)), c)
+        case ps0 :+ ((a0,j0,NP)) => 
+          ns :+ SubjectClaus(ps0 :+ ((a0,j0,p)), c)
 
         // _ + artikel + P + [P] -- missing connector
         case _ => 
-          ns :+ SubjectClaus(ps :+ ((Ein,p)), c)
+          ns :+ SubjectClaus(ps :+ ((Ein,Adj(Nil),p)), c)
       }
 
       // Continuous object
@@ -166,29 +166,29 @@ object Satze {
 
         // prep + [P]
         case Nil => 
-          ns :+ ObjectClaus(prep, ((Ein,p)) :: Nil, c)
+          ns :+ ObjectClaus(prep, ((Ein,Adj(Nil),p)) :: Nil, c)
 
         // _ + artikel + [P]
-        case ps0 :+ ((a0,NP)) => 
-          ns :+ ObjectClaus(prep, ps0 :+ ((a0,p)), c)
+        case ps0 :+ ((a0,j0,NP)) => 
+          ns :+ ObjectClaus(prep, ps0 :+ ((a0,j0,p)), c)
 
         // _ + P + [P]
         case _ => c match {
           // 2nd object
           // _ + artikel + P + [P]
           case Space =>
-            prevTokens :+ ObjectClaus(None, ((Ein,p)) :: Nil, c)
+            prevTokens :+ ObjectClaus(None, ((Ein,Adj(Nil),p)) :: Nil, c)
 
           // Multiple objects
           // _ + P + und + [P]
           case _ =>
-            ns :+ ObjectClaus(prep, ps :+ ((Ein,p)), c)
+            ns :+ ObjectClaus(prep, ps :+ ((Ein,Adj(Nil),p)), c)
         }
       }
       
       // _ + [P]
       case _ => 
-        prevTokens :+ ObjectClaus(ps = (Ein,p) :: Nil)
+        prevTokens :+ ObjectClaus(ps = (Ein,Adj(Nil),p) :: Nil)
     }
     parse(others, newTokens)
   }
@@ -197,7 +197,7 @@ object Satze {
   (implicit rule: MasterRule) = {
 
     val a = Artikel.toArtikel(s)
-    val newPs = ((a,NP)) :: Nil
+    val newPs = ((a,Adj(Nil),NP)) :: Nil
 
     // NOTE: "Ihr" will also be counted as artikel initially
     val newTokens = prevTokens match {
@@ -323,6 +323,14 @@ object Satze {
     parse(others, newTokens)
   }
 
+  private def parseAdj(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+    val newTokens = prevTokens match {
+      case _ => ???
+    }
+    parse(others, newTokens)
+  }
+
   def parse(tokens: Seq[String], prevTokens: Seq[Claus] = Nil)(implicit rule: MasterRule): Satze = 
     tokens match {
       case s :: others => 
@@ -351,6 +359,9 @@ object Satze {
         }
         else if (Negation.isInstance(s)) {
           parseNegation(prevTokens, others, s)
+        }
+        else if (Adj.isInstance(s)) {
+          parseAdj(prevTokens, others, s)
         }
         else {
           prevTokens match {

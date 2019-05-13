@@ -97,11 +97,16 @@ case class SacheRule(m: Map[String, Sache]) extends Rule {
   override def toString = m.map{ case(_, sache) => sache.toString }.mkString("\n")
 }
 
-case class Adj(mean: String) extends Rule
-case class Adv(mean: String) extends Rule
+sealed case class AdjSubRule(mean: String) extends Rule
+sealed case class AdvSubRule(mean: String) extends Rule
 
-case class AdjRule(adj: Map[String, Adj], adv: Map[String, Adv]) extends Rule {
-  override def toString = s"Adj : ${adj.keySet}\n,Adv: ${adv.keySet}"
+case class AdjRule(
+  adj: Map[String, AdjSubRule], 
+  adv: Map[String, AdvSubRule]) 
+extends Rule {
+  override def toString = s"Adj : ${adj.keySet}\nAdv: ${adv.keySet}"
+
+  def contains(s: String) = adj.contains(s) || adv.contains(s)
 }
 
 case class MasterRule(
@@ -132,8 +137,8 @@ object Rule {
     implicit val formats: Formats = DefaultFormats.withStrictOptionParsing.withStrictArrayExtraction
     val raw = parse(fromFile("adj.json")).extract[Map[String, Map[String, Map[String, String]]]]
 
-    val adj = raw("adj").map{ case (w,attr) => (w, Adj(attr.getOrElse("mean", "")))}
-    val adv = raw("adv").map{ case (w,attr) => (w, Adv(attr.getOrElse("mean", "")))}
+    val adj = raw("adj").map{ case (w,attr) => (w, AdjSubRule(attr.getOrElse("mean", "")))}
+    val adv = raw("adv").map{ case (w,attr) => (w, AdvSubRule(attr.getOrElse("mean", "")))}
 
     AdjRule(adj, adv)
   }
