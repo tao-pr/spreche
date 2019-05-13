@@ -32,6 +32,8 @@ sealed trait Time extends Token {
 
 
 // Classes and Objects
+case class Adj(s: Seq[String]) extends Token
+
 case object Und extends Connector { override val s = " und " }
 case object Oder extends Connector { override val s =" oder "}
 case object Space extends Connector { override val s = " " }
@@ -514,6 +516,8 @@ object Adj extends TokenInstance {
   override def isInstance(token: String)(implicit rule: MasterRule) = {
     // TAOTODO: Check with unstemmed version too
     rule.adj.contains(token.toLowerCase.trim) ||
-    rule.adv.contains(token.toLowerCase.trim)
+    rule.adj.contains(token.toLowerCase.trim)
   }
+
+  def empty = Adj(Nil)
 }

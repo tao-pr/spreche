@@ -13,11 +13,11 @@ case object NegateClaus extends Claus {
 }
 
 sealed trait PronounClaus {
-  val ps: Seq[(Artikel,Pronoun)]
+  val ps: Seq[(Artikel,Adj,Pronoun)]
   val connector: Connector
 
   def isPlural = ps match {
-    case ((a,p)) :: Nil => a match {
+    case ((a,j,p)) :: Nil => a match {
       case Plural => true
       case _ => false
     }
@@ -26,23 +26,25 @@ sealed trait PronounClaus {
   }
 
   def isPositional = ps match {
-    case ((a,p)) :: Nil => 
+    case ((a,j,p)) :: Nil => 
       p.isInstanceOf[PositionalPronoun]
 
     case _ => false
   }
   
-  protected def renderSache(c: Case)(pair: (Artikel, Pronoun))
+  protected def renderSache(c: Case)(pair: (Artikel, Adj, Pronoun))
   (implicit rule: MasterRule) = {
-    val (a,p) = pair
+    // TAOTODO: Take adj into account
+    val (a,j,p) = pair
     a.renderWith(rule.sache.findGender(p.s.capInitial), c) + " " + (a match {
       case Plural => rule.sache.findPlural(p.s.capInitial).capInitial
       case _ => p.s.capInitial
     })
   }
     
-  protected def renderInfinitiv(c: Case)(pair: (Artikel, Pronoun)) = { 
-    val (a,p) = pair
+  protected def renderInfinitiv(c: Case)(pair: (Artikel, Adj, Pronoun)) = { 
+    val (a,j,p) = pair
+    // TAOTODO: Take adj into account
     c match {
       case Nominativ => p.s
       case Akkusativ => p.akkusativ
@@ -50,22 +52,22 @@ sealed trait PronounClaus {
     }
   }
 
-  protected def psToString = ps.map{ case(a,p) => 
+  protected def psToString = ps.map{ case(a,j,p) => 
     a.toString + " " + p.s.capInitial
   }.mkString(connector.s)
 }
 
 case class SubjectClaus(
-  override val ps: Seq[(Artikel,Pronoun)] = Nil,
+  override val ps: Seq[(Artikel,Adj,Pronoun)] = Nil,
   override val connector: Connector = Und
 ) 
 extends Claus 
 with PronounClaus {
   override def render(satze: Satze, index: Int)(implicit rule: MasterRule) = 
-    ps.map{ case (a,p) =>
+    ps.map{ case (a,j,p) =>
       Pronoun.isInfinitiv(p) match {
-        case true => renderInfinitiv(Nominativ)((a,p))
-        case false => renderSache(Nominativ)((a,p))
+        case true => renderInfinitiv(Nominativ)((a,j,p))
+        case false => renderSache(Nominativ)((a,j,p))
       }
     }.mkString(connector.s)
 
@@ -84,7 +86,7 @@ extends Claus {
       rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel)
     }
     else { 
-      val (a,p) = subj.ps.head
+      val (a,j,p) = subj.ps.head
       rule.conjugation.conjugateVerb(v.v, p, a)
     }
   }
@@ -98,7 +100,7 @@ extends Claus {
   (implicit rule: MasterRule) = satze.subject.get match {
     case SubjectClaus(ps,_) => ps match {
       // Single subject
-      case ((a,p)) :: Nil => 
+      case ((a,j,p)) :: Nil => 
         rule.conjugation.conjugateVerb(v.v, p, a)
 
       // Multiple subjects
@@ -112,7 +114,7 @@ extends Claus {
 
 case class ObjectClaus(
   val prep: Option[Preposition] = None,
-  override val ps: Seq[(Artikel,Pronoun)] = Nil,
+  override val ps: Seq[(Artikel,Adj,Pronoun)] = Nil,
   override val connector: Connector = Space
 ) 
 extends Claus 
@@ -127,10 +129,11 @@ with PronounClaus {
           if (v.isAkkusativ) Akkusativ 
           else Nominativ
         )
-        ps.map { case (a,p) => 
+        ps.map { case (a,j,p) => 
+          // TAOTODO: Take adj into account
           Pronoun.isInfinitiv(p) match {
-            case true => renderInfinitiv(effectiveCase)((a,p))
-            case false => renderSache(effectiveCase)((a,p))
+            case true => renderInfinitiv(effectiveCase)((a,j,p))
+            case false => renderSache(effectiveCase)((a,j,p))
           }
         }.mkString(connector.s)
     })
