@@ -33,9 +33,14 @@ sealed trait Time extends Token {
 
 // Classes and Objects
 case class Adj(s: Seq[String]) extends Token {
-  def nominativ: String = s.mkString(" ")
-  def akkusativ: String = s.mkString(" ")
-  def dativ: String = s.mkString(" ")
+  def nominativ: String = s.filterNot(_.isEmpty).mkString(" ")
+  def akkusativ: String = s.filterNot(_.isEmpty).mkString(" ")
+  def dativ: String = s.filterNot(_.isEmpty).mkString(" ")
+
+  def renderWith(gender: String): String = {
+    // TAOTODO: conjugation
+    nominativ
+  }
 }
 
 case object Und extends Connector { override val s = " und " }
