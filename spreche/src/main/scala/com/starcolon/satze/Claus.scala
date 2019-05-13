@@ -34,12 +34,16 @@ sealed trait PronounClaus {
   
   protected def renderSache(c: Case)(pair: (Artikel, Adj, Pronoun))
   (implicit rule: MasterRule) = {
-    // TAOTODO: Take adj into account
     val (a,j,p) = pair
-    a.renderWith(rule.sache.findGender(p.s.capInitial), c) + " " + (a match {
+    val gender = rule.sache.findGender(p.s.capInitial)
+    val stringArtikel = a.renderWith(gender, c)
+    val stringAdj     = j.renderWith(gender)
+    val stringPronoun = a match {
       case Plural => rule.sache.findPlural(p.s.capInitial).capInitial
       case _ => p.s.capInitial
-    })
+    }
+
+    Seq(stringArtikel, stringAdj, stringPronoun).filterNot(_.isEmpty).mkString(" ").trim
   }
     
   protected def renderInfinitiv(c: Case)(pair: (Artikel, Adj, Pronoun)) = { 
