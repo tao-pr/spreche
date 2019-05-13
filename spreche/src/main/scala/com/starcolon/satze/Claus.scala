@@ -44,16 +44,15 @@ sealed trait PronounClaus {
     
   protected def renderInfinitiv(c: Case)(pair: (Artikel, Adj, Pronoun)) = { 
     val (a,j,p) = pair
-    // TAOTODO: Take adj into account
-    c match {
-      case Nominativ => p.s
-      case Akkusativ => p.akkusativ
-      case Dativ => p.dativ
-    }
+    (c match {
+      case Nominativ => Seq(j.nominativ, p.s).mkString
+      case Akkusativ => Seq(j.akkusativ, p.akkusativ).mkString
+      case Dativ => Seq(j.dativ, p.dativ).mkString
+    }).trim
   }
 
   protected def psToString = ps.map{ case(a,j,p) => 
-    a.toString + " " + p.s.capInitial
+    Seq(a.toString, j.toString, p.s.capInitial).mkString(" ")
   }.mkString(connector.s)
 }
 
