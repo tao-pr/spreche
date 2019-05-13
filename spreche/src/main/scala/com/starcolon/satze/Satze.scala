@@ -238,6 +238,60 @@ object Satze {
     parse(others, newTokens)
   }
 
+  private def parseAdj(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+    val newPs = ((Ein,Adj(s :: Nil),NP)) :: Nil
+
+    // NOTE: "Ihr" will also be counted as artikel initially
+    val newTokens = prevTokens match {
+      // [artikel]
+      case Nil  => 
+        SubjectClaus(newPs) :: Nil
+
+      // Multiple subjects
+      // P + [adj]
+      case ns :+ SubjectClaus(ps, c) =>
+        val ps_ = ps match {
+          case Nil => newPs
+
+          // P + artikel + [adj]
+          case ps0 :+ ((a0,Adj(Nil),NP)) => ps0 :+ ((a0,Adj(s :: Nil),NP))
+
+          // P + artikel + adj + [adj]
+          case ps0 :+ ((a0,Adj(adjs0),NP)) => ps0 :+ ((a0,Adj(adjs0 :+ s),NP))
+        }
+
+        ns :+ SubjectClaus(ps_, c)
+
+      // _ + prep + [adj]
+      case ns :+ ObjectClaus(prep, ps, c) => ps match {
+
+        // _ + prep + [adj]
+        case Nil => 
+          ns :+ ObjectClaus(prep, newPs, c)
+
+        
+        case _ => c match {
+          // 2nd object
+          // _ + prep + artikel + P + [adj]
+          case Space => 
+            prevTokens :+ ObjectClaus(None, newPs)
+
+          // multiple objects
+          // _ P + und + [artikel]
+          case _ =>
+            ns :+ ObjectClaus(prep, ps ++ newPs, c)
+        }
+      }
+
+      // _ + [artikel]
+      case _ => 
+        prevTokens :+ ObjectClaus(None, newPs)
+    }
+    parse(others, newTokens)
+  }
+
+
   private def parsePreposition(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
     val prep = Preposition(s.trim.toLowerCase)
@@ -320,14 +374,6 @@ object Satze {
       case _                 => NegateClaus +: prevTokens
     }
 
-    parse(others, newTokens)
-  }
-
-  private def parseAdj(prevTokens: Seq[Claus], others: Seq[String], s: String)
-  (implicit rule: MasterRule) = {
-    val newTokens = prevTokens match {
-      case _ => ???
-    }
     parse(others, newTokens)
   }
 
