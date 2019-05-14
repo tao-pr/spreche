@@ -270,18 +270,19 @@ object Satze {
         case Nil => 
           ns :+ ObjectClaus(prep, newPs, c)
 
-        
-        case _ => c match {
-          // 2nd object
-          // _ + prep + artikel + P + [adj]
-          case Space => 
-            prevTokens :+ ObjectClaus(None, newPs)
+        // multiple objects
+        // _ + prep + ?? + [adj]
+        case ps0 :+ ((a0,Adj(j0),p0)) => 
 
-          // multiple objects
-          // _ P + und + [artikel]
-          case _ =>
-            ns :+ ObjectClaus(prep, ps ++ newPs, c)
-        }
+          p0 match {
+            // prep + [adj]
+            case NP => ns :+ ObjectClaus(prep, ps0 :+ ((a0,Adj(j0 :+ s),NP)), c)
+
+            // new object begins with adj
+            // prep + P + [adj]
+            case _ => ns :+ ObjectClaus(prep, ps :+ ((Ein,Adj(s :: Nil),NP)), c)
+
+          }
       }
 
       // _ + [artikel]
