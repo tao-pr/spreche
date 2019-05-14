@@ -77,6 +77,7 @@ with PronounClaus {
   override def toString = s"+ ${CYAN_B + BLACK}S${RESET}:${psToString}"
 }
 
+// TAOTODO: support gerne
 case class VerbClaus(v: Verb) 
 extends Claus {
   override def render(satze: Satze, index: Int)
