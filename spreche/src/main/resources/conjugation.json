@@ -19,6 +19,16 @@
     "ihr": "möchtet",
     "Sie": "möchten"
   },
+  "wünschen": {
+    "ich": "wünsche",
+    "du": "wünschst",
+    "es": "wünscht",
+    "sie": "wünscht",
+    "er": "wünscht",
+    "wir": "wünschen",
+    "ihr": "wünscht",
+    "Sie": "wünschen"
+  },
   "dürfen": {
     "ich": "darf",
     "du": "darfst",
