@@ -9,6 +9,11 @@
     "fleißig": {"mean": "busy"},
     "faul": {"mean": "lazy"},
     "wichtig": {"mean": "important"},
+    "sicher": {"mean": "sure"},
+    "ungewiss": {"mean": "uncertain"},
+    "sehr": {"mean": "very"},
+    "ganz": {"mean": "very"},
+    "prima": {"mean": "super"},
     
     "neu": {"mean": "new"},
     "alt": {"mean": "old"},
