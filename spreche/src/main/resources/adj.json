@@ -4,7 +4,9 @@
     "bestimmt": {"mean": "of course"},
     "endlich": {"mean": "finally"},
     "zusammen": {"mean": "together"},
-    "allein": {"mean": "alone"}
+    "allein": {"mean": "alone"},
+    "noch": {"mean": "still"},
+    "schon": {"mean": "already"}
   },  
   "adj" : {
     "vorbei": {"mean": "is over"},
