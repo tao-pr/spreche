@@ -6,7 +6,8 @@
     "zusammen": {"mean": "together"},
     "allein": {"mean": "alone"},
     "noch": {"mean": "still"},
-    "schon": {"mean": "already"}
+    "schon": {"mean": "already"},
+    "leider": {"mean": "unfortunately"}
   },  
   "adj" : {
     "vorbei": {"mean": "is over"},
@@ -40,6 +41,7 @@
     "weit": {"mean": "wide"},
     "eng": {"mean": "tight"},
     "mehr": {"mean": "more"},
+    "nett": {"mean": "nice"}, 
 
     "schwarz": {"mean": "black"},
     "weiß": {"mean": "white"},
