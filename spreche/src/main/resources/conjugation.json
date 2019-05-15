@@ -458,5 +458,15 @@
     "wir": "gefallen",
     "ihr": "gefallt",
     "Sie": "gefallen"
+  },
+  "arbeiten": {
+    "ich": "arbeite",
+    "du": "arbeitest",
+    "es": "arbeitet",
+    "sie": "arbeitet",
+    "er": "arbeitet",
+    "wir": "arbeiten",
+    "ihr": "arbeitet",
+    "Sie": "arbeiten"
   }
 }
