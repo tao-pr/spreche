@@ -7,7 +7,11 @@
     "allein": {"mean": "alone"},
     "noch": {"mean": "still"},
     "schon": {"mean": "already"},
-    "leider": {"mean": "unfortunately"}
+    "leider": {"mean": "unfortunately"},
+    "zuvor": {"mean": "previously"},
+    "natürlich": {"mean": "naturally"},
+    "sofort": {"mean": "immediately"},
+    "dafür": {"mean": "for this"}
   },  
   "adj" : {
     "vorbei": {"mean": "is over"},
@@ -16,9 +20,14 @@
     "wichtig": {"mean": "important"},
     "sicher": {"mean": "sure"},
     "ungewiss": {"mean": "uncertain"},
+    "definitiv": {"mean": "surely"},
     "sehr": {"mean": "very"},
+    "zu": {"mean": "too"},
     "ganz": {"mean": "very"},
     "prima": {"mean": "super"},
+    "aktuell": {"mean": "current"},
+    "jetztigen": {"mean": "current"},
+    "letzt": {"mean": "last"},
     
     "neu": {"mean": "new"},
     "alt": {"mean": "old"},
@@ -42,6 +51,7 @@
     "eng": {"mean": "tight"},
     "mehr": {"mean": "more"},
     "nett": {"mean": "nice"}, 
+    "los": {"mean": "loose"},
 
     "schwarz": {"mean": "black"},
     "weiß": {"mean": "white"},
