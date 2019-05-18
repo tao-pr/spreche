@@ -191,7 +191,6 @@ with PronounClaus {
     }
     else {
       // Single object, or with preposition
-      println(s"master case determined by preprosition: ${masterCase}")
       renderSoleObject(satze, masterCase)
     }
   }

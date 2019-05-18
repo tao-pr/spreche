@@ -102,6 +102,8 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
 
 object Satze {
 
+  sealed val excludedTokens = Set("uhr")
+
   def abbrev(satze: String) = {
     AbbrevRule.foldLeft(satze){ case(sat, pair) => 
       val (a,b) = pair
@@ -380,6 +382,9 @@ object Satze {
 
   def parse(tokens: Seq[String], prevTokens: Seq[Claus] = Nil)(implicit rule: MasterRule): Satze = 
     tokens match {
+      case s :: others if (excludedTokens.contains(s.toLowerCase)) =>
+        parse(others, prevTokens)
+
       case s :: others => 
         if (ModalVerb.isInstance(s)) {
           parseModalVerb(prevTokens, others, s)
