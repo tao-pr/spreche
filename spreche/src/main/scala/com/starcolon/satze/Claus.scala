@@ -17,8 +17,9 @@ sealed trait PronounClaus {
   val connector: Connector
 
   def isPlural = ps match {
-    case ((a,j,p)) :: Nil => a match {
-      case Plural => true
+    case ((a,j,p)) :: Nil => (a,p) match {
+      case (Plural,_) => true
+      case (_,Wir) => true
       case _ => false
     }
 

@@ -17,6 +17,7 @@
     "vorbei": {"mean": "is over"},
     "fleißig": {"mean": "busy"},
     "faul": {"mean": "lazy"},
+    "langweilig": {"mean": "boring"},
     "wichtig": {"mean": "important"},
     "sicher": {"mean": "sure"},
     "ungewiss": {"mean": "uncertain"},
@@ -28,7 +29,6 @@
     "aktuell": {"mean": "current"},
     "jetztigen": {"mean": "current"},
     "letzt": {"mean": "last"},
-    
     "neu": {"mean": "new"},
     "alt": {"mean": "old"},
     "schön": {"mean": "nice"},
