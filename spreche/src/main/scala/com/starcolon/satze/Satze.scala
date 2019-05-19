@@ -16,7 +16,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
     // Render time at the beginning of the satze (if any)
     val timePrefix = time.map(_.render(satze,-1) + " ").getOrElse("")
     
-    timePrefix + (modalVerb match {
+    (timePrefix + (modalVerb match {
       // Without modal verb
       case None => renderSVO()
       case Some(ModalVerbClaus(_)) => 
@@ -32,7 +32,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
 
           case _ => renderSMOV()
         }
-    })
+    })).trim
   }
 
   private def renderSMOV()
