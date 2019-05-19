@@ -146,7 +146,7 @@ object Satze {
   private def parsePronoun(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
     // Akkusativ noun
-    val p = Pronoun.toPronoun(s)
+    val p = Pronoun.toPronoun(s.toLowerCase)
     val newTokens = prevTokens match {
       // [P]
       case Nil => SubjectClaus((Ein,Adj(Nil),p) :: Nil) :: Nil

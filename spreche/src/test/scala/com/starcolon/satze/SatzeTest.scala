@@ -15,13 +15,17 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
   describe("Nominativ"){
 
     it("should render nominativ sentence"){
-      Satze.parse($("Er ist ein Pullover")).render() shouldBe("Er ist ein Pullover")
+      Satze.parse($("Er ist ein Pullover")).render() shouldBe(
+        "er ist ein Pullover")
     }
 
     it("should correct gender"){
-      Satze.parse($("Er ist einer Tasse")).render() shouldBe("Er ist eine Tasse")
-      Satze.parse($("Er ist das Vader")).render() shouldBe("Er ist der Vader")
-      Satze.parse($("Er ist der Mutter")).render() shouldBe("Er ist die Mutter")
+      Satze.parse($("Er ist einer Tasse")).render() shouldBe(
+        "er ist eine Tasse")
+      Satze.parse($("Er ist das Vader")).render() shouldBe(
+        "er ist der Vader")
+      Satze.parse($("Er ist der Mutter")).render() shouldBe(
+        "er ist die Mutter")
     }
 
     it("should make viele plural"){
@@ -37,7 +41,7 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
     it("should render multiple adjs"){
       Satze.parse($("Wir ist zu ungewiss und fleißig")).render() shouldBe(
-        "Wir sind zu ungewiss und fleißig")
+        "wir sind zu ungewiss fleißig")
     }
   }
 
@@ -45,7 +49,7 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
     it("should render akkusativ"){
       Satze.parse($("Ich habe mein kugelschreiber")).render() shouldBe(
-        "Ich habe meinen Kugelschreiber")
+        "ich habe meinen Kugelschreiber")
     }
 
     it("should render multiple objects or subjects"){
@@ -55,12 +59,12 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
     it("should render some prepositions as akkusativ"){
       Satze.parse($("Wir kommen für unsere Computer")).render() shouldBe(
-        "Wir kommen für unseren Computer")
+        "wir kommen für unseren Computer")
     }
 
     it("should render some prepositions as akkusativ (2)"){
       Satze.parse($("Er laufen durch der park oder der kirche oder ein büro")).render() shouldBe(
-        "Er lauft durch den Park oder die Kirche oder ein Büro")
+        "er läuft durch den Park oder die Kirche oder ein Büro")
     }
 
   }
@@ -84,17 +88,17 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
  
     it("should render halb"){
       Satze.parse($("Ich um 17:30 uhr kommen in das kino")).render() shouldBe(
-        "Um halbachtzehn Uhr komme Ich ins Kino")
+        "um halbachtzehn Uhr komme Ich ins Kino")
     }
 
     it("should render viertel"){
       Satze.parse($("Wir um 17:45 soll kommen in das kino")).render() shouldBe(
-        "Um viertel vor achtzehn Uhr sollen wir in das Kino kommen") 
+        "um viertel vor achtzehn Uhr sollen wir in das Kino kommen") 
     }
 
     it("should render day"){
       Satze.parse($("Ich am samstag will gehen mit mein Freund")).render() shouldBe(
-        "Am Samstag will Ich mit meinen Freund gehen") 
+        "am Samstag will Ich mit meinen Freund gehen") 
     }
 
     it("should render time & day"){
