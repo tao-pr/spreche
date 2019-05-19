@@ -102,7 +102,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
 
 object Satze {
 
-  sealed val excludedTokens = Set("uhr")
+  val excludedTokens = Set("uhr")
 
   def abbrev(satze: String) = {
     AbbrevRule.foldLeft(satze){ case(sat, pair) => 
