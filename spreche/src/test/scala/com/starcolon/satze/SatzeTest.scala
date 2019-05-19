@@ -26,13 +26,13 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
     it("should make viele plural"){
       Satze.parse($("Das ist viele Buch")).render() shouldBe(
-        "das sind die Bucher")
+        "das sind viele Bucher")
     }
 
 
     it("should render adj"){
       Satze.parse($("Mein haus ist sehr alt")).render() shouldBe(
-        "Mein haus ist sehr alt")
+        "mein Haus ist sehr alt")
     }
 
     it("should render multiple adjs"){
@@ -66,7 +66,7 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
   }
 
   describe("Dativ"){
-    
+
     it("should render simple Dativ"){}
 
     it("should render some prepositions as dativ"){}
@@ -81,7 +81,7 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
   }
 
   describe("Time"){
-
+ 
     it("should render halb"){
       Satze.parse($("Ich um 17:30 uhr kommen in das kino")).render() shouldBe(
         "Um halbachtzehn Uhr komme Ich ins Kino")
@@ -98,7 +98,7 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
     }
 
     it("should render time & day"){
-      Satze.parse($("Ich heute um 6:20 Uhr putzt mein tisch")).render() shouldBe(
+      Satze.parse($("Ich heute um 6:20 putzt mein tisch")).render() shouldBe(
         "Heute um sechs Uhr zwanzig putzen Ich meinen Tisch") 
     }
   }
