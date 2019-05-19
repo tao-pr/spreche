@@ -477,21 +477,21 @@ case class Um(override val t: String) extends Time {
   override def toString: String = {
     val timeTokens = t.split(":").toSeq
     val (prefix, suffix) = if (Time.allPredef.contains(t)) 
-      ("","") else ("um "," Uhr")
+      ("","") else ("um "," Uhr ")
     timeTokens.headOption.map {
       case hh =>
         lazy val t = NumberSet.toString(hh.toInt)
         lazy val tNext = NumberSet.toString(hh.toInt+1)
         if (timeTokens.length > 1){
           val parsedNum = timeTokens.last.toInt match {
-            case 0 => t
-            case 15 => "viertel nach " + t
-            case 30 => "halb" + NumberSet.toString(hh.toInt + 1)
-            case 45 => "viertel vor " + tNext
-            case mm => t + NumberSet.toString(mm)
+            case 0 => t + suffix
+            case 15 => "viertel nach " + t + suffix
+            case 30 => "halb" + NumberSet.toString(hh.toInt + 1) + suffix
+            case 45 => "viertel vor " + tNext + suffix
+            case mm => t + suffix + NumberSet.toString(mm)
           }
 
-          prefix + parsedNum.trim + suffix
+          prefix + parsedNum.replace("  "," ").trim
         }
         else prefix + t.trim + suffix
     }.getOrElse("")
