@@ -107,6 +107,15 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
   describe("Modal verbs"){
 
+    it("should render modal verb"){
+      Satze.parse($("Ich soll treffe mit mein Freund")).render() shouldBe(
+        "ich soll mit meinem Freund treffen")
+    }
+
+    it("should render modal verb with dativ"){
+      Satze.parse($("Ich soll bringe du meinen kugelschreiber")).render() shouldBe(
+        "ich soll dir meinen Kugelschreiber bringen")
+    }
   }
 
   describe("Time"){
