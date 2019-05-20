@@ -468,5 +468,15 @@
     "wir": "arbeiten",
     "ihr": "arbeitet",
     "Sie": "arbeiten"
+  },
+  "enziehen": {
+    "ich": "enziehe",
+    "du": "enziehst",
+    "es": "enzieht",
+    "sie": "enzieht",
+    "er": "enzieht",
+    "wir": "enziehen",
+    "ihr": "enzieht",
+    "Sie": "enziehen"
   }
 }
