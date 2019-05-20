@@ -53,6 +53,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
           c.isInstanceOf[VerbClaus] ||
           c.isInstanceOf[TimeClaus]
         }
+    val satzeWithoutModal = Satze(clauses.filterNot{_.isInstanceOf[ModalVerbClaus]})
     val beginning = if (putModalVerbInFront){
       modalVerb.map(_.render(this, -1)).getOrElse("") + " "
     }
@@ -66,7 +67,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
     val preVerbToken = if (isNegate) " nicht " else " "
     
     beginning + Satze.abbrev(clausesToRender.zipWithIndex.map{
-      case(c,i) => c.render(this, i).trim
+      case(c,i) => c.render(satzeWithoutModal, i).trim
     }.mkString(" ")) + preVerbToken + endingVerb
   }
 
