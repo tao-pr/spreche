@@ -32,7 +32,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
 
           case _ => renderSMOV()
         }
-    })).trim
+    })).trim.replace("  "," ")
   }
 
   private def renderSMOV()
