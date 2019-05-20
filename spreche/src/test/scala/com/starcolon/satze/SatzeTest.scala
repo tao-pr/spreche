@@ -112,7 +112,7 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
     it("should render time & day"){
       Satze.parse($("Ich heute um 6:20 putzt mein tisch")).render() shouldBe(
-        "Heute um sechs Uhr zwanzig putzen ich meinen Tisch") 
+        "Heute um sechs Uhr zwanzig putze ich meinen Tisch") 
     }
   }
 
