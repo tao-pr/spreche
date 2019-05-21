@@ -146,5 +146,10 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
     }
   }
 
+  describe("Separable verbs"){
+
+    
+  }
+
 }
 
