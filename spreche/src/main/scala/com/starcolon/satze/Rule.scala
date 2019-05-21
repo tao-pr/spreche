@@ -80,6 +80,14 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
     case _ => m.getOrElse(v, Map(p.s -> v)).getOrElse(p.s, v)
   }
 
+  def separate(v: String): Option[(String, String)] = {
+    Seq("ein","fern","aus","an").find(v.startsWith(_)).map{ pref =>
+      (pref, v.drop(pref.length))
+    }
+  }
+
+  def isSeparable(v: String) = separate(v).isDefined
+
   override def toString = m.map{ case(_, n) => 
     n.map{ case(p, v) => s"${p} ${v}"}.mkString(" | ") 
   }.mkString("\n")
