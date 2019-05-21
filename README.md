@@ -112,3 +112,18 @@ Output > ein Freund soll ins Cafe nicht kommen
 
 
 ```
+
+<b>Time</b>
+
+```
+Sagen Sie > das kind darf zu haus gehen um 15:30 uhr
+
+Output > um halbsechszehn Uhr darf das Kind zu ein Haus einer Uhr gehen
+
+---
+
+Sagen Sie > wir will mit unser auto zu das kino fahren am montag
+
+Output > Montag wollen wir mit unserem Auto zum Kino fahren
+
+```

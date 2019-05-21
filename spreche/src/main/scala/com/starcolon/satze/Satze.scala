@@ -16,7 +16,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
     // Render time at the beginning of the satze (if any)
     val timePrefix = time.map(_.render(satze,-1) + " ").getOrElse("")
     
-    timePrefix + (modalVerb match {
+    (timePrefix + (modalVerb match {
       // Without modal verb
       case None => renderSVO()
       case Some(ModalVerbClaus(_)) => 
@@ -32,7 +32,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
 
           case _ => renderSMOV()
         }
-    })
+    })).trim.replace("  "," ")
   }
 
   private def renderSMOV()
@@ -53,6 +53,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
           c.isInstanceOf[VerbClaus] ||
           c.isInstanceOf[TimeClaus]
         }
+    val satzeWithoutModal = Satze(clauses.filterNot{_.isInstanceOf[ModalVerbClaus]})
     val beginning = if (putModalVerbInFront){
       modalVerb.map(_.render(this, -1)).getOrElse("") + " "
     }
@@ -66,7 +67,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
     val preVerbToken = if (isNegate) " nicht " else " "
     
     beginning + Satze.abbrev(clausesToRender.zipWithIndex.map{
-      case(c,i) => c.render(this, i).trim
+      case(c,i) => c.render(satzeWithoutModal, i).trim
     }.mkString(" ")) + preVerbToken + endingVerb
   }
 
@@ -102,6 +103,8 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
 
 object Satze {
 
+  val excludedTokens = Set("uhr")
+
   def abbrev(satze: String) = {
     AbbrevRule.foldLeft(satze){ case(sat, pair) => 
       val (a,b) = pair
@@ -111,9 +114,9 @@ object Satze {
 
   def from(clauses: Seq[Claus]) = {
 
-    def correctIhrDas(ps: Seq[(Artikel,Pronoun)]) = ps.map{ 
-      case (Ihre,NP) => (NoArtikel,Ihr)
-      case (Der,NP) => (NoArtikel,Das)
+    def correctIhrDas(ps: Seq[(Artikel,Adj,Pronoun)]) = ps.map{ 
+      case (Ihre,j,NP) => (NoArtikel,j,Ihr)
+      case (Der,j,NP) => (NoArtikel,j,Das)
       case any => any
     }
 
@@ -144,21 +147,21 @@ object Satze {
   private def parsePronoun(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
     // Akkusativ noun
-    val p = Pronoun.toPronoun(s)
+    val p = Pronoun.toPronoun(s.toLowerCase)
     val newTokens = prevTokens match {
       // [P]
-      case Nil => SubjectClaus((Ein,p) :: Nil) :: Nil
+      case Nil => SubjectClaus((Ein,Adj(Nil),p) :: Nil) :: Nil
 
       // Continuous subject
       case ns :+ SubjectClaus(ps,c) => ps match {
         
         // _ + artikel + [P]
-        case ps0 :+ ((a0,NP)) => 
-          ns :+ SubjectClaus(ps0 :+ ((a0,p)), c)
+        case ps0 :+ ((a0,j0,NP)) => 
+          ns :+ SubjectClaus(ps0 :+ ((a0,j0,p)), c)
 
         // _ + artikel + P + [P] -- missing connector
         case _ => 
-          ns :+ SubjectClaus(ps :+ ((Ein,p)), c)
+          ns :+ SubjectClaus(ps :+ ((Ein,Adj(Nil),p)), c)
       }
 
       // Continuous object
@@ -166,29 +169,29 @@ object Satze {
 
         // prep + [P]
         case Nil => 
-          ns :+ ObjectClaus(prep, ((Ein,p)) :: Nil, c)
+          ns :+ ObjectClaus(prep, ((Ein,Adj(Nil),p)) :: Nil, c)
 
         // _ + artikel + [P]
-        case ps0 :+ ((a0,NP)) => 
-          ns :+ ObjectClaus(prep, ps0 :+ ((a0,p)), c)
+        case ps0 :+ ((a0,j0,NP)) => 
+          ns :+ ObjectClaus(prep, ps0 :+ ((a0,j0,p)), c)
 
         // _ + P + [P]
         case _ => c match {
           // 2nd object
           // _ + artikel + P + [P]
           case Space =>
-            prevTokens :+ ObjectClaus(None, ((Ein,p)) :: Nil, c)
+            prevTokens :+ ObjectClaus(None, ((Ein,Adj(Nil),p)) :: Nil, c)
 
           // Multiple objects
           // _ + P + und + [P]
           case _ =>
-            ns :+ ObjectClaus(prep, ps :+ ((Ein,p)), c)
+            ns :+ ObjectClaus(prep, ps :+ ((Ein,Adj(Nil),p)), c)
         }
       }
       
       // _ + [P]
       case _ => 
-        prevTokens :+ ObjectClaus(ps = (Ein,p) :: Nil)
+        prevTokens :+ ObjectClaus(ps = (Ein,Adj(Nil),p) :: Nil)
     }
     parse(others, newTokens)
   }
@@ -197,7 +200,7 @@ object Satze {
   (implicit rule: MasterRule) = {
 
     val a = Artikel.toArtikel(s)
-    val newPs = ((a,NP)) :: Nil
+    val newPs = ((a,Adj(Nil),NP)) :: Nil
 
     // NOTE: "Ihr" will also be counted as artikel initially
     val newTokens = prevTokens match {
@@ -237,6 +240,61 @@ object Satze {
     }
     parse(others, newTokens)
   }
+
+  private def parseAdj(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+    val newPs = ((Ein,Adj(s :: Nil),NP)) :: Nil
+
+    // NOTE: "Ihr" will also be counted as artikel initially
+    val newTokens = prevTokens match {
+      // [artikel]
+      case Nil  => 
+        SubjectClaus(newPs) :: Nil
+
+      // Multiple subjects
+      // P + [adj]
+      case ns :+ SubjectClaus(ps, c) =>
+        val ps_ = ps match {
+          case Nil => newPs
+
+          // P + artikel + [adj]
+          case ps0 :+ ((a0,Adj(Nil),NP)) => ps0 :+ ((a0,Adj(s :: Nil),NP))
+
+          // P + artikel + adj + [adj]
+          case ps0 :+ ((a0,Adj(adjs0),NP)) => ps0 :+ ((a0,Adj(adjs0 :+ s),NP))
+        }
+
+        ns :+ SubjectClaus(ps_, c)
+
+      // _ + prep + [adj]
+      case ns :+ ObjectClaus(prep, ps, c) => ps match {
+
+        // _ + prep + [adj]
+        case Nil => 
+          ns :+ ObjectClaus(prep, newPs, c)
+
+        // multiple objects
+        // _ + prep + ?? + [adj]
+        case ps0 :+ ((a0,Adj(j0),p0)) => 
+
+          p0 match {
+            // prep + [adj]
+            case NP => ns :+ ObjectClaus(prep, ps0 :+ ((a0,Adj(j0 :+ s),NP)), c)
+
+            // new object begins with adj
+            // prep + P + [adj]
+            case _ => ns :+ ObjectClaus(prep, ps :+ ((Ein,Adj(s :: Nil),NP)), c)
+
+          }
+      }
+
+      // _ + [artikel]
+      case _ => 
+        prevTokens :+ ObjectClaus(None, newPs)
+    }
+    parse(others, newTokens)
+  }
+
 
   private def parsePreposition(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
@@ -325,6 +383,9 @@ object Satze {
 
   def parse(tokens: Seq[String], prevTokens: Seq[Claus] = Nil)(implicit rule: MasterRule): Satze = 
     tokens match {
+      case s :: others if (excludedTokens.contains(s.toLowerCase)) =>
+        parse(others, prevTokens)
+
       case s :: others => 
         if (ModalVerb.isInstance(s)) {
           parseModalVerb(prevTokens, others, s)
@@ -351,6 +412,9 @@ object Satze {
         }
         else if (Negation.isInstance(s)) {
           parseNegation(prevTokens, others, s)
+        }
+        else if (Adj.isInstance(s)) {
+          parseAdj(prevTokens, others, s)
         }
         else {
           prevTokens match {
