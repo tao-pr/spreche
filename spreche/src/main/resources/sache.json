@@ -38,6 +38,12 @@
   "Wand": ["die","Wände"],
   "Musik": ["die","Musik"],
   "Buchung": ["die","Buchungen"],
+  "Termin": ["der","Termine"],
+  "Tag": ["der","Tage"],
+  "Stunde": ["die","Stunden"],
+  "Woche": ["die","Wochen"],
+  "Jahr": ["das","Jahren"],
+  "Zeit": ["die","Zeite"],
 
   "Mann": ["der","Männer"],
   "Frau": ["die","Fräuen"],

@@ -32,6 +32,17 @@ sealed trait Time extends Token {
 
 
 // Classes and Objects
+case class Adj(s: Seq[String]) extends Token {
+  def nominativ: String = s.filterNot(_.isEmpty).mkString(" ")
+  def akkusativ: String = s.filterNot(_.isEmpty).mkString(" ")
+  def dativ: String = s.filterNot(_.isEmpty).mkString(" ")
+
+  def renderWith(gender: String): String = {
+    // TAOTODO: conjugation
+    nominativ
+  }
+}
+
 case object Und extends Connector { override val s = " und " }
 case object Oder extends Connector { override val s =" oder "}
 case object Space extends Connector { override val s = " " }
@@ -466,20 +477,21 @@ case class Um(override val t: String) extends Time {
   override def toString: String = {
     val timeTokens = t.split(":").toSeq
     val (prefix, suffix) = if (Time.allPredef.contains(t)) 
-      ("","") else ("um "," Uhr")
+      ("","") else ("um "," Uhr ")
     timeTokens.headOption.map {
       case hh =>
         lazy val t = NumberSet.toString(hh.toInt)
+        lazy val tNext = NumberSet.toString(hh.toInt+1)
         if (timeTokens.length > 1){
           val parsedNum = timeTokens.last.toInt match {
-            case 0 => t
-            case 15 => "viertel nach " + t
-            case 30 => "halb" + NumberSet.toString(hh.toInt + 1)
-            case 45 => "viertel vor " + t
-            case mm => t + NumberSet.toString(mm)
+            case 0 => t + suffix
+            case 15 => "viertel nach " + t + suffix
+            case 30 => "halb" + NumberSet.toString(hh.toInt + 1) + suffix
+            case 45 => "viertel vor " + tNext + suffix
+            case mm => t + suffix + NumberSet.toString(mm)
           }
 
-          prefix + parsedNum.trim + suffix
+          prefix + parsedNum.replace("  "," ").trim
         }
         else prefix + t.trim + suffix
     }.getOrElse("")
@@ -488,7 +500,7 @@ case class Um(override val t: String) extends Time {
 
 case class Am(override val t: String) extends Time {
   override def toString: String = {
-    Time.allPredef.contains(t) match {
+    Time.ohnePrefix.contains(t) match {
       case true => t.capInitial
       case false => "am " + t.capInitial
     }
@@ -502,10 +514,21 @@ object Time extends TokenInstance {
     "montag","dienstag","mittwoch","donnerstag","freitag",
     "samstag","sonntag")
   val times = Set("jetzt")
+  val ohnePrefix = Seq("heute","jetzt")
   val allPredef = days ++ times
 
   override def isInstance(token: String)(implicit rule: MasterRule) = {
     (Seq("um","am") ++ days ++ times)
       .contains(token.toLowerCase.trim)
   }
+}
+
+object Adj extends TokenInstance {
+  override def isInstance(token: String)(implicit rule: MasterRule) = {
+    // TAOTODO: Check with unstemmed version too
+    rule.adj.contains(token.toLowerCase.trim) ||
+    rule.adj.contains(token.toLowerCase.trim)
+  }
+
+  def empty = Adj(Nil)
 }

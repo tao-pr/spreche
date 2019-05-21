@@ -97,9 +97,22 @@ case class SacheRule(m: Map[String, Sache]) extends Rule {
   override def toString = m.map{ case(_, sache) => sache.toString }.mkString("\n")
 }
 
+sealed case class AdjSubRule(mean: String) extends Rule
+sealed case class AdvSubRule(mean: String) extends Rule
+
+case class AdjRule(
+  adj: Map[String, AdjSubRule], 
+  adv: Map[String, AdvSubRule]) 
+extends Rule {
+  override def toString = s"Adj : ${adj.keySet}\nAdv: ${adv.keySet}"
+
+  def contains(s: String) = adj.contains(s) || adv.contains(s)
+}
+
 case class MasterRule(
   conjugation: ConjugationRule, 
-  sache: SacheRule) 
+  sache: SacheRule,
+  adj: AdjRule) 
 extends Rule 
 
 object Rule {
@@ -120,18 +133,30 @@ object Rule {
     })
   }
 
+  def loadAdjRule: AdjRule = {
+    implicit val formats: Formats = DefaultFormats.withStrictOptionParsing.withStrictArrayExtraction
+    val raw = parse(fromFile("adj.json")).extract[Map[String, Map[String, Map[String, String]]]]
+
+    val adj = raw("adj").map{ case (w,attr) => (w, AdjSubRule(attr.getOrElse("mean", "")))}
+    val adv = raw("adv").map{ case (w,attr) => (w, AdvSubRule(attr.getOrElse("mean", "")))}
+
+    AdjRule(adj, adv)
+  }
+
   def loadContext: MasterRule = {
     implicit val formats: Formats = DefaultFormats.withStrictOptionParsing.withStrictArrayExtraction
     val conjugation = loadConjugationRule
     val sache = loadSacheRule
+    val adj = loadAdjRule
     
     println(GREEN)
     println("Rules loaded")
     println(RESET)
 
-    println(conjugation)
-    println(sache)
+    println(adj)
+    //println(conjugation)
+    //println(sache)
     
-    MasterRule(conjugation, sache)
+    MasterRule(conjugation, sache, adj)
   }
 }
