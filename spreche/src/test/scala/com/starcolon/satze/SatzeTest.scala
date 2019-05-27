@@ -148,11 +148,24 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
   describe("Separable verbs"){
 
+    it("should separate verbs in akkusativ"){
+      Satze.parse($("wir einsteigen die tram")).render() shouldBe(
+        "wir steigen die Tram ein")
+    }
 
+    it("should separate verbs in mixture of dativ and akkusativ"){}
+
+    it("should not separate verbs when verb is placed at the end"){}
+
+    it("should separate verbs when time claus is present"){}
   }
 
   describe("Perfekt tense"){
-    
+
+  }
+
+  describe("Hauptsatze und Nebensatze"){
+
   }
 
 }
