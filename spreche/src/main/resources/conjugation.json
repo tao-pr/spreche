@@ -269,6 +269,36 @@
     "ihr": "steht",
     "Sie": "stehen"
   },
+  "aufstehen": {
+    "ich": "aufstehe",
+    "du": "aufstehst",
+    "es": "aufsteht",
+    "sie": "aufsteht",
+    "er": "aufsteht",
+    "wir": "aufstehen",
+    "ihr": "aufsteht",
+    "Sie": "aufstehen"
+  },
+  "anstehen": {
+    "ich": "anstehe",
+    "du": "anstehst",
+    "es": "ansteht",
+    "sie": "ansteht",
+    "er": "ansteht",
+    "wir": "anstehen",
+    "ihr": "ansteht",
+    "Sie": "anstehen"
+  },
+  "durchstehen": {
+    "ich": "durchstehe",
+    "du": "durchstehst",
+    "es": "durchsteht",
+    "sie": "durchsteht",
+    "er": "durchsteht",
+    "wir": "durchstehen",
+    "ihr": "durchsteht",
+    "Sie": "durchstehen"
+  },
   "sitzen": {
     "ich": "sizte",
     "du": "sizt",

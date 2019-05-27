@@ -32,7 +32,9 @@
     "neu": {"mean": "new"},
     "alt": {"mean": "old"},
     "schön": {"mean": "nice"},
+    "schlecht": {"mean": "bad"},
     "wenig": {"mean": "little"},
+    "einige": {"mean": "some"},
     "gut": {"mean": "good"},
     "lang": {"mean": "long"},
     "kurz": {"mean": "short"},
@@ -52,6 +54,7 @@
     "mehr": {"mean": "more"},
     "nett": {"mean": "nice"}, 
     "los": {"mean": "loose"},
+    "ausfürlich": {"mean": "detailed"},
 
     "schwarz": {"mean": "black"},
     "weiß": {"mean": "white"},

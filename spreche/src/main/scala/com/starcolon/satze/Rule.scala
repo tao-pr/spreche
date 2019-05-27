@@ -81,7 +81,7 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
   }
 
   def separate(v: String): Option[(String, String)] = {
-    Seq("ein","fern","aus","an").find(v.startsWith(_)).map{ pref =>
+    Seq("ein","um","fern","aus","auf","an","durch").find(v.startsWith(_)).map{ pref =>
       (pref, v.drop(pref.length))
     }
   }
