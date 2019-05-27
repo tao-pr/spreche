@@ -72,14 +72,17 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
   }
 
   private def renderSVO()(implicit rule: MasterRule) = {
+    implicit val conjugation = rule.conjugation
     val putVerbInFront = time.isDefined
+    lazy val verbClaus = clauses
+      .collect{ case c @VerbClaus(_) => c.asInstanceOf[VerbClaus] }
+      .headOption
     val (clausesToRender, beginning): (Seq[Claus], String) =
       if (!putVerbInFront)
         (clauses, "")
       else{
         val clausesNoVerb: Seq[Claus] = clauses.filterNot(_.isInstanceOf[VerbClaus])
-        val verbStr = clauses.filter(_.isInstanceOf[VerbClaus])
-          .headOption
+        val verbStr = verbClaus
           // NOTE: Following render has to supply the full sentence with verbs
           .map(_.render(Satze(clauses),-1) + " ")
           .getOrElse("")
@@ -89,7 +92,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
     val satzeRef = this
     
     val isNegate = clausesToRender.headOption == Some(NegateClaus)
-    val ending = if (isNegate) " nicht" else ""
+    val ending = (if (isNegate) " nicht" else "") + verbClaus.map{_.v.prefix}.getOrElse("")
 
     beginning + Satze.abbrev(clausesToRender
       .filterNot(_.isInstanceOf[TimeClaus])

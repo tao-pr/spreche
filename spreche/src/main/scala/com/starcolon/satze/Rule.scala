@@ -66,6 +66,7 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
     reverseMap.getOrElse(v, v)
   }
   
+  // TAOTODO: Also remove separable prefix (if any)
   def conjugateVerb(v: String, p: Pronoun, artikel: Artikel)(implicit rule: MasterRule) = p match {
     case _:Instance | _:PositionalPronoun => 
       val gender = rule.sache.findGender(p.s.capInitial)

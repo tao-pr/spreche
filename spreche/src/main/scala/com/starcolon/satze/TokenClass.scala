@@ -67,6 +67,15 @@ object Negation extends TokenInstance {
 case class Verb(v: String) extends Token {
   def isAkkusativ: Boolean = v != "seid"
   override def toString = v
+
+  /**
+   * Get separable prefix (if any)
+   */
+  def prefix()(implicit rule: ConjugationRule): String = 
+    rule.separate(v).map{_._1}.getOrElse("")
+
+  def ohnePrefix()(implicit rule: ConjugationRule): String = 
+    rule.separate(v).map{_._2}.getOrElse(v)
 }
 
 object Verb extends TokenInstance {
