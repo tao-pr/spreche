@@ -32,7 +32,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
 
           case _ => renderSMOV()
         }
-    })).trim.replace("  "," ")
+    })).trim.replaceAll("  +"," ")
   }
 
   private def renderSMOV()
@@ -92,7 +92,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
     val satzeRef = this
     
     val isNegate = clausesToRender.headOption == Some(NegateClaus)
-    val ending = (if (isNegate) " nicht" else "") + verbClaus.map{_.v.prefix}.getOrElse("")
+    val ending = (if (isNegate) " nicht" else "") + verbClaus.map{" " + _.v.prefix}.getOrElse("")
 
     beginning + Satze.abbrev(clausesToRender
       .filterNot(_.isInstanceOf[TimeClaus])
