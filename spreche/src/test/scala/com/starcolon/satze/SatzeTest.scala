@@ -162,9 +162,19 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
         "mein Freund und ich steigen die Tram zu unserem Büro ein")
     }
 
-    it("should not separate verbs when verb is placed at the end"){}
+    it("should not separate verbs when verb is placed at the end (with modalverb)"){
+      Satze.parse($("sie soll anhalten mit ihre mutter")).render() shouldBe(
+        "sie soll mit ihre Mutter anhalten")
+      Satze.parse($("sie anhalten mit ihre mutter")).render() shouldBe(
+        "sie hält mit ihre Mutter an")
+    }
 
-    it("should separate verbs when time claus is present"){}
+    it("should not separate verbs when time claus is present"){
+      Satze.parse($("sie soll heute anhalten mit ihre mutter")).render() shouldBe(
+        "Heute soll sie mit ihre Mutter anhalten")
+      Satze.parse($("sie um 7:30 anhalten mit ihre mutter")).render() shouldBe(
+        "um halbacht Uhr hält sie mit ihre Mutter an")
+    }
   }
 
   describe("Perfekt tense"){
