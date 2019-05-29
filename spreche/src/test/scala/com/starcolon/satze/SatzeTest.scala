@@ -151,9 +151,16 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
     it("should separate verbs in akkusativ"){
       Satze.parse($("wir einsteigen die tram")).render() shouldBe(
         "wir steigen die Tram ein")
+      Satze.parse($("ich aussteigen das auto")).render() shouldBe(
+        "ich steige das Auto aus")
+      Satze.parse($("er einsteigen das auto")).render() shouldBe(
+        "er steigt das Auto ein")
     }
 
-    it("should separate verbs in mixture of dativ and akkusativ"){}
+    it("should separate verbs in mixture of dativ and akkusativ"){
+      Satze.parse($("mein freund und ich einsteigen die tram zu unser büro")).render() shouldBe(
+        "mein Freund und ich steigen die Tram zu unserem Büro ein")
+    }
 
     it("should not separate verbs when verb is placed at the end"){}
 

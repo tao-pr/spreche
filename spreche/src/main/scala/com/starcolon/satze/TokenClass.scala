@@ -75,7 +75,7 @@ case class Verb(v: String) extends Token {
     rule.separate(v).map{_._1}.getOrElse("")
 
   def ohnePrefix()(implicit rule: ConjugationRule): String = 
-    rule.separate(v).map{_._2}.getOrElse(v)
+    v.ohnePrefix
 }
 
 object Verb extends TokenInstance {
