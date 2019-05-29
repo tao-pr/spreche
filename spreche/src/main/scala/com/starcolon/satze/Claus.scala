@@ -90,11 +90,11 @@ extends Claus {
 
     if (subj.isPlural || 
         (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
-      rule.conjugation.conjugateVerb(v.ohnePrefix, Wir, NoArtikel)
+      rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel).ohnePrefix
     }
     else { 
       val (a,j,p) = subj.ps.head
-      rule.conjugation.conjugateVerb(v.ohnePrefix, p, a)
+      rule.conjugation.conjugateVerb(v.v, p, a).ohnePrefix
     }
   }
 

@@ -469,6 +469,17 @@
     "ihr": "einsteigt",
     "Sie": "einsteigen"
   },
+  "aussteigen": {
+    "ich": "aussteige",
+    "du": "aussteigst",
+    "es": "aussteigt",
+    "sie": "aussteigt",
+    "er": "aussteigt",
+    "wir": "aussteigen",
+    "ihr": "aussteigt",
+    "Sie": "aussteigen"
+  },
+
   "bewerten": {
     "ich": "bewerte",
     "du": "bewertest",
