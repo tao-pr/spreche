@@ -109,6 +109,16 @@
     "ihr": "sagt",
     "Sie": "sagen"
   },
+  "fragen": {
+    "ich": "frage",
+    "du": "fragst",
+    "es": "fragt",
+    "sie": "fragt",
+    "er": "fragt",
+    "wir": "fragen",
+    "ihr": "fragt",
+    "Sie": "fragen"
+  },
   "wohen": {
     "ich": "wohne",
     "du": "wohnst",
@@ -158,6 +168,16 @@
     "wir": "sehen",
     "ihr": "seht",
     "Sie": "sehen"
+  },
+  "stellen": {
+    "ich": "stelle",
+    "du": "stellst",
+    "es": "stellt",
+    "sie": "stellt",
+    "er": "stellt",
+    "wir": "stellen",
+    "ihr": "stellt",
+    "Sie": "stellen"
   },
   "beginnen": {
     "ich": "beginne",

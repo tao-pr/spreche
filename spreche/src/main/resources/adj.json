@@ -11,7 +11,8 @@
     "zuvor": {"mean": "previously"},
     "natürlich": {"mean": "naturally"},
     "sofort": {"mean": "immediately"},
-    "dafür": {"mean": "for this"}
+    "dafür": {"mean": "for this"},
+    "gerne": {"mean": "would love"}
   },  
   "adj" : {
     "vorbei": {"mean": "is over"},
