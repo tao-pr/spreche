@@ -11,7 +11,8 @@
     "zuvor": {"mean": "previously"},
     "natürlich": {"mean": "naturally"},
     "sofort": {"mean": "immediately"},
-    "dafür": {"mean": "for this"}
+    "dafür": {"mean": "for this"},
+    "gerne": {"mean": "would love"}
   },  
   "adj" : {
     "vorbei": {"mean": "is over"},
@@ -32,7 +33,9 @@
     "neu": {"mean": "new"},
     "alt": {"mean": "old"},
     "schön": {"mean": "nice"},
+    "schlecht": {"mean": "bad"},
     "wenig": {"mean": "little"},
+    "einige": {"mean": "some"},
     "gut": {"mean": "good"},
     "lang": {"mean": "long"},
     "kurz": {"mean": "short"},
@@ -52,6 +55,7 @@
     "mehr": {"mean": "more"},
     "nett": {"mean": "nice"}, 
     "los": {"mean": "loose"},
+    "ausfürlich": {"mean": "detailed"},
 
     "schwarz": {"mean": "black"},
     "weiß": {"mean": "white"},

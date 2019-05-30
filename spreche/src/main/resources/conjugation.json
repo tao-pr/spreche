@@ -109,6 +109,16 @@
     "ihr": "sagt",
     "Sie": "sagen"
   },
+  "fragen": {
+    "ich": "frage",
+    "du": "fragst",
+    "es": "fragt",
+    "sie": "fragt",
+    "er": "fragt",
+    "wir": "fragen",
+    "ihr": "fragt",
+    "Sie": "fragen"
+  },
   "wohen": {
     "ich": "wohne",
     "du": "wohnst",
@@ -158,6 +168,16 @@
     "wir": "sehen",
     "ihr": "seht",
     "Sie": "sehen"
+  },
+  "stellen": {
+    "ich": "stelle",
+    "du": "stellst",
+    "es": "stellt",
+    "sie": "stellt",
+    "er": "stellt",
+    "wir": "stellen",
+    "ihr": "stellt",
+    "Sie": "stellen"
   },
   "beginnen": {
     "ich": "beginne",
@@ -268,6 +288,36 @@
     "wir": "stehen",
     "ihr": "steht",
     "Sie": "stehen"
+  },
+  "aufstehen": {
+    "ich": "aufstehe",
+    "du": "aufstehst",
+    "es": "aufsteht",
+    "sie": "aufsteht",
+    "er": "aufsteht",
+    "wir": "aufstehen",
+    "ihr": "aufsteht",
+    "Sie": "aufstehen"
+  },
+  "anstehen": {
+    "ich": "anstehe",
+    "du": "anstehst",
+    "es": "ansteht",
+    "sie": "ansteht",
+    "er": "ansteht",
+    "wir": "anstehen",
+    "ihr": "ansteht",
+    "Sie": "anstehen"
+  },
+  "durchstehen": {
+    "ich": "durchstehe",
+    "du": "durchstehst",
+    "es": "durchsteht",
+    "sie": "durchsteht",
+    "er": "durchsteht",
+    "wir": "durchstehen",
+    "ihr": "durchsteht",
+    "Sie": "durchstehen"
   },
   "sitzen": {
     "ich": "sizte",
@@ -439,6 +489,17 @@
     "ihr": "einsteigt",
     "Sie": "einsteigen"
   },
+  "aussteigen": {
+    "ich": "aussteige",
+    "du": "aussteigst",
+    "es": "aussteigt",
+    "sie": "aussteigt",
+    "er": "aussteigt",
+    "wir": "aussteigen",
+    "ihr": "aussteigt",
+    "Sie": "aussteigen"
+  },
+
   "bewerten": {
     "ich": "bewerte",
     "du": "bewertest",

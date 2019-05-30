@@ -83,16 +83,18 @@ case class VerbClaus(v: Verb)
 extends Claus {
   override def render(satze: Satze, index: Int)
   (implicit rule: MasterRule) = {
+    implicit val conjugation = rule.conjugation
+
     val subj = satze.subject.get
     val obj = satze.objekt
 
     if (subj.isPlural || 
         (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
-      rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel)
+      rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel).ohnePrefix
     }
     else { 
       val (a,j,p) = subj.ps.head
-      rule.conjugation.conjugateVerb(v.v, p, a)
+      rule.conjugation.conjugateVerb(v.v, p, a).ohnePrefix
     }
   }
 
