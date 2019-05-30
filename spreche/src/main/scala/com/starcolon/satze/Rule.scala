@@ -21,6 +21,7 @@ case object PrepositionRule extends Rule {
     "durch" -> Akkusativ,
     "zu" -> Dativ,
     "in" -> Dativ,
+    "ab" -> Dativ,
     "an" -> Dativ,
     "vor" -> Dativ,
     "über" -> Dativ,
@@ -29,6 +30,7 @@ case object PrepositionRule extends Rule {
     "auf" -> Dativ,
     "zwischen" -> Dativ,
     "hinter" -> Dativ,
+    "gegenüber" -> Dativ,
     "aus" -> Dativ,
     "außer" -> Dativ,
     "nach" -> Dativ,
@@ -36,7 +38,14 @@ case object PrepositionRule extends Rule {
     "bei" -> Dativ,
     "von" -> Dativ
   )
-  def isPreposition(s: String) = mapCase.keySet.contains(s.toLowerCase)
+  def generalise(s: String) = s match {
+    case "zur" | "zum" => "zu"
+    case "vom" => "vor"
+    case "am" => "an"
+    case "ins" => "in"
+    case any => any
+  }
+  def isPreposition(s: String) = mapCase.keySet.contains(generalise(s.toLowerCase))
 }
 
 case object AbbrevRule {
@@ -44,7 +53,9 @@ case object AbbrevRule {
     "in dem" -> "im",
     "in das" -> "ins",
     "zu dem" -> "zum",
-    "zu der" -> "zur"
+    "zu der" -> "zur",
+    "von dem" -> "vom",
+    "an dem" -> "am"
   )
   def foldLeft(sentence: String)(folder: (String, Tuple2[String, String]) => String) = 
     map.foldLeft(sentence)(folder)

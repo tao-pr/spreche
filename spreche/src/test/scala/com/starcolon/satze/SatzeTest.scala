@@ -64,9 +64,6 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
     it("should render some prepositions as akkusativ"){
       Satze.parse($("Wir kommen für unsere Computer")).render() shouldBe(
         "wir kommen für unseren Computer")
-    }
-
-    it("should render some prepositions as akkusativ (2)"){
       Satze.parse($("Er laufen durch der park oder der kirche oder ein büro")).render() shouldBe(
         "er läuft durch den Park oder die Kirche oder ein Büro")
     }
@@ -82,10 +79,19 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
     it("should render simple Dativ"){
       Satze.parse($("Wir gehen in das Kino")).render() shouldBe(
-        "wir gehen ins Kino"
+        "wir gehen im Kino"
       )
       Satze.parse($("Er laufe zu das haus")).render() shouldBe(
         "er läuft zum Haus"
+      )
+      Satze.parse($("sie gehe zu dir")).render() shouldBe(
+        "sie geht zu dir"
+      )
+      Satze.parse($("Er laufe zu die schule")).render() shouldBe(
+        "er läuft zur Schule"
+      )
+      Satze.parse($("wir fragen mit die frau von die ausland")).render() shouldBe(
+        "wir fragen mit der Frau vom Ausland"
       )
     }
 
@@ -102,6 +108,21 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
       Satze.parse($("ein Mann gibt der nachbar der keks")).render() shouldBe(
         "ein Mann gibt dem Nachbar den Keks"
       )
+    }
+
+    it("should abbreviate zu der to zur, and so on"){
+      Satze.parse($("wir gehen zu der arzt in der stadt")).render() shouldBe(
+        "wir gehen zum Arzt im Stadt")
+      Satze.parse($("er laufe von der vader zu der nachbar")).render() shouldBe(
+        "er läuft vom Vader zum Nachbar")
+      Satze.parse($("du stellen ein glas von der schrank an den tisch")).render() shouldBe(
+        "du stellst ein Glas vom Schrank am Tisch")
+      Satze.parse($("ich bin zu der stadt")).render() shouldBe(
+        "ich bin zum Stadt")
+      Satze.parse($("ich bin zu der schule")).render() shouldBe(
+        "ich bin zur Schule")
+      Satze.parse($("wir gehen in das kino")).render() shouldBe(
+        "wir gehen im Kino")
     }
   }
 
@@ -122,17 +143,17 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
  
     it("should render halb"){
       Satze.parse($("Ich um 17:30 uhr kommen in das kino")).render() shouldBe(
-        "um halbachtzehn Uhr komme ich ins Kino")
+        "um halbachtzehn Uhr komme ich im Kino")
     }
 
     it("should render viertel"){
       Satze.parse($("Wir um 17:45 soll kommen in das kino")).render() shouldBe(
-        "um viertel vor achtzehn Uhr sollen wir ins Kino kommen") 
+        "um viertel vor achtzehn Uhr sollen wir im Kino kommen") 
     }
 
     it("should render day"){
       Satze.parse($("Ich am samstag will gehen mit mein Freund")).render() shouldBe(
-        "am Samstag will ich mit meinen Freund gehen") 
+        "am Samstag will ich mit meinem Freund gehen") 
     }
 
     it("should render time & day"){

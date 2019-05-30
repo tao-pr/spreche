@@ -120,14 +120,16 @@ object ModalVerb extends TokenInstance {
 
 case class Preposition(s: String) extends Token {
   def getCase(v: Verb) = v match {
-    case Verb("gehen") | Verb("kommen") => Akkusativ 
+    //case Verb("gehen") | Verb("kommen") => Akkusativ 
     case Verb("sein") => Akkusativ
     case _ => Preposition.getCase(s)
   }
 }
 
 object Preposition extends TokenInstance {
-  def getCase(s: String) = PrepositionRule.mapCase.getOrElse(s, Nominativ)
+  def getCase(s: String) = PrepositionRule.mapCase.getOrElse(
+    PrepositionRule.generalise(s), 
+    Nominativ)
   override def isInstance(token: String)(implicit rule: MasterRule) =
     PrepositionRule.isPreposition(token)
 }
