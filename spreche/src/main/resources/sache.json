@@ -1,4 +1,5 @@
 {
+  "Nichts": ["das","Nichts"],
   "Schrank": ["der","Schränke"],
   "Sessel": ["der","Sessel"],
   "Stuhl": ["die","Stühle"],
@@ -9,6 +10,7 @@
   "Uhr": ["die","Uhren"],
   "Regal": ["das","Regal"],
   "Sofa": ["das","Sofa"],
+  "Boden": ["der","Böden"],
   "Bett": ["das","Betten"],
   "Bild": ["das","Bilder"],
   "Pullover": ["der","Pullovers"],
@@ -38,6 +40,7 @@
   "Wand": ["die","Wände"],
   "Musik": ["die","Musik"],
   "Buchung": ["die","Buchungen"],
+  "Ticket": ["das","Tickets"],
   "Termin": ["der","Termine"],
   "Tag": ["der","Tage"],
   "Stunde": ["die","Stunden"],
@@ -77,6 +80,8 @@
   "Zitrone": ["die","Zitronen"],
   "Sprudel": ["der","Sprudel"],
 
+  "Ausland": ["das","Ausland"],
+  "Stadt": ["der","Städte"],
   "Zimmer": ["das","Zimmer"],
   "Haus": ["das","Hausen"],
   "Wohnung": ["die", "Wohnung"],

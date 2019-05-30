@@ -21,6 +21,7 @@ case object PrepositionRule extends Rule {
     "durch" -> Akkusativ,
     "zu" -> Dativ,
     "in" -> Dativ,
+    "ab" -> Dativ,
     "an" -> Dativ,
     "vor" -> Dativ,
     "über" -> Dativ,
@@ -29,6 +30,7 @@ case object PrepositionRule extends Rule {
     "auf" -> Dativ,
     "zwischen" -> Dativ,
     "hinter" -> Dativ,
+    "gegenüber" -> Dativ,
     "aus" -> Dativ,
     "außer" -> Dativ,
     "nach" -> Dativ,
@@ -36,7 +38,14 @@ case object PrepositionRule extends Rule {
     "bei" -> Dativ,
     "von" -> Dativ
   )
-  def isPreposition(s: String) = mapCase.keySet.contains(s.toLowerCase)
+  def generalise(s: String) = s match {
+    case "zur" | "zum" => "zu"
+    case "vom" => "vor"
+    case "am" => "an"
+    case "ins" => "in"
+    case any => any
+  }
+  def isPreposition(s: String) = mapCase.keySet.contains(generalise(s.toLowerCase))
 }
 
 case object AbbrevRule {
@@ -44,7 +53,9 @@ case object AbbrevRule {
     "in dem" -> "im",
     "in das" -> "ins",
     "zu dem" -> "zum",
-    "zu der" -> "zur"
+    "zu der" -> "zur",
+    "von dem" -> "vom",
+    "an dem" -> "am"
   )
   def foldLeft(sentence: String)(folder: (String, Tuple2[String, String]) => String) = 
     map.foldLeft(sentence)(folder)
@@ -66,6 +77,7 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
     reverseMap.getOrElse(v, v)
   }
   
+  // TAOTODO: Also remove separable prefix (if any)
   def conjugateVerb(v: String, p: Pronoun, artikel: Artikel)(implicit rule: MasterRule) = p match {
     case _:Instance | _:PositionalPronoun => 
       val gender = rule.sache.findGender(p.s.capInitial)
@@ -79,6 +91,14 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
       m.getOrElse(v, Map(genderedPronoun.s -> v)).getOrElse(genderedPronoun.s, v)
     case _ => m.getOrElse(v, Map(p.s -> v)).getOrElse(p.s, v)
   }
+
+  def separate(v: String): Option[(String, String)] = {
+    Seq("ein","um","fern","aus","auf","an","durch").find(v.startsWith(_)).map{ pref =>
+      (pref, v.drop(pref.length))
+    }
+  }
+
+  def isSeparable(v: String) = separate(v).isDefined
 
   override def toString = m.map{ case(_, n) => 
     n.map{ case(p, v) => s"${p} ${v}"}.mkString(" | ") 

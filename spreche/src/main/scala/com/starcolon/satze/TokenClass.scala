@@ -67,6 +67,15 @@ object Negation extends TokenInstance {
 case class Verb(v: String) extends Token {
   def isAkkusativ: Boolean = v != "seid"
   override def toString = v
+
+  /**
+   * Get separable prefix (if any)
+   */
+  def prefix()(implicit rule: ConjugationRule): String = 
+    rule.separate(v).map{_._1}.getOrElse("")
+
+  def ohnePrefix()(implicit rule: ConjugationRule): String = 
+    v.ohnePrefix
 }
 
 object Verb extends TokenInstance {
@@ -111,14 +120,16 @@ object ModalVerb extends TokenInstance {
 
 case class Preposition(s: String) extends Token {
   def getCase(v: Verb) = v match {
-    case Verb("gehen") | Verb("kommen") => Akkusativ 
+    //case Verb("gehen") | Verb("kommen") => Akkusativ 
     case Verb("sein") => Akkusativ
     case _ => Preposition.getCase(s)
   }
 }
 
 object Preposition extends TokenInstance {
-  def getCase(s: String) = PrepositionRule.mapCase.getOrElse(s, Nominativ)
+  def getCase(s: String) = PrepositionRule.mapCase.getOrElse(
+    PrepositionRule.generalise(s), 
+    Nominativ)
   override def isInstance(token: String)(implicit rule: MasterRule) =
     PrepositionRule.isPreposition(token)
 }

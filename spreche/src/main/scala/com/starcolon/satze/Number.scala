@@ -17,6 +17,7 @@ object NumberSet {
     10  -> "zehn",
     11  -> "elf",
     12  -> "zwölf",
+    17  -> "siebzehn",
     20  -> "zwanzig",
     100 -> "hundert",
     1000 -> "tausend"
