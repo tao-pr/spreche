@@ -77,7 +77,6 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
     reverseMap.getOrElse(v, v)
   }
   
-  // TAOTODO: Also remove separable prefix (if any)
   def conjugateVerb(v: String, p: Pronoun, artikel: Artikel)(implicit rule: MasterRule) = p match {
     case _:Instance | _:PositionalPronoun => 
       val gender = rule.sache.findGender(p.s.capInitial)
@@ -93,7 +92,7 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
   }
 
   def separate(v: String): Option[(String, String)] = {
-    Seq("ein","um","fern","aus","auf","an","durch").find(v.startsWith(_)).map{ pref =>
+    Seq("ein","um","fern","aus","auf","an","durch","mit").find(v.startsWith(_)).map{ pref =>
       (pref, v.drop(pref.length))
     }
   }
@@ -174,8 +173,6 @@ object Rule {
     println(RESET)
 
     println(adj)
-    //println(conjugation)
-    //println(sache)
     
     MasterRule(conjugation, sache, adj)
   }
