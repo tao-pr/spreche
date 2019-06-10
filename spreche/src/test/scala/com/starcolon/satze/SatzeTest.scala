@@ -201,9 +201,27 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
         "es ist ein großes Kino")
     }
 
-    it("should conjugate dativ adjectives"){}
+    it("should conjugate dativ adjectives"){
+      $("sie sitzen neben der groß Park") shouldBe(
+        "sie sitzt neben dem großen Park")
+      $("ihr kauft ein alt mann ein taschentuch") shouldBe(
+        "ihr kauft einem alten Mann ein Taschentuch")
+      $("wir gehen zu der neu Kino") shouldBe(
+        "wir gehen zum neuen Kino")
+    }
 
-    it("should conjugate akkusativ adjectives"){}
+    it("should conjugate akkusativ adjectives"){
+      $("wir kaufe ein klein tisch") shouldBe(
+        "wir kaufen einen kleinen Tisch")
+      $("wir kaufe ein orange lampe") shouldBe(
+        "wir kaufen eine orange Lampe")
+      $("wir kaufe die klein lampe") shouldBe(
+        "wir kaufen die kleine Lampe")
+      $("wir kaufe ein rot glas") shouldBe(
+        "wir kaufen ein rotes Glas")
+      $("wir kaufe das rot glas") shouldBe(
+        "wir kaufen das rote Glas")
+    }
 
   }
 
