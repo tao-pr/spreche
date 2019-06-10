@@ -364,13 +364,13 @@
     "perfekt": "habe durchgestanden"
   },
   "sitzen": {
-    "ich": "sizte",
-    "du": "sizt",
-    "es": "sizt",
-    "sie": "sizt",
-    "er": "sizt",
+    "ich": "sitze",
+    "du": "sitzt",
+    "es": "sitzt",
+    "sie": "sitzt",
+    "er": "sitzt",
     "wir": "sitzen",
-    "ihr": "sizt",
+    "ihr": "sitzt",
     "Sie": "sitzen",
     "perfekt": "habe gesessen"
   },
