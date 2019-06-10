@@ -198,6 +198,14 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
     }
   }
 
+  describe("Adjective conjugation"){
+    
+    it("should conjugate nominativ adjectives"){}
+    it("should conjugate dativ adjectives"){}
+    it("should conjugate akkusativ adjectives"){}
+
+  }
+
   describe("Perfekt tense"){
 
   }

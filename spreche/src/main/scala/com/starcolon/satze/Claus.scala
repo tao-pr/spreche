@@ -38,7 +38,7 @@ sealed trait PronounClaus {
     val (a,j,p) = pair
     val gender = rule.sache.findGender(p.s.capInitial)
     val stringArtikel = a.renderWith(gender, c)
-    val stringAdj     = j.renderWith(gender)
+    val stringAdj     = j.renderWith(gender, c, a)
     val stringPronoun = a match {
       case Plural => rule.sache.findPlural(p.s.capInitial).capInitial
       case _ => p.s.capInitial
