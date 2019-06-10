@@ -37,16 +37,6 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
       $("Das sind nicht mein auto") shouldBe(
         "das ist mein Auto nicht")
     }
-
-    it("should render adj"){
-      $("Mein haus ist sehr alt") shouldBe(
-        "mein Haus ist sehr alt")
-    }
-
-    it("should render multiple adjs"){
-      $("Wir ist zu ungewiss und fleißig") shouldBe(
-        "wir sind zu ungewiss fleißig")
-    }
   }
 
   describe("Akkusativ"){
@@ -200,8 +190,19 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
   describe("Adjective conjugation"){
     
-    it("should conjugate nominativ adjectives"){}
+    it("should conjugate nominativ adjectives"){
+      $("das ist ein nett mann") shouldBe(
+        "das ist ein netter Mann")
+      $("das ist der nett mann") shouldBe(
+        "das ist der nette Mann")
+      $("das ist ein groß tasse") shouldBe(
+        "das ist eine große Tasse")
+      $("es ist ein groß kino") shouldBe(
+        "es ist ein großes Kino")
+    }
+
     it("should conjugate dativ adjectives"){}
+
     it("should conjugate akkusativ adjectives"){}
 
   }
