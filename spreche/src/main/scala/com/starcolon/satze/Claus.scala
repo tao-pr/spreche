@@ -78,7 +78,6 @@ with PronounClaus {
   override def toString = s"+ ${CYAN_B + BLACK}S${RESET}:${psToString}"
 }
 
-// TAOTODO: support gerne
 case class VerbClaus(v: Verb) 
 extends Claus {
   override def render(satze: Satze, index: Int)
@@ -137,7 +136,6 @@ with PronounClaus {
           else Nominativ
         )
         ps.map { case (a,j,p) => 
-          // TAOTODO: Take adj into account
           Pronoun.isInfinitiv(p) match {
             case true => renderInfinitiv(effectiveCase)((a,j,p))
             case false => renderSache(effectiveCase)((a,j,p))
