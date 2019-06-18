@@ -107,7 +107,7 @@
     "wir": "sind",
     "ihr": "seid",
     "Sie": "sind",
-    "perfekt": "habe gewessen"
+    "perfekt": "bin gewessen"
   },
   "sagen": {
     "ich": "sage",
@@ -627,5 +627,16 @@
     "ihr": "stellt",
     "Sie": "stellen",
     "perfekt": "habe gestellt"
+  },
+  "weiterempfehlen": {
+    "ich": "weiterempfehle",
+    "du": "weiterempfehlst",
+    "es": "weiterempfehlen",
+    "sie": "weiterempfiehlt",
+    "er": "weiterempfiehlt",
+    "wir": "weiterempfehlen",
+    "ihr": "weiterempfiehlt",
+    "Sie": "weiterempfehlen",
+    "perfekt": "habe weiterempfohlen"
   }
 }

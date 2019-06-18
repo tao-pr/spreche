@@ -6,11 +6,15 @@ import Console._
 
 case class Satze(clauses: Seq[Claus]) extends Claus {
   def subject: Option[SubjectClaus]     = clauses.find(_.isInstanceOf[SubjectClaus]).map(_.asInstanceOf[SubjectClaus])
+  def haben: Option[HabenVerbClaus]     = clauses.find(_.isInstanceOf[HabenVerbClaus]).map(_.asInstanceOf[HabenVerbClaus])
+  // TAOTODO: Return verb inside [haben] if any
   def verb: Option[VerbClaus]           = clauses.find(_.isInstanceOf[VerbClaus]).map(_.asInstanceOf[VerbClaus])
   def modalVerb: Option[ModalVerbClaus] = clauses.find(_.isInstanceOf[ModalVerbClaus]).map(_.asInstanceOf[ModalVerbClaus])
   def objekt: Option[ObjectClaus]       = clauses.find(_.isInstanceOf[ObjectClaus]).map(_.asInstanceOf[ObjectClaus])
   def time: Option[TimeClaus]           = clauses.find(_.isInstanceOf[TimeClaus]).map(_.asInstanceOf[TimeClaus])
   
+  def isPerfekt = haben.isDefined
+
   override def render(satze: Satze = this, index: Int = -1)(implicit rule: MasterRule) = {
     
     // Render time at the beginning of the satze (if any)
@@ -143,8 +147,17 @@ object Satze {
   private def parseVerb(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
     implicit val r = rule.conjugation
-    val newTokens = prevTokens :+ VerbClaus(Verb.toVerb(s.toLowerCase))
-    parse(others, newTokens)
+    // If haben already existed, then convert to a [[HabenVerbClaus]]
+    prevTokens.find(_.isInstanceOf[VerbClaus]) match {
+      case None =>
+        val newTokens = prevTokens :+ VerbClaus(Verb.toVerb(s.toLowerCase))
+        parse(others, newTokens)
+
+      case Some(prevHaben) =>
+        val prevTokensOhneHaben = prevTokens.filterNot(_.isInstanceOf[VerbClaus])
+        val newTokens = prevTokensOhneHaben :+ HabenVerbClaus(Verb.toVerb(s.toLowerCase))
+        parse(others, newTokens)
+    }
   }
 
   private def parsePronoun(prevTokens: Seq[Claus], others: Seq[String], s: String)

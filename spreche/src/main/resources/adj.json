@@ -13,7 +13,10 @@
     "sofort": {"mean": "immediately"},
     "dafür": {"mean": "for this"},
     "darum": {"mean": "therefore"},
-    "gerne": {"mean": "would love"}
+    "gerne": {"mean": "would love"},
+    
+    "oben": {"mean": "above"},
+    "unten": {"mean": "below"}
   },  
   "adj" : {
     "vorbei": {"mean": "is over"},
@@ -49,6 +52,7 @@
     "warm": {"mean": "warm"},
     "lecker": {"mean": "tasty"},
     "fett": {"mean": "fat"},
+    "dick": {"mean": "thick"},
     "dünn": {"mean": "thin"},
     "nass": {"mean": "wet"},
     "bequem": {"mean": "convenient"},
