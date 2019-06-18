@@ -595,16 +595,16 @@
     "Sie": "arbeiten",
     "perfekt": "habe gearbeitet"
   },
-  "enziehen": {
-    "ich": "enziehe",
-    "du": "enziehst",
-    "es": "enzieht",
-    "sie": "enzieht",
-    "er": "enzieht",
-    "wir": "enziehen",
-    "ihr": "enzieht",
-    "Sie": "enziehen",
-    "perfekt": "habe geenzogen"
+  "einziehen": {
+    "ich": "einziehe",
+    "du": "einziehst",
+    "es": "einzieht",
+    "sie": "einzieht",
+    "er": "einzieht",
+    "wir": "einziehen",
+    "ihr": "einzieht",
+    "Sie": "einziehen",
+    "perfekt": "habe eingezogen"
   },
   "kümmern": {
     "ich": "kümmere",
@@ -638,5 +638,27 @@
     "ihr": "weiterempfiehlt",
     "Sie": "weiterempfehlen",
     "perfekt": "habe weiterempfohlen"
+  },
+  "drücken": {
+    "ich": "drücke",
+    "du": "drückst",
+    "es": "drückt",
+    "sie": "drückt",
+    "er": "drückt",
+    "wir": "drücken",
+    "ihr": "drückt",
+    "Sie": "drücken",
+    "perfekt": "bin gedrückt"
+  },
+  "ziehen": {
+    "ich": "ziehe",
+    "du": "ziehst",
+    "es": "zieht",
+    "sie": "zieht",
+    "er": "zieht",
+    "wir": "ziehen",
+    "ihr": "zieht",
+    "Sie": "ziehen",
+    "perfekt": "bin gezohgen"
   }
 }
