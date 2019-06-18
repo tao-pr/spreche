@@ -59,6 +59,7 @@
   "Nachbar": ["der","Nachbarn"],
   "Benutzer": ["der","Benutzer"],
   "Gast": ["der","Gäste"],
+  "Person": ["der","Personen"],
 
   "Tee": ["der","Tees"],
   "Kaffee": ["der","Kaffees"],
