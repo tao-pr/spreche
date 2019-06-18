@@ -12,6 +12,7 @@
     "natürlich": {"mean": "naturally"},
     "sofort": {"mean": "immediately"},
     "dafür": {"mean": "for this"},
+    "darum": {"mean": "therefore"},
     "gerne": {"mean": "would love"}
   },  
   "adj" : {
@@ -36,6 +37,7 @@
     "schlecht": {"mean": "bad"},
     "wenig": {"mean": "little"},
     "einige": {"mean": "some"},
+    "gemütlich": {"mean": "confortable"},
     "gut": {"mean": "good"},
     "lang": {"mean": "long"},
     "kurz": {"mean": "short"},

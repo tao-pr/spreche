@@ -98,6 +98,23 @@ extends Claus {
   }
 
   override def toString = s"+ ${YELLOW_B + BLACK}V${RESET}:${v.v}"
+
+  def isHaben = rule.conjugate.deconjugateverb(v) == "haben"
+}
+
+case class HabenVerbClaus(v: Option[Verb] = None) extends Claus {
+  override def render(satze: Satze, index: Int)
+  (implicit rule: MasterRule) = {
+    implicit val conjugation = rule.conjugation
+
+    // TAOTODO: read perfekt conjugation rule
+    ???
+  }
+
+  def toVerb = v match {
+    case None => VerbClaus("haben")
+    case Some(_v) => VerbClaus(_v)
+  }
 }
 
 case class ModalVerbClaus(v: ModalVerb)

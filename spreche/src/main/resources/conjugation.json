@@ -605,5 +605,27 @@
     "ihr": "enzieht",
     "Sie": "enziehen",
     "perfekt": "habe geenzogen"
+  },
+  "kümmern": {
+    "ich": "kümmere",
+    "du": "kümmerst",
+    "es": "kümmert",
+    "sie": "kümmert",
+    "er": "kümmert",
+    "wir": "kümmern",
+    "ihr": "kümmert",
+    "Sie": "kümmern",
+    "perfekt": "habe gekümmert"
+  },
+  "stellen": {
+    "ich": "stelle",
+    "du": "stellst",
+    "es": "stellt",
+    "sie": "stellt",
+    "er": "stellt",
+    "wir": "stellen",
+    "ihr": "stellt",
+    "Sie": "stellen",
+    "perfekt": "habe gestellt"
   }
 }
