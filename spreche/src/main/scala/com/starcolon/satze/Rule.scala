@@ -91,6 +91,14 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
     case _ => m.getOrElse(v, Map(p.s -> v)).getOrElse(p.s, v)
   }
 
+  def conjugatePerfektVerb(v: String, p: Pronoun)(implicit rule: MasterRule) = {
+    val a = Ein
+    m.getOrElse(v, Map("perfekt" -> v)).getOrElse("perfekt", v).split(" ") match {
+      case Seq("habe", w) => (conjugateVerb("haben",p,a), w)
+      case Seq("bin", w) => (conjugateVerb("seid",p,a), w)
+    }
+  }
+
   def separate(v: String): Option[(String, String)] = {
     Seq("ein","um","fern","aus","auf","an","durch","mit").find(v.startsWith(_)).map{ pref =>
       (pref, v.drop(pref.length))

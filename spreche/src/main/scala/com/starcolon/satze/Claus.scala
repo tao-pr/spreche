@@ -107,8 +107,18 @@ case class HabenVerbClaus(v: Option[Verb] = None) extends Claus {
   (implicit rule: MasterRule) = {
     implicit val conjugation = rule.conjugation
 
-    // TAOTODO: read perfekt conjugation rule
-    ???
+    v match {
+      case None => VerbClaus("haben").render(satze, index)
+      case Some(w) =>
+        val subj = satze.subject.get 
+        val subj_ = if (subj.isPlural) Wir else subj
+        val (auxVerb, perfektVerb) = rule.conjugation.conjugatePerfektVerb(w, subj_)
+
+
+        // TAOTODO: Find out how to cooperate with satze
+        perfektVerb
+     }
+    
   }
 
   def toVerb = v match {
