@@ -4,6 +4,7 @@
     "bestimmt": {"mean": "of course"},
     "endlich": {"mean": "finally"},
     "zusammen": {"mean": "together"},
+    "ingesamt": {"mean": "all included"},
     "allein": {"mean": "alone"},
     "noch": {"mean": "still"},
     "schon": {"mean": "already"},
@@ -16,7 +17,6 @@
     "gerne": {"mean": "would love"},
     "bzw": {"mean": "respectively"},
     "nur": {"mean": "just"},
-    ""
     
     "oben": {"mean": "above"},
     "unten": {"mean": "below"}
