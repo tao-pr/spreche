@@ -227,6 +227,27 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
   describe("Perfekt tense"){
 
+    it("should conjugate verbs into perfekt tense"){
+      $("wir haben eine tasse kaufen") shouldBe(
+        "wir haben eine tasse gekauft")
+      $("sie hat ein frühstück machen") shouldBe(
+        "sie hat ein frühstück gemacht")
+      $("sie hat ein frühstück machen nicht") shouldBe(
+        "sie hat ein frühstück nicht gemacht")
+    }
+
+    it("should reform perfekt verbs into correct position"){
+
+    }
+
+    it("should render with modal verb"){
+
+    }
+
+    it("should render with time claus"){
+
+    }
+
   }
 
   describe("Hauptsatze und Nebensatze"){

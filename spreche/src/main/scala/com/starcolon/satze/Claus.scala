@@ -7,10 +7,12 @@ trait Claus {
   def render(satze: Satze, index: Int)(implicit rule: MasterRule): String = toString
 }
 
-case object NegateClaus extends Claus {
-  override def render(satze: Satze, index: Int)(implicit rule: MasterRule): String = "" 
+sealed trait NegateClaus extends Claus {
+  override def render(satze: Satze, index: Int)(implicit rule: MasterRule): String = "nicht" 
   override def toString = "nicht"
 }
+
+case object NegateClaus extends NegateClaus
 
 sealed trait PronounClaus {
   val ps: Seq[(Artikel,Adj,Pronoun)]
@@ -118,7 +120,7 @@ extends Claus {
   def isHaben()(implicit rule: MasterRule) = rule.conjugation.deconjugateVerb(v.v) == "haben"
 }
 
-case object HabenVerbClaus extends Claus {
+trait HabenVerbClaus extends Claus {
   override def render(satze: Satze, index: Int)
   (implicit rule: MasterRule) = {
     implicit val conjugation = rule.conjugation
@@ -138,7 +140,11 @@ case object HabenVerbClaus extends Claus {
 
     habenVerb
   }
+
+  override def toString = s"${GREEN_B + BLACK}Seid/Haben${RESET}"
 }
+
+case object HabenVerbClaus extends HabenVerbClaus
 
 case class ModalVerbClaus(v: ModalVerb)
 extends Claus {
