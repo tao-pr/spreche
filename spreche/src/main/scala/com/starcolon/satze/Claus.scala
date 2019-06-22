@@ -151,8 +151,8 @@ extends Claus {
   override def render(satze: Satze, index: Int)
   (implicit rule: MasterRule) = satze.subject.get match {
     case SubjectClaus(ps,_) => ps match {
-      // Single subject
-      case ((a,j,p)) :: Nil => 
+      // Single subject, and modal verb is not placed at the end
+      case ((a,j,p)) :: Nil && index < satze.clauses.size-1 => 
         rule.conjugation.conjugateVerb(v.v, p, a)
 
       // Multiple subjects
