@@ -23,10 +23,9 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
         Satze((Seq(time, modalVerb, subject) ++ allObjekts ++ Seq(negation, verb)).flatten)
 
       case (None, Some(_), None) =>
-        Satze((Seq(subject, modalVerb, haben, verb) ++ allObjekts ++ Seq(negation)).flatten)
+        Satze((Seq(subject, modalVerb) ++ allObjekts ++ Seq(negation, verb)).flatten)
 
       case (None, Some(_), Some(_)) =>
-        // TAOTODO: Note: if modal verb goes at the end of sentence, always conjugate as Wir
         Satze((Seq(subject, haben, verb) ++ allObjekts ++ Seq(negation, modalVerb)).flatten)
 
       case (None, None, Some(_)) =>
