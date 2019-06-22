@@ -5,6 +5,7 @@
 - [] Hauptsatze + Nebensatze
 - [] zwischen A und B
 - [] für/seit 15 Monaten
+- [] Reflective verbs
 
 
 # Wishlist of refactors

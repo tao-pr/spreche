@@ -87,6 +87,17 @@
     "Sie": "wollen",
     "perfekt": "habe gewollt"
   },
+  "machen": {
+    "ich": "mache",
+    "du": "machst",
+    "es": "macht",
+    "sie": "macht",
+    "er": "macht",
+    "wir": "machen",
+    "ihr": "macht",
+    "Sie": "machen",
+    "perfekt": "habe gemacht"
+  },
   "heißen": {
     "ich": "heiße",
     "du": "heißt",

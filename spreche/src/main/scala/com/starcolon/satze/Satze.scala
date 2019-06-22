@@ -10,31 +10,60 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
   def modalVerb: Option[ModalVerbClaus] = clauses.find(_.isInstanceOf[ModalVerbClaus]).map(_.asInstanceOf[ModalVerbClaus])
   def objekt: Option[ObjectClaus]       = clauses.find(_.isInstanceOf[ObjectClaus]).map(_.asInstanceOf[ObjectClaus])
   def time: Option[TimeClaus]           = clauses.find(_.isInstanceOf[TimeClaus]).map(_.asInstanceOf[TimeClaus])
-  
+  def negation: Option[NegateClaus]     = clauses.find(_.isInstanceOf[NegateClaus]).map(_.asInstanceOf[NegateClaus])
+  def haben: Option[HabenVerbClaus]     = clauses.find(_.isInstanceOf[HabenVerbClaus]).map(_.asInstanceOf[HabenVerbClaus])
+  def allObjekts: Seq[Option[ObjectClaus]] = clauses.collect{ case obj@ObjectClaus(_,_,_) => Some(obj) }.toSeq
+
   def isPerfekt = clauses.find(_ == HabenVerbClaus).isDefined
+
+  lazy val rearranged = {
+    (time, modalVerb, haben) match {
+      
+      case (Some(_), _, _) =>
+        Satze((Seq(time, modalVerb, subject) ++ allObjekts ++ Seq(negation, verb)).flatten)
+
+      case (None, Some(_), None) =>
+        Satze((Seq(subject, modalVerb, haben, verb) ++ allObjekts ++ Seq(negation)).flatten)
+
+      case (None, Some(_), Some(_)) =>
+        // TAOTODO: Note: if modal verb goes at the end of sentence, always conjugate as Wir
+        Satze((Seq(subject, haben, verb) ++ allObjekts ++ Seq(negation, modalVerb)).flatten)
+
+      case (None, None, Some(_)) =>
+        Satze((Seq(subject, haben) ++ allObjekts ++ Seq(negation, verb)).flatten)
+
+      case (None, None, None) =>
+        Satze((Seq(subject, verb) ++ allObjekts ++ Seq(negation)).flatten)
+    }
+  }
 
   override def render(satze: Satze = this, index: Int = -1)(implicit rule: MasterRule) = {
     
-    // Render time at the beginning of the satze (if any)
-    val timePrefix = time.map(_.render(satze,-1) + " ").getOrElse("")
-    
-    (timePrefix + (modalVerb match {
-      // Without modal verb
-      case None => renderSVO()
-      case Some(ModalVerbClaus(_)) => 
-        // Modal verb but without verb, 
-        // modal verb will become a verb itself
-        verb match {
-          
-          case None => 
-            Satze(clauses.map{
-              case ModalVerbClaus(v) => VerbClaus(v.toVerb)
-              case any => any
-            }).render(this)
+    Satze.abbrev(rearranged.clauses.zipWithIndex.map{
+      case(c,i) => c.render(rearranged, i).trim
+    }.mkString(" ")).trim.replaceAll("  +"," ")
 
-          case _ => renderSMOV()
-        }
-    })).trim.replaceAll("  +"," ")
+
+    // Render time at the beginning of the satze (if any)
+    // val timePrefix = time.map(_.render(satze,-1) + " ").getOrElse("")
+    
+    // (timePrefix + (modalVerb match {
+    //   // Without modal verb
+    //   case None => renderSVO()
+    //   case Some(ModalVerbClaus(_)) => 
+    //     // Modal verb but without verb, 
+    //     // modal verb will become a verb itself
+    //     verb match {
+          
+    //       case None => 
+    //         Satze(clauses.map{
+    //           case ModalVerbClaus(v) => VerbClaus(v.toVerb)
+    //           case any => any
+    //         }).render(this)
+
+    //       case _ => renderSMOV()
+    //     }
+    // })).trim.replaceAll("  +"," ")
   }
 
   private def renderSMOV()
