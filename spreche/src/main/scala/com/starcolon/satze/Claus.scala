@@ -87,43 +87,56 @@ extends Claus {
     val subj = satze.subject.get
     val obj = satze.objekt
 
-    if (subj.isPlural || 
-        (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
-      rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel).ohnePrefix
+    if (satze.isPerfekt){
+      // Perfekt tense
+      val (_, perfektVerb) = if (subj.isPlural || 
+          (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
+        rule.conjugation.conjugatePerfektVerb(v.v, Wir)
+      }
+      else { 
+        val (a,j,p) = subj.ps.head
+        rule.conjugation.conjugatePerfektVerb(v.v, p)
+      }
+
+      perfektVerb
     }
-    else { 
-      val (a,j,p) = subj.ps.head
-      rule.conjugation.conjugateVerb(v.v, p, a).ohnePrefix
+    else {
+      // Present tense
+      if (subj.isPlural || 
+          (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
+        rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel).ohnePrefix
+      }
+      else { 
+        val (a,j,p) = subj.ps.head
+        rule.conjugation.conjugateVerb(v.v, p, a).ohnePrefix
+      }
     }
   }
 
   override def toString = s"+ ${YELLOW_B + BLACK}V${RESET}:${v.v}"
 
-  def isHaben = rule.conjugate.deconjugateverb(v) == "haben"
+  def isHaben()(implicit rule: MasterRule) = rule.conjugation.deconjugateVerb(v.v) == "haben"
 }
 
-case class HabenVerbClaus(v: Option[Verb] = None) extends Claus {
+case object HabenVerbClaus extends Claus {
   override def render(satze: Satze, index: Int)
   (implicit rule: MasterRule) = {
     implicit val conjugation = rule.conjugation
 
-    v match {
-      case None => VerbClaus("haben").render(satze, index)
-      case Some(w) =>
-        val subj = satze.subject.get 
-        val subj_ = if (subj.isPlural) Wir else subj
-        val (auxVerb, perfektVerb) = rule.conjugation.conjugatePerfektVerb(w, subj_)
+    val subj = satze.subject.get
+    val obj = satze.objekt
+    val verb = satze.verb.get
 
+    val (habenVerb, _) = if (subj.isPlural || 
+        (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
+      conjugation.conjugatePerfektVerb(verb.v.v, Wir)
+    }
+    else { 
+      val (a,j,p) = subj.ps.head
+      conjugation.conjugatePerfektVerb(verb.v.v, p)
+    }
 
-        // TAOTODO: Find out how to cooperate with satze
-        perfektVerb
-     }
-    
-  }
-
-  def toVerb = v match {
-    case None => VerbClaus("haben")
-    case Some(_v) => VerbClaus(_v)
+    habenVerb
   }
 }
 

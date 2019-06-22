@@ -6,14 +6,12 @@ import Console._
 
 case class Satze(clauses: Seq[Claus]) extends Claus {
   def subject: Option[SubjectClaus]     = clauses.find(_.isInstanceOf[SubjectClaus]).map(_.asInstanceOf[SubjectClaus])
-  def haben: Option[HabenVerbClaus]     = clauses.find(_.isInstanceOf[HabenVerbClaus]).map(_.asInstanceOf[HabenVerbClaus])
-  // TAOTODO: Return verb inside [haben] if any
   def verb: Option[VerbClaus]           = clauses.find(_.isInstanceOf[VerbClaus]).map(_.asInstanceOf[VerbClaus])
   def modalVerb: Option[ModalVerbClaus] = clauses.find(_.isInstanceOf[ModalVerbClaus]).map(_.asInstanceOf[ModalVerbClaus])
   def objekt: Option[ObjectClaus]       = clauses.find(_.isInstanceOf[ObjectClaus]).map(_.asInstanceOf[ObjectClaus])
   def time: Option[TimeClaus]           = clauses.find(_.isInstanceOf[TimeClaus]).map(_.asInstanceOf[TimeClaus])
   
-  def isPerfekt = haben.isDefined
+  def isPerfekt = clauses.find(_ == HabenVerbClaus).isDefined
 
   override def render(satze: Satze = this, index: Int = -1)(implicit rule: MasterRule) = {
     
@@ -48,12 +46,14 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
     // Put modal verb in front if needed
     val clausesToRender = if (putModalVerbInFront)
         clauses.filterNot{ c =>
+        c == HabenVerbClaus ||
         c.isInstanceOf[VerbClaus] ||
         c.isInstanceOf[TimeClaus] ||
         c.isInstanceOf[ModalVerbClaus]
       }
       else
         clauses.filterNot{ c =>
+          c == HabenVerbClaus ||
           c.isInstanceOf[VerbClaus] ||
           c.isInstanceOf[TimeClaus]
         }
@@ -149,13 +149,15 @@ object Satze {
     implicit val r = rule.conjugation
     // If haben already existed, then convert to a [[HabenVerbClaus]]
     prevTokens.find(_.isInstanceOf[VerbClaus]) match {
-      case None =>
-        val newTokens = prevTokens :+ VerbClaus(Verb.toVerb(s.toLowerCase))
+      case Some(prevHaben) 
+      if Set("seid","haben").contains(
+        r.deconjugateVerb(prevHaben.asInstanceOf[VerbClaus].v.v)) =>
+        val prevTokensOhneHaben = prevTokens.filterNot(_.isInstanceOf[VerbClaus])
+        val newTokens = prevTokensOhneHaben :+ HabenVerbClaus :+ VerbClaus(Verb.toVerb(s.toLowerCase))
         parse(others, newTokens)
 
-      case Some(prevHaben) =>
-        val prevTokensOhneHaben = prevTokens.filterNot(_.isInstanceOf[VerbClaus])
-        val newTokens = prevTokensOhneHaben :+ HabenVerbClaus(Verb.toVerb(s.toLowerCase))
+      case None =>
+        val newTokens = prevTokens :+ VerbClaus(Verb.toVerb(s.toLowerCase))
         parse(others, newTokens)
     }
   }
