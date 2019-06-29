@@ -80,39 +80,82 @@ with PronounClaus {
   override def toString = s"+ ${CYAN_B + BLACK}S${RESET}:${psToString}"
 }
 
+case class PrefixVerbClaus(v: Verb)
+extends Claus {
+  override def render(satze: Satze, index: Int)
+  (implicit rule: MasterRule) = {
+    implicit val conjugation = rule.conjugation
+    v.prefix
+  }
+}
+
 case class VerbClaus(v: Verb) 
 extends Claus {
   override def render(satze: Satze, index: Int)
   (implicit rule: MasterRule) = {
     implicit val conjugation = rule.conjugation
 
-    val subj = satze.subject.get
-    val obj = satze.objekt
+    implicit val satze_ = satze
+    lazy val subj = satze.subject.get
+    lazy val obj = satze.objekt
+
+    val (a,j,p) = if (isPluralVerb) (NoArtikel, Adj(Nil), Wir) else subj.ps.head
 
     if (satze.isPerfekt){
-      // Perfekt tense
-      val (_, perfektVerb) = if (subj.isPlural || 
-          (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
-        rule.conjugation.conjugatePerfektVerb(v.v, Wir)
-      }
-      else { 
-        val (a,j,p) = subj.ps.head
-        rule.conjugation.conjugatePerfektVerb(v.v, p)
-      }
-
-      perfektVerb
+      rule.conjugation.conjugatePerfektVerb(v.v, p)._2
     }
     else {
       // Present tense
-      if (subj.isPlural || 
-          (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
-        rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel).ohnePrefix
+      if (isAfterObjekt){
+        rule.conjugation.conjugateVerb(v.v, p, a)
       }
-      else { 
-        val (a,j,p) = subj.ps.head
+      else {
         rule.conjugation.conjugateVerb(v.v, p, a).ohnePrefix
       }
     }
+
+    // if (satze.isPerfekt){
+    //   // Perfekt tense
+    //   val (_, perfektVerb) = if (subj.isPlural || 
+    //       (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
+    //     rule.conjugation.conjugatePerfektVerb(v.v, Wir)
+    //   }
+    //   else { 
+    //     val (a,j,p) = subj.ps.head
+    //     rule.conjugation.conjugatePerfektVerb(v.v, p)
+    //   }
+
+    //   perfektVerb
+    // }
+    // else {
+    //   // Present tense
+    //   if (subj.isPlural || 
+    //       (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
+    //     rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel).ohnePrefix
+    //   }
+    //   else { 
+    //     val (a,j,p) = subj.ps.head
+    //     rule.conjugation.conjugateVerb(v.v, p, a).ohnePrefix
+    //   }
+    // }
+  }
+
+  def prefix = PrefixVerbClaus(v)
+
+  def isAfterObjekt(implicit satze: Satze) = satze.isAfter[VerbClaus, ObjectClaus]
+
+  def isPluralVerb(implicit satze: Satze) = {
+    lazy val subj = satze.subject.get
+    lazy val obj = satze.objekt
+    lazy val verb = satze.verb.get
+
+    if (subj.isPlural) true
+    else if (verb.v == "seid" && obj.map{_.isPlural}.getOrElse(false)) true
+    else false
+  }
+
+  def isSeparable(implicit rule: MasterRule) = {
+    rule.conjugation.isSeparable(v.v)
   }
 
   override def toString = s"+ ${YELLOW_B + BLACK}V${RESET}:${v.v}"
@@ -152,7 +195,7 @@ extends Claus {
   (implicit rule: MasterRule) = satze.subject.get match {
     case SubjectClaus(ps,_) => ps match {
       // Single subject, and modal verb is not placed at the end
-      case ((a,j,p)) :: Nil && index < satze.clauses.size-1 => 
+      case ((a,j,p)) :: Nil if index < satze.clauses.size-1 => 
         rule.conjugation.conjugateVerb(v.v, p, a)
 
       // Multiple subjects
