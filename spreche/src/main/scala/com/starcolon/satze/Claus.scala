@@ -150,7 +150,7 @@ extends Claus {
     lazy val verb = satze.verb.get
 
     if (subj.isPlural) true
-    else if (verb.v == "seid" && obj.map{_.isPlural}.getOrElse(false)) true
+    else if (verb.v.v == "seid" && obj.map{_.isPlural}.getOrElse(false)) true
     else false
   }
 
