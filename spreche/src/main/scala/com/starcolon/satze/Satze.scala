@@ -21,10 +21,10 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
   /**
    * Check whether [A] comes before [B] in the sentence
    */
-  def isAfter[A<: Claus, B<: Claus] = {
+  def isAfter[A<: Claus: ClassTag, B<: Claus: ClassTag] = {
     lazy val clausesIndexed = clauses.zipWithIndex
-    val a = clausesIndexed.collect{ case (c: A,i) => (c,i) }.headOption
-    val b = clausesIndexed.collect{ case (c: B,i) => (c,i) }.headOption
+    val a = clausesIndexed.collect{ case (c,i) if classTag[A].runtimeClass.isInstance(c) => (c,i) }.headOption
+    val b = clausesIndexed.collect{ case (c,i) if classTag[B].runtimeClass.isInstance(c) => (c,i) }.headOption
 
     (a,b) match {
       case (None,None) => false
@@ -43,7 +43,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
     (time, modalVerb, haben) match {
       
       case (Some(_), _, _) =>
-        Satze((Seq(time, modalVerb, subject) ++ allObjekts ++ Seq(negation, verb)).flatten)
+        Satze((Seq(time, modalVerb, verb, subject) ++ allObjekts ++ Seq(negation, verb)).flatten)
 
       case (None, Some(_), None) =>
         Satze((Seq(subject, modalVerb) ++ allObjekts ++ Seq(negation, verb)).flatten)

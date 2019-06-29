@@ -107,42 +107,19 @@ extends Claus {
     else {
       // Present tense
       if (isAfterObjekt){
-        rule.conjugation.conjugateVerb(v.v, p, a)
+        // TAOTODO: If modal verb comes after verb, it wont convert to [wir]'s verb
+        println("after obj")
+        rule.conjugation.conjugateVerb(v.v, Wir, a)
       }
       else {
         rule.conjugation.conjugateVerb(v.v, p, a).ohnePrefix
       }
     }
-
-    // if (satze.isPerfekt){
-    //   // Perfekt tense
-    //   val (_, perfektVerb) = if (subj.isPlural || 
-    //       (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
-    //     rule.conjugation.conjugatePerfektVerb(v.v, Wir)
-    //   }
-    //   else { 
-    //     val (a,j,p) = subj.ps.head
-    //     rule.conjugation.conjugatePerfektVerb(v.v, p)
-    //   }
-
-    //   perfektVerb
-    // }
-    // else {
-    //   // Present tense
-    //   if (subj.isPlural || 
-    //       (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
-    //     rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel).ohnePrefix
-    //   }
-    //   else { 
-    //     val (a,j,p) = subj.ps.head
-    //     rule.conjugation.conjugateVerb(v.v, p, a).ohnePrefix
-    //   }
-    // }
   }
 
   def prefix = PrefixVerbClaus(v)
 
-  def isAfterObjekt(implicit satze: Satze) = satze.isAfter[VerbClaus, ObjectClaus]
+  def isAfterObjekt(implicit satze: Satze) = satze.isAfter[ObjectClaus, VerbClaus]
 
   def isPluralVerb(implicit satze: Satze) = {
     lazy val subj = satze.subject.get
