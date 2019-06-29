@@ -12,6 +12,27 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
   def $(str: String): String = Satze.parse(str.split(" ").toList).render()
 
+  describe("Utils / Commons"){
+
+    val NoAdj = Adj(Nil)
+    val satze = Satze(
+        TimeClaus(None, Some(Um("sieben"))) ::
+        VerbClaus(Verb("gehen")) ::
+        SubjectClaus((NoArtikel, NoAdj, Wir) :: Nil) ::
+        ObjectClaus(Some(Preposition("zu")), ((Der, NoAdj, Instance("Kino"))) :: Nil) ::
+        Nil
+      )
+
+    it("should identify order of clauses"){
+
+      satze.isAfter[TimeClaus, VerbClaus] shouldBe true
+      satze.isAfter[VerbClaus, ObjectClaus] shouldBe true
+      satze.isAfter[ObjectClaus, SubjectClaus] shouldBe false
+      satze.isAfter[VerbClaus, ModalVerbClaus] shouldBe false
+    }
+
+  }
+
   describe("Nominativ"){
 
     it("should render nominativ sentence"){
