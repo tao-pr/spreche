@@ -1,5 +1,7 @@
 package com.starcolon.satze
 
+import scala.reflect._
+
 import com.starcolon.satze._
 import com.starcolon.satze.Implicits._
 import Console._
@@ -16,7 +18,28 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
 
   def isPerfekt = clauses.find(_ == HabenVerbClaus).isDefined
 
-  lazy val rearranged = {
+  /**
+   * Check whether [A] comes before [B] in the sentence
+   */
+  def isAfter[A<: Claus, B<: Claus] = {
+    lazy val clausesIndexed = clauses.zipWithIndex
+    val a = clausesIndexed.collect{ case (c: A,i) => (c,i) }.headOption
+    val b = clausesIndexed.collect{ case (c: B,i) => (c,i) }.headOption
+
+    (a,b) match {
+      case (None,None) => false
+      case (_, None) => false
+      case (None, _) => false
+      case (Some((_,ai)), Some((_,bi))) => ai < bi
+    }
+  }
+
+  def rearranged(implicit rule: MasterRule) = {
+    
+    lazy val ending = if (verb.map(_.isSeparable).getOrElse(false)) 
+      Seq(verb.map(_.prefix)) 
+    else Nil
+    
     (time, modalVerb, haben) match {
       
       case (Some(_), _, _) =>
@@ -26,43 +49,22 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
         Satze((Seq(subject, modalVerb) ++ allObjekts ++ Seq(negation, verb)).flatten)
 
       case (None, Some(_), Some(_)) =>
-        Satze((Seq(subject, haben, verb) ++ allObjekts ++ Seq(negation, modalVerb)).flatten)
+        Satze((Seq(subject, haben, verb) ++ allObjekts ++ Seq(negation, modalVerb) ++ ending).flatten)
 
       case (None, None, Some(_)) =>
         Satze((Seq(subject, haben) ++ allObjekts ++ Seq(negation, verb)).flatten)
 
       case (None, None, None) =>
-        Satze((Seq(subject, verb) ++ allObjekts ++ Seq(negation)).flatten)
+        Satze((Seq(subject, verb) ++ allObjekts ++ Seq(negation) ++ ending).flatten)
     }
   }
 
   override def render(satze: Satze = this, index: Int = -1)(implicit rule: MasterRule) = {
     
-    Satze.abbrev(rearranged.clauses.zipWithIndex.map{
-      case(c,i) => c.render(rearranged, i).trim
+    val rearrangedSatze = rearranged
+    Satze.abbrev(rearrangedSatze.clauses.zipWithIndex.map{
+      case(c,i) => c.render(rearrangedSatze, i).trim
     }.mkString(" ")).trim.replaceAll("  +"," ")
-
-
-    // Render time at the beginning of the satze (if any)
-    // val timePrefix = time.map(_.render(satze,-1) + " ").getOrElse("")
-    
-    // (timePrefix + (modalVerb match {
-    //   // Without modal verb
-    //   case None => renderSVO()
-    //   case Some(ModalVerbClaus(_)) => 
-    //     // Modal verb but without verb, 
-    //     // modal verb will become a verb itself
-    //     verb match {
-          
-    //       case None => 
-    //         Satze(clauses.map{
-    //           case ModalVerbClaus(v) => VerbClaus(v.toVerb)
-    //           case any => any
-    //         }).render(this)
-
-    //       case _ => renderSMOV()
-    //     }
-    // })).trim.replaceAll("  +"," ")
   }
 
   private def renderSMOV()
