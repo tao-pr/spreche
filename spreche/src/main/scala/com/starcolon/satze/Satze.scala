@@ -42,8 +42,11 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
     
     (time, modalVerb, haben) match {
       
+      case (Some(_), Some(_), _) =>
+        Satze((Seq(time, modalVerb, subject) ++ allObjekts ++ Seq(negation, verb)).flatten)
+
       case (Some(_), _, _) =>
-        Satze((Seq(time, modalVerb, verb, subject) ++ allObjekts ++ Seq(negation, verb)).flatten)
+        Satze((Seq(time, verb, subject) ++ allObjekts ++ Seq(negation)).flatten)
 
       case (None, Some(_), None) =>
         Satze((Seq(subject, modalVerb) ++ allObjekts ++ Seq(negation, verb)).flatten)
@@ -67,74 +70,6 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
     }.mkString(" ")).trim.replaceAll("  +"," ")
   }
 
-  private def renderSMOV()
-  (implicit rule: MasterRule) = {
-    
-    val putModalVerbInFront = time.isDefined
-    val verbClaus = verb.get
-
-    // Put modal verb in front if needed
-    val clausesToRender = if (putModalVerbInFront)
-        clauses.filterNot{ c =>
-        c == HabenVerbClaus ||
-        c.isInstanceOf[VerbClaus] ||
-        c.isInstanceOf[TimeClaus] ||
-        c.isInstanceOf[ModalVerbClaus]
-      }
-      else
-        clauses.filterNot{ c =>
-          c == HabenVerbClaus ||
-          c.isInstanceOf[VerbClaus] ||
-          c.isInstanceOf[TimeClaus]
-        }
-    val satzeWithoutModal = Satze(clauses.filterNot{_.isInstanceOf[ModalVerbClaus]})
-    val beginning = if (putModalVerbInFront){
-      modalVerb.map(_.render(this, -1)).getOrElse("") + " "
-    }
-    else ""
-
-    val endingVerb = rule.conjugation.conjugateVerb(
-      verbClaus.v.v, Wir, NoArtikel
-    )
-
-    val isNegate = clausesToRender.headOption == Some(NegateClaus)
-    val preVerbToken = if (isNegate) " nicht " else " "
-    
-    beginning + Satze.abbrev(clausesToRender.zipWithIndex.map{
-      case(c,i) => c.render(satzeWithoutModal, i).trim
-    }.mkString(" ")) + preVerbToken + endingVerb
-  }
-
-  private def renderSVO()(implicit rule: MasterRule) = {
-    implicit val conjugation = rule.conjugation
-    val putVerbInFront = time.isDefined
-    lazy val verbClaus = clauses
-      .collect{ case c @VerbClaus(_) => c.asInstanceOf[VerbClaus] }
-      .headOption
-    val (clausesToRender, beginning): (Seq[Claus], String) =
-      if (!putVerbInFront)
-        (clauses, "")
-      else{
-        val clausesNoVerb: Seq[Claus] = clauses.filterNot(_.isInstanceOf[VerbClaus])
-        val verbStr = verbClaus
-          // NOTE: Following render has to supply the full sentence with verbs
-          .map(_.render(Satze(clauses),-1) + " ")
-          .getOrElse("")
-
-        (clausesNoVerb, verbStr)
-      }
-    val satzeRef = this
-    
-    val isNegate = clausesToRender.headOption == Some(NegateClaus)
-    val ending = (if (isNegate) " nicht" else "") + verbClaus.map{" " + _.v.prefix}.getOrElse("")
-
-    beginning + Satze.abbrev(clausesToRender
-      .filterNot(_.isInstanceOf[TimeClaus])
-      .zipWithIndex.map{
-        case(c,i) => c.render(satzeRef, i).trim
-      }.mkString(" ")) + ending
-  }
-  
   override def toString = clauses.map(_.toString).mkString(" ")
 }
 
