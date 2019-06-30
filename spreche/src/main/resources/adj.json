@@ -38,6 +38,7 @@
     "aktuell": {"mean": "current"},
     "jetztigen": {"mean": "current"},
     "letzt": {"mean": "last"},
+    "abgebrochen": {"mean": "discontinuedly"},
     "neu": {"mean": "new"},
     "alt": {"mean": "old"},
     "schön": {"mean": "nice"},
