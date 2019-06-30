@@ -1,5 +1,6 @@
 {
   "mögen": {
+    "mean": "like",
     "ich": "mag",
     "du": "magst",
     "es": "mag",
@@ -11,6 +12,7 @@
     "perfekt": "habe gemocht"
   },
   "möchten": {
+    "mean": "would love",
     "ich": "möchte",
     "du": "möchtest",
     "es": "möchte",
@@ -22,6 +24,7 @@
     "perfekt": "habe gemocht"
   },
   "wünschen": {
+    "mean": "wish",
     "ich": "wünsche",
     "du": "wünschst",
     "es": "wünscht",
@@ -33,6 +36,7 @@
     "perfekt": "habe gewünscht"
   },
   "dürfen": {
+    "mean": "is allowed",
     "ich": "darf",
     "du": "darfst",
     "es": "darf",
@@ -44,6 +48,7 @@
     "perfekt": "habe gedurft"
   },
   "können": {
+    "mean": "can",
     "ich": "kann",
     "du": "kannst",
     "es": "kann",
@@ -55,6 +60,7 @@
     "perfekt": "habe gekonnt"
   },
   "müssen": {
+    "mean": "must",
     "ich": "muss",
     "du": "musst",
     "es": "muss",
@@ -66,6 +72,7 @@
     "perfekt": "habe gemusst"
   },
   "sollen": {
+    "mean": "should",
     "ich": "soll",
     "du": "sollst",
     "es": "soll",
@@ -77,6 +84,7 @@
     "perfekt": "habe gesollt"
   },
   "wollen": {
+    "mean": "want",
     "ich": "will",
     "du": "willst",
     "es": "will",
@@ -88,6 +96,7 @@
     "perfekt": "habe gewollt"
   },
   "machen": {
+    "mean": "make",
     "ich": "mache",
     "du": "machst",
     "es": "macht",
@@ -99,6 +108,7 @@
     "perfekt": "habe gemacht"
   },
   "heißen": {
+    "mean": "name",
     "ich": "heiße",
     "du": "heißt",
     "es": "heißt",
@@ -110,6 +120,7 @@
     "perfekt": "habe geheißen"
   },
   "seid": {
+    "mean": "be",
     "ich": "bin",
     "du": "bist",
     "es": "ist",
@@ -121,6 +132,7 @@
     "perfekt": "bin gewessen"
   },
   "sagen": {
+    "mean": "say",
     "ich": "sage",
     "du": "sagst",
     "es": "sagt",
@@ -132,6 +144,7 @@
     "perfekt": "habe gesagt"
   },
   "fragen": {
+    "mean": "ask",
     "ich": "frage",
     "du": "fragst",
     "es": "fragt",
@@ -142,7 +155,8 @@
     "Sie": "fragen",
     "perfekt": "habe gefragt"
   },
-  "wohen": {
+  "wohnen": {
+    "mean": "live",
     "ich": "wohne",
     "du": "wohnst",
     "es": "wohnt",
@@ -154,6 +168,7 @@
     "perfekt": "habe gewohnt"
   },
   "fahren": {
+    "mean": "travel",
     "ich": "fahre",
     "du": "fährst",
     "es": "fährt",
@@ -165,6 +180,7 @@
     "perfekt": "bin gefahren"
   },
   "gehen": {
+    "mean": "go",
     "ich": "gehe",
     "du": "gehst",
     "es": "geht",
@@ -176,6 +192,7 @@
     "perfekt": "bin gegangen"
   },
   "laufen": {
+    "mean": "walk",
     "ich": "laufe",
     "du": "läufst",
     "es": "läuft",
@@ -187,6 +204,7 @@
     "perfekt": "bin gelaufen"
   },
   "sehen": {
+    "mean": "see",
     "ich": "sehe",
     "du": "siehst",
     "es": "sieht",
@@ -197,18 +215,8 @@
     "Sie": "sehen",
     "perfekt": "habe gesehen"
   },
-  "stellen": {
-    "ich": "stelle",
-    "du": "stellst",
-    "es": "stellt",
-    "sie": "stellt",
-    "er": "stellt",
-    "wir": "stellen",
-    "ihr": "stellt",
-    "Sie": "stellen",
-    "perfekt": "habe gestellt"
-  },
   "beginnen": {
+    "mean": "begin",
     "ich": "beginne",
     "du": "beginnst",
     "es": "beginnt",
@@ -220,6 +228,7 @@
     "perfekt": "habe begonnen"
   },
   "schließen": {
+    "mean": "close",
     "ich": "schließe",
     "du": "schließt",
     "es": "schließt",
@@ -231,6 +240,7 @@
     "perfekt": "habe geschlosen"
   },
   "haben": {
+    "mean": "have",
     "ich": "habe",
     "du": "hast",
     "es": "hat",
@@ -242,6 +252,7 @@
     "perfekt": "habe gehabt"
   },
   "kennen": {
+    "mean": "know",
     "ich": "kenne",
     "du": "kennst",
     "es": "kennt",
@@ -253,6 +264,7 @@
     "perfekt": "habe gekannt"
   },
   "kommen": {
+    "mean": "come",
     "ich": "komme",
     "du": "kommst",
     "es": "kommt",
@@ -264,6 +276,7 @@
     "perfekt": "bin gekommen"
   },
   "mitkommen": {
+    "mean": "come join",
     "ich": "mitkomme",
     "du": "mitkommst",
     "es": "mitkommt",
@@ -274,8 +287,8 @@
     "Sie": "mitkommen",
     "perfekt": "bin mitgekommen"
   },
-
   "nehmen": {
+    "mean": "take",
     "ich": "nehme",
     "du": "nimmst",
     "es": "nimmt",
@@ -287,6 +300,7 @@
     "perfekt": "habe genommen"
   },
   "finden": {
+    "mean": "find",
     "ich": "finde",
     "du": "findest",
     "es": "findet",
@@ -298,6 +312,7 @@
     "perfekt": "habe gefunden"
   },
   "suchen": {
+    "mean": "search",
     "ich": "suche",
     "du": "suchst",
     "es": "sucht",
@@ -309,6 +324,7 @@
     "perfekt": "habe gesucht"
   },
   "benutzen": {
+    "mean": "use",
     "ich": "benutze",
     "du": "benutzt",
     "es": "benutzt",
@@ -320,6 +336,7 @@
     "perfekt": "habe benutzt"
   },
   "liegen": {
+    "mean": "lie",
     "ich": "liege",
     "du": "liegst",
     "es": "liegt",
@@ -331,6 +348,7 @@
     "perfekt": "habe gelegen"
   },
   "stehen": {
+    "mean": "stand",
     "ich": "stehe",
     "du": "stehst",
     "es": "steht",
@@ -342,6 +360,7 @@
     "perfekt": "bin gestanden"
   },
   "aufstehen": {
+    "mean": "get up",
     "ich": "aufstehe",
     "du": "aufstehst",
     "es": "aufsteht",
@@ -353,6 +372,7 @@
     "perfekt": "bin aufgestanden"
   },
   "anstehen": {
+    "mean": "line up/queue",
     "ich": "anstehe",
     "du": "anstehst",
     "es": "ansteht",
@@ -364,6 +384,7 @@
     "perfekt": "habe angestanden"
   },
   "durchstehen": {
+    "mean": "go through",
     "ich": "durchstehe",
     "du": "durchstehst",
     "es": "durchsteht",
@@ -375,6 +396,7 @@
     "perfekt": "habe durchgestanden"
   },
   "sitzen": {
+    "mean": "sit",
     "ich": "sitze",
     "du": "sitzt",
     "es": "sitzt",
@@ -386,6 +408,7 @@
     "perfekt": "habe gesessen"
   },
   "senden": {
+    "mean": "send",
     "ich": "sende",
     "du": "sendest",
     "es": "sendet",
@@ -397,6 +420,7 @@
     "perfekt": "habe gesendet"
   },
   "geben": {
+    "mean": "give",
     "ich": "gebe",
     "du": "gibst",
     "es": "gibt",
@@ -408,6 +432,7 @@
     "perfekt": "habe gegeben"
   },
   "sprechen": {
+    "mean": "speak",
     "ich": "spreche",
     "du": "sprichst",
     "es": "spricht",
@@ -419,6 +444,7 @@
     "perfekt": "habe gesprochen"
   },
   "bringen": {
+    "mean": "bring",
     "ich": "bringe",
     "du": "bringst",
     "es": "bringt",
@@ -430,6 +456,7 @@
     "perfekt": "habe gebracht"
   },
   "kaufen": {
+    "mean": "buy",
     "ich": "kaufe",
     "du": "kaufst",
     "es": "kauft",
@@ -441,6 +468,7 @@
     "perfekt": "habe gekauft"
   },
   "treffen": {
+    "mean": "meet",
     "ich": "treffe",
     "du": "triffst",
     "es": "trifft",
@@ -452,6 +480,7 @@
     "perfekt": "habe getroffen"
   },
   "brauchen": {
+    "mean": "want",
     "ich": "brauche",
     "du": "brauchst",
     "es": "braucht",
@@ -463,6 +492,7 @@
     "perfekt": "habe gebraucht"
   },
   "einladen": {
+    "mean": "invite",
     "ich": "einlade",
     "du": "einlädst",
     "es": "einlädt",
@@ -474,6 +504,7 @@
     "perfekt": "habe eingeladen"
   },
   "besuchen": {
+    "mean": "visit",
     "ich": "besuche",
     "du": "besuchst",
     "es": "besucht",
@@ -485,6 +516,7 @@
     "perfekt": "habe besucht"
   },
   "essen": {
+    "mean": "eat",
     "ich": "esse",
     "du": "isst",
     "es": "isst",
@@ -496,6 +528,7 @@
     "perfekt": "habe gegessen"
   },
   "trinken": {
+    "mean": "drink",
     "ich": "trinke",
     "du": "trinkst",
     "es": "trinkt",
@@ -507,6 +540,7 @@
     "perfekt": "habe getrunken"
   },
   "warten": {
+    "mean": "wait",
     "ich": "warte",
     "du": "wartest",
     "es": "wartet",
@@ -518,6 +552,7 @@
     "perfekt": "habe gewartet"
   },
   "helfen": {
+    "mean": "help",
     "ich": "helfe",
     "du": "hilfst",
     "es": "hilft",
@@ -529,6 +564,7 @@
     "perfekt": "habe geholfen"
   },
   "putzen": {
+    "mean": "clean",
     "ich": "putze",
     "du": "putzt",
     "es": "putzt",
@@ -540,6 +576,7 @@
     "perfekt": "habe geputzt"
   },
   "anhalten": {
+    "mean": "pause",
     "ich": "anhalte",
     "du": "anhältst",
     "es": "anhält",
@@ -551,6 +588,7 @@
     "perfekt": "habe angehalten"
   },
   "einsteigen": {
+    "mean": "get in",
     "ich": "einsteige",
     "du": "einsteigst",
     "es": "einsteigt",
@@ -562,6 +600,7 @@
     "perfekt": "bin eingesteigen"
   },
   "aussteigen": {
+    "mean": "get off",
     "ich": "aussteige",
     "du": "aussteigst",
     "es": "aussteigt",
@@ -572,8 +611,8 @@
     "Sie": "aussteigen",
     "perfekt": "bin ausgesteigen"
   },
-
   "bewerten": {
+    "mean": "evaluate/rate",
     "ich": "bewerte",
     "du": "bewertest",
     "es": "bewertet",
@@ -585,6 +624,7 @@
     "perfekt": "habe bewertet"
   },
   "gefallen": {
+    "mean": "satisfy",
     "ich": "gefalle",
     "du": "gefällst",
     "es": "gefällt",
@@ -596,6 +636,7 @@
     "perfekt": "bin gefallen"
   },
   "arbeiten": {
+    "mean": "work",
     "ich": "arbeite",
     "du": "arbeitest",
     "es": "arbeitet",
@@ -607,6 +648,7 @@
     "perfekt": "habe gearbeitet"
   },
   "einziehen": {
+    "mean": "collect/pick",
     "ich": "einziehe",
     "du": "einziehst",
     "es": "einzieht",
@@ -618,6 +660,7 @@
     "perfekt": "habe eingezogen"
   },
   "kümmern": {
+    "mean": "mind/bother",
     "ich": "kümmere",
     "du": "kümmerst",
     "es": "kümmert",
@@ -629,6 +672,7 @@
     "perfekt": "habe gekümmert"
   },
   "stellen": {
+    "mean": "provide/put/place",
     "ich": "stelle",
     "du": "stellst",
     "es": "stellt",
@@ -640,6 +684,7 @@
     "perfekt": "habe gestellt"
   },
   "weiterempfehlen": {
+    "mean": "recommend",
     "ich": "weiterempfehle",
     "du": "weiterempfehlst",
     "es": "weiterempfehlen",
@@ -651,6 +696,7 @@
     "perfekt": "habe weiterempfohlen"
   },
   "drücken": {
+    "mean": "push",
     "ich": "drücke",
     "du": "drückst",
     "es": "drückt",
@@ -662,6 +708,7 @@
     "perfekt": "bin gedrückt"
   },
   "ziehen": {
+    "mean": "pull/drag/move",
     "ich": "ziehe",
     "du": "ziehst",
     "es": "zieht",
@@ -671,5 +718,53 @@
     "ihr": "zieht",
     "Sie": "ziehen",
     "perfekt": "bin gezohgen"
+  },
+  "ausschalten": {
+    "mean": "switch off",
+    "ich": "ausschalte",
+    "du": "ausschaltest",
+    "es": "ausschaltet",
+    "sie": "ausschaltet",
+    "er": "ausschaltet",
+    "wir": "ausschalten",
+    "ihr": "ausschaltet",
+    "Sie": "ausschalten",
+    "perfekt": "habe ausgeschaltet"
+  },
+  "erzählen": {
+    "mean": "tell",
+    "ich": "erzähle",
+    "du": "erzählest",
+    "es": "erzählt",
+    "sie": "erzählt",
+    "er": "erzählt",
+    "wir": "erzählen",
+    "ihr": "erzählt",
+    "Sie": "erzählen",
+    "perfekt": "habe erzählt"
+  },
+  "wählen": {
+    "mean": "choose/elect",
+    "ich": "wähle",
+    "du": "wählst",
+    "es": "wählt",
+    "sie": "wählt",
+    "er": "wählt",
+    "wir": "wählen",
+    "ihr": "wählt",
+    "Sie": "wählen",
+    "perfekt": "habe gewählt"
+  },
+  "verlassen": {
+    "mean": "leave/quit",
+    "ich": "verlasse",
+    "du": "verlässt",
+    "es": "verlässt",
+    "sie": "verlässt",
+    "er": "verlässt",
+    "wir": "verlassen",
+    "ihr": "verlasst",
+    "Sie": "verlassen",
+    "perfekt": "habe verlassen"
   }
 }
