@@ -42,6 +42,7 @@
   "Buchung": ["die","Buchungen"],
   "Ticket": ["das","Tickets"],
   "Termin": ["der","Termine"],
+  "Auftrag": ["der","Aufträge"],
   "Tag": ["der","Tage"],
   "Stunde": ["die","Stunden"],
   "Woche": ["die","Wochen"],
@@ -59,6 +60,7 @@
   "Nachbar": ["der","Nachbarn"],
   "Benutzer": ["der","Benutzer"],
   "Gast": ["der","Gäste"],
+  "Person": ["der","Personen"],
 
   "Tee": ["der","Tees"],
   "Kaffee": ["der","Kaffees"],
@@ -79,6 +81,7 @@
   "Keks": ["der","Kekse"],
   "Zitrone": ["die","Zitronen"],
   "Sprudel": ["der","Sprudel"],
+  "Frühstück": ["das","Frühstück"],
 
   "Ausland": ["das","Ausland"],
   "Stadt": ["der","Städte"],

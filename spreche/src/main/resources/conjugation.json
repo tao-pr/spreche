@@ -7,7 +7,8 @@
     "er": "mag",
     "wir": "mögen",
     "ihr": "mögt",
-    "Sie": "mögen"
+    "Sie": "mögen",
+    "perfekt": "habe gemocht"
   },
   "möchten": {
     "ich": "möchte",
@@ -17,7 +18,8 @@
     "er": "möchte",
     "wir": "möchten",
     "ihr": "möchtet",
-    "Sie": "möchten"
+    "Sie": "möchten",
+    "perfekt": "habe gemocht"
   },
   "wünschen": {
     "ich": "wünsche",
@@ -27,7 +29,8 @@
     "er": "wünscht",
     "wir": "wünschen",
     "ihr": "wünscht",
-    "Sie": "wünschen"
+    "Sie": "wünschen",
+    "perfekt": "habe gewünscht"
   },
   "dürfen": {
     "ich": "darf",
@@ -37,7 +40,8 @@
     "er": "darf",
     "wir": "dürfen",
     "ihr": "dürft",
-    "Sie": "dürfen"
+    "Sie": "dürfen",
+    "perfekt": "habe gedurft"
   },
   "können": {
     "ich": "kann",
@@ -47,7 +51,8 @@
     "er": "kann",
     "wir": "können",
     "ihr": "könnt",
-    "Sie": "können"
+    "Sie": "können",
+    "perfekt": "habe gekonnt"
   },
   "müssen": {
     "ich": "muss",
@@ -57,7 +62,8 @@
     "er": "muss",
     "wir": "müssen",
     "ihr": "müsst",
-    "Sie": "müssen"
+    "Sie": "müssen",
+    "perfekt": "habe gemusst"
   },
   "sollen": {
     "ich": "soll",
@@ -67,7 +73,8 @@
     "er": "soll",
     "wir": "sollen",
     "ihr": "sollt",
-    "Sie": "sollen"
+    "Sie": "sollen",
+    "perfekt": "habe gesollt"
   },
   "wollen": {
     "ich": "will",
@@ -77,7 +84,19 @@
     "er": "will",
     "wir": "wollen",
     "ihr": "wollt",
-    "Sie": "wollen"
+    "Sie": "wollen",
+    "perfekt": "habe gewollt"
+  },
+  "machen": {
+    "ich": "mache",
+    "du": "machst",
+    "es": "macht",
+    "sie": "macht",
+    "er": "macht",
+    "wir": "machen",
+    "ihr": "macht",
+    "Sie": "machen",
+    "perfekt": "habe gemacht"
   },
   "heißen": {
     "ich": "heiße",
@@ -87,7 +106,8 @@
     "er": "heißt",
     "wir": "heißen",
     "ihr": "heißt",
-    "Sie": "heißen"
+    "Sie": "heißen",
+    "perfekt": "habe geheißen"
   },
   "seid": {
     "ich": "bin",
@@ -97,7 +117,8 @@
     "er": "ist",
     "wir": "sind",
     "ihr": "seid",
-    "Sie": "sind"
+    "Sie": "sind",
+    "perfekt": "bin gewessen"
   },
   "sagen": {
     "ich": "sage",
@@ -107,7 +128,8 @@
     "er": "sagt",
     "wir": "sagen",
     "ihr": "sagt",
-    "Sie": "sagen"
+    "Sie": "sagen",
+    "perfekt": "habe gesagt"
   },
   "fragen": {
     "ich": "frage",
@@ -117,7 +139,8 @@
     "er": "fragt",
     "wir": "fragen",
     "ihr": "fragt",
-    "Sie": "fragen"
+    "Sie": "fragen",
+    "perfekt": "habe gefragt"
   },
   "wohen": {
     "ich": "wohne",
@@ -127,7 +150,8 @@
     "er": "wohnt",
     "wir": "wohnen",
     "ihr": "wohnt",
-    "Sie": "wohnen"
+    "Sie": "wohnen",
+    "perfekt": "habe gewohnt"
   },
   "fahren": {
     "ich": "fahre",
@@ -137,7 +161,8 @@
     "er": "fährt",
     "wir": "fahren",
     "ihr": "fahrt",
-    "Sie": "fahren"
+    "Sie": "fahren",
+    "perfekt": "bin gefahren"
   },
   "gehen": {
     "ich": "gehe",
@@ -147,7 +172,8 @@
     "er": "geht",
     "wir": "gehen",
     "ihr": "geht",
-    "Sie": "gehen"
+    "Sie": "gehen",
+    "perfekt": "bin gegangen"
   },
   "laufen": {
     "ich": "laufe",
@@ -157,7 +183,8 @@
     "er": "läuft",
     "wir": "laufen",
     "ihr": "lauft",
-    "Sie": "laufen"
+    "Sie": "laufen",
+    "perfekt": "bin gelaufen"
   },
   "sehen": {
     "ich": "sehe",
@@ -167,7 +194,8 @@
     "er": "sieht",
     "wir": "sehen",
     "ihr": "seht",
-    "Sie": "sehen"
+    "Sie": "sehen",
+    "perfekt": "habe gesehen"
   },
   "stellen": {
     "ich": "stelle",
@@ -177,7 +205,8 @@
     "er": "stellt",
     "wir": "stellen",
     "ihr": "stellt",
-    "Sie": "stellen"
+    "Sie": "stellen",
+    "perfekt": "habe gestellt"
   },
   "beginnen": {
     "ich": "beginne",
@@ -187,7 +216,8 @@
     "er": "beginnt",
     "wir": "beginnen",
     "ihr": "beginnt",
-    "Sie": "beginnen"
+    "Sie": "beginnen",
+    "perfekt": "habe begonnen"
   },
   "schließen": {
     "ich": "schließe",
@@ -197,7 +227,8 @@
     "er": "schließt",
     "wir": "schließen",
     "ihr": "schließt",
-    "Sie": "schließen"
+    "Sie": "schließen",
+    "perfekt": "habe geschlosen"
   },
   "haben": {
     "ich": "habe",
@@ -207,7 +238,8 @@
     "er": "hat",
     "wir": "haben",
     "ihr": "habt",
-    "Sie": "haben"
+    "Sie": "haben",
+    "perfekt": "habe gehabt"
   },
   "kennen": {
     "ich": "kenne",
@@ -217,7 +249,8 @@
     "er": "kennt",
     "wir": "kennen",
     "ihr": "kennt",
-    "Sie": "kennen"
+    "Sie": "kennen",
+    "perfekt": "habe gekannt"
   },
   "kommen": {
     "ich": "komme",
@@ -227,8 +260,21 @@
     "er": "kommt",
     "wir": "kommen",
     "ihr": "kommt",
-    "Sie": "kommen"
+    "Sie": "kommen",
+    "perfekt": "bin gekommen"
   },
+  "mitkommen": {
+    "ich": "mitkomme",
+    "du": "mitkommst",
+    "es": "mitkommt",
+    "sie": "mitkommt",
+    "er": "mitkommt",
+    "wir": "mitkommen",
+    "ihr": "mitkommt",
+    "Sie": "mitkommen",
+    "perfekt": "bin mitgekommen"
+  },
+
   "nehmen": {
     "ich": "nehme",
     "du": "nimmst",
@@ -237,7 +283,8 @@
     "er": "nimmt",
     "wir": "nehmen",
     "ihr": "nehmt",
-    "Sie": "nehmen"
+    "Sie": "nehmen",
+    "perfekt": "habe genommen"
   },
   "finden": {
     "ich": "finde",
@@ -247,7 +294,8 @@
     "er": "findet",
     "wir": "finden",
     "ihr": "findet",
-    "Sie": "finden"
+    "Sie": "finden",
+    "perfekt": "habe gefunden"
   },
   "suchen": {
     "ich": "suche",
@@ -257,7 +305,8 @@
     "er": "sucht",
     "wir": "suchen",
     "ihr": "sucht",
-    "Sie": "suchen"
+    "Sie": "suchen",
+    "perfekt": "habe gesucht"
   },
   "benutzen": {
     "ich": "benutze",
@@ -267,7 +316,8 @@
     "er": "benutzt",
     "wir": "benutzen",
     "ihr": "benutzt",
-    "Sie": "benutzen"
+    "Sie": "benutzen",
+    "perfekt": "habe benutzt"
   },
   "liegen": {
     "ich": "liege",
@@ -277,7 +327,8 @@
     "er": "liegt",
     "wir": "liegen",
     "ihr": "liegt",
-    "Sie": "liegen"
+    "Sie": "liegen",
+    "perfekt": "habe gelegen"
   },
   "stehen": {
     "ich": "stehe",
@@ -287,7 +338,8 @@
     "er": "steht",
     "wir": "stehen",
     "ihr": "steht",
-    "Sie": "stehen"
+    "Sie": "stehen",
+    "perfekt": "bin gestanden"
   },
   "aufstehen": {
     "ich": "aufstehe",
@@ -297,7 +349,8 @@
     "er": "aufsteht",
     "wir": "aufstehen",
     "ihr": "aufsteht",
-    "Sie": "aufstehen"
+    "Sie": "aufstehen",
+    "perfekt": "bin aufgestanden"
   },
   "anstehen": {
     "ich": "anstehe",
@@ -307,7 +360,8 @@
     "er": "ansteht",
     "wir": "anstehen",
     "ihr": "ansteht",
-    "Sie": "anstehen"
+    "Sie": "anstehen",
+    "perfekt": "habe angestanden"
   },
   "durchstehen": {
     "ich": "durchstehe",
@@ -317,17 +371,19 @@
     "er": "durchsteht",
     "wir": "durchstehen",
     "ihr": "durchsteht",
-    "Sie": "durchstehen"
+    "Sie": "durchstehen",
+    "perfekt": "habe durchgestanden"
   },
   "sitzen": {
-    "ich": "sizte",
-    "du": "sizt",
-    "es": "sizt",
-    "sie": "sizt",
-    "er": "sizt",
+    "ich": "sitze",
+    "du": "sitzt",
+    "es": "sitzt",
+    "sie": "sitzt",
+    "er": "sitzt",
     "wir": "sitzen",
-    "ihr": "sizt",
-    "Sie": "sitzen"
+    "ihr": "sitzt",
+    "Sie": "sitzen",
+    "perfekt": "habe gesessen"
   },
   "senden": {
     "ich": "sende",
@@ -337,7 +393,8 @@
     "er": "sendet",
     "wir": "senden",
     "ihr": "sendet",
-    "Sie": "senden"
+    "Sie": "senden",
+    "perfekt": "habe gesendet"
   },
   "geben": {
     "ich": "gebe",
@@ -347,7 +404,8 @@
     "er": "gibt",
     "wir": "geben",
     "ihr": "gebt",
-    "Sie": "geben"
+    "Sie": "geben",
+    "perfekt": "habe gegeben"
   },
   "sprechen": {
     "ich": "spreche",
@@ -357,7 +415,8 @@
     "er": "spricht",
     "wir": "sprechen",
     "ihr": "sprecht",
-    "Sie": "sprechen"
+    "Sie": "sprechen",
+    "perfekt": "habe gesprochen"
   },
   "bringen": {
     "ich": "bringe",
@@ -367,7 +426,8 @@
     "er": "bringt",
     "wir": "bringen",
     "ihr": "bringt",
-    "Sie": "bringen"
+    "Sie": "bringen",
+    "perfekt": "habe gebracht"
   },
   "kaufen": {
     "ich": "kaufe",
@@ -377,7 +437,8 @@
     "er": "kauft",
     "wir": "kaufen",
     "ihr": "kauft",
-    "Sie": "kaufen"
+    "Sie": "kaufen",
+    "perfekt": "habe gekauft"
   },
   "treffen": {
     "ich": "treffe",
@@ -387,7 +448,8 @@
     "er": "trifft",
     "wir": "treffen",
     "ihr": "trifft",
-    "Sie": "treffen"
+    "Sie": "treffen",
+    "perfekt": "habe getroffen"
   },
   "brauchen": {
     "ich": "brauche",
@@ -397,7 +459,8 @@
     "er": "braucht",
     "wir": "brauchen",
     "ihr": "braucht",
-    "Sie": "brauchen"
+    "Sie": "brauchen",
+    "perfekt": "habe gebraucht"
   },
   "einladen": {
     "ich": "einlade",
@@ -407,7 +470,8 @@
     "er": "einlädt",
     "wir": "einladen",
     "ihr": "einladet",
-    "Sie": "einladen"
+    "Sie": "einladen",
+    "perfekt": "habe eingeladen"
   },
   "besuchen": {
     "ich": "besuche",
@@ -417,7 +481,8 @@
     "er": "besucht",
     "wir": "besuchen",
     "ihr": "besucht",
-    "Sie": "besuchen"
+    "Sie": "besuchen",
+    "perfekt": "habe besucht"
   },
   "essen": {
     "ich": "esse",
@@ -427,7 +492,8 @@
     "er": "isst",
     "wir": "essen",
     "ihr": "esst",
-    "Sie": "essen"
+    "Sie": "essen",
+    "perfekt": "habe gegessen"
   },
   "trinken": {
     "ich": "trinke",
@@ -437,7 +503,8 @@
     "er": "trinkt",
     "wir": "trinken",
     "ihr": "trinkt",
-    "Sie": "trinken"
+    "Sie": "trinken",
+    "perfekt": "habe getrunken"
   },
   "warten": {
     "ich": "warte",
@@ -447,7 +514,8 @@
     "er": "wartet",
     "wir": "warten",
     "ihr": "wartet",
-    "Sie": "warten"
+    "Sie": "warten",
+    "perfekt": "habe gewartet"
   },
   "helfen": {
     "ich": "helfe",
@@ -457,7 +525,8 @@
     "er": "hilft",
     "wir": "helfen",
     "ihr": "helft",
-    "Sie": "helfen"
+    "Sie": "helfen",
+    "perfekt": "habe geholfen"
   },
   "putzen": {
     "ich": "putze",
@@ -467,7 +536,8 @@
     "er": "putzt",
     "wir": "putzen",
     "ihr": "putzt",
-    "Sie": "putzen"
+    "Sie": "putzen",
+    "perfekt": "habe geputzt"
   },
   "anhalten": {
     "ich": "anhalte",
@@ -477,7 +547,8 @@
     "er": "anhält",
     "wir": "anhalten",
     "ihr": "anhaltet",
-    "Sie": "anhalten"
+    "Sie": "anhalten",
+    "perfekt": "habe angehalten"
   },
   "einsteigen": {
     "ich": "einsteige",
@@ -487,7 +558,8 @@
     "er": "einsteigt",
     "wir": "einsteigen",
     "ihr": "einsteigt",
-    "Sie": "einsteigen"
+    "Sie": "einsteigen",
+    "perfekt": "bin eingesteigen"
   },
   "aussteigen": {
     "ich": "aussteige",
@@ -497,7 +569,8 @@
     "er": "aussteigt",
     "wir": "aussteigen",
     "ihr": "aussteigt",
-    "Sie": "aussteigen"
+    "Sie": "aussteigen",
+    "perfekt": "bin ausgesteigen"
   },
 
   "bewerten": {
@@ -508,7 +581,8 @@
     "er": "bewertet",
     "wir": "bewerten",
     "ihr": "bewertet",
-    "Sie": "bewerten"
+    "Sie": "bewerten",
+    "perfekt": "habe bewertet"
   },
   "gefallen": {
     "ich": "gefalle",
@@ -518,7 +592,8 @@
     "er": "gefällt",
     "wir": "gefallen",
     "ihr": "gefallt",
-    "Sie": "gefallen"
+    "Sie": "gefallen",
+    "perfekt": "bin gefallen"
   },
   "arbeiten": {
     "ich": "arbeite",
@@ -528,16 +603,73 @@
     "er": "arbeitet",
     "wir": "arbeiten",
     "ihr": "arbeitet",
-    "Sie": "arbeiten"
+    "Sie": "arbeiten",
+    "perfekt": "habe gearbeitet"
   },
-  "enziehen": {
-    "ich": "enziehe",
-    "du": "enziehst",
-    "es": "enzieht",
-    "sie": "enzieht",
-    "er": "enzieht",
-    "wir": "enziehen",
-    "ihr": "enzieht",
-    "Sie": "enziehen"
+  "einziehen": {
+    "ich": "einziehe",
+    "du": "einziehst",
+    "es": "einzieht",
+    "sie": "einzieht",
+    "er": "einzieht",
+    "wir": "einziehen",
+    "ihr": "einzieht",
+    "Sie": "einziehen",
+    "perfekt": "habe eingezogen"
+  },
+  "kümmern": {
+    "ich": "kümmere",
+    "du": "kümmerst",
+    "es": "kümmert",
+    "sie": "kümmert",
+    "er": "kümmert",
+    "wir": "kümmern",
+    "ihr": "kümmert",
+    "Sie": "kümmern",
+    "perfekt": "habe gekümmert"
+  },
+  "stellen": {
+    "ich": "stelle",
+    "du": "stellst",
+    "es": "stellt",
+    "sie": "stellt",
+    "er": "stellt",
+    "wir": "stellen",
+    "ihr": "stellt",
+    "Sie": "stellen",
+    "perfekt": "habe gestellt"
+  },
+  "weiterempfehlen": {
+    "ich": "weiterempfehle",
+    "du": "weiterempfehlst",
+    "es": "weiterempfehlen",
+    "sie": "weiterempfiehlt",
+    "er": "weiterempfiehlt",
+    "wir": "weiterempfehlen",
+    "ihr": "weiterempfiehlt",
+    "Sie": "weiterempfehlen",
+    "perfekt": "habe weiterempfohlen"
+  },
+  "drücken": {
+    "ich": "drücke",
+    "du": "drückst",
+    "es": "drückt",
+    "sie": "drückt",
+    "er": "drückt",
+    "wir": "drücken",
+    "ihr": "drückt",
+    "Sie": "drücken",
+    "perfekt": "bin gedrückt"
+  },
+  "ziehen": {
+    "ich": "ziehe",
+    "du": "ziehst",
+    "es": "zieht",
+    "sie": "zieht",
+    "er": "zieht",
+    "wir": "ziehen",
+    "ihr": "zieht",
+    "Sie": "ziehen",
+    "perfekt": "bin gezohgen"
   }
 }

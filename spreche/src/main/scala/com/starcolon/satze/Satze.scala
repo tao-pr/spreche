@@ -1,5 +1,7 @@
 package com.starcolon.satze
 
+import scala.reflect._
+
 import com.starcolon.satze._
 import com.starcolon.satze.Implicits._
 import Console._
@@ -10,97 +12,68 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
   def modalVerb: Option[ModalVerbClaus] = clauses.find(_.isInstanceOf[ModalVerbClaus]).map(_.asInstanceOf[ModalVerbClaus])
   def objekt: Option[ObjectClaus]       = clauses.find(_.isInstanceOf[ObjectClaus]).map(_.asInstanceOf[ObjectClaus])
   def time: Option[TimeClaus]           = clauses.find(_.isInstanceOf[TimeClaus]).map(_.asInstanceOf[TimeClaus])
-  
+  def negation: Option[NegateClaus]     = clauses.find(_.isInstanceOf[NegateClaus]).map(_.asInstanceOf[NegateClaus])
+  def haben: Option[HabenVerbClaus]     = clauses.find(_.isInstanceOf[HabenVerbClaus]).map(_.asInstanceOf[HabenVerbClaus])
+  def allObjekts: Seq[Option[ObjectClaus]] = clauses.collect{ case obj@ObjectClaus(_,_,_) => Some(obj) }.toSeq
+
+  def isPerfekt = clauses.find(_ == HabenVerbClaus).isDefined
+
+  /**
+   * Check whether [A] comes before [B] in the sentence
+   */
+  def isAfter[A<: Claus: ClassTag, B<: Claus: ClassTag] = {
+    lazy val clausesIndexed = clauses.zipWithIndex
+    val a = clausesIndexed.collect{ case (c,i) if classTag[A].runtimeClass.isInstance(c) => (c,i) }.headOption
+    val b = clausesIndexed.collect{ case (c,i) if classTag[B].runtimeClass.isInstance(c) => (c,i) }.headOption
+
+    (a,b) match {
+      case (None,None) => false
+      case (_, None) => false
+      case (None, _) => false
+      case (Some((_,ai)), Some((_,bi))) => ai < bi
+    }
+  }
+
+  def rearranged(implicit rule: MasterRule) = {
+    
+    lazy val ending = if (verb.map(_.isSeparable).getOrElse(false)) 
+      Seq(verb.map(_.prefix)) 
+    else Nil
+    
+    (time, modalVerb, haben) match {
+
+      // With time
+      
+      case (Some(_), Some(_), _) | (Some(_), _, Some(_)) =>
+        Satze({Seq(time, modalVerb, haben, subject) ++ allObjekts ++ Seq(negation, verb)}.flatten)
+
+      case (Some(_), _, _) =>
+        Satze({Seq(time, verb, subject) ++ allObjekts ++ Seq(negation) ++ ending}.flatten)
+
+      // Without time
+
+      case (None, Some(_), None) =>
+        Satze({Seq(subject, modalVerb) ++ allObjekts ++ Seq(negation, verb)}.flatten)
+
+      case (None, Some(_), Some(_)) =>
+        Satze({Seq(subject, haben, verb) ++ allObjekts ++ Seq(negation, modalVerb) ++ ending}.flatten)
+
+      case (None, None, Some(_)) =>
+        Satze({Seq(subject, haben) ++ allObjekts ++ Seq(negation, verb)}.flatten)
+
+      case (None, None, None) =>
+        Satze({Seq(subject, verb) ++ allObjekts ++ Seq(negation) ++ ending}.flatten)
+    }
+  }
+
   override def render(satze: Satze = this, index: Int = -1)(implicit rule: MasterRule) = {
     
-    // Render time at the beginning of the satze (if any)
-    val timePrefix = time.map(_.render(satze,-1) + " ").getOrElse("")
-    
-    (timePrefix + (modalVerb match {
-      // Without modal verb
-      case None => renderSVO()
-      case Some(ModalVerbClaus(_)) => 
-        // Modal verb but without verb, 
-        // modal verb will become a verb itself
-        verb match {
-          
-          case None => 
-            Satze(clauses.map{
-              case ModalVerbClaus(v) => VerbClaus(v.toVerb)
-              case any => any
-            }).render(this)
-
-          case _ => renderSMOV()
-        }
-    })).trim.replaceAll("  +"," ")
+    val rearrangedSatze = rearranged
+    Satze.abbrev(rearrangedSatze.clauses.zipWithIndex.map{
+      case(c,i) => c.render(rearrangedSatze, i).trim
+    }.mkString(" ")).trim.replaceAll("  +"," ")
   }
 
-  private def renderSMOV()
-  (implicit rule: MasterRule) = {
-    
-    val putModalVerbInFront = time.isDefined
-    val verbClaus = verb.get
-
-    // Put modal verb in front if needed
-    val clausesToRender = if (putModalVerbInFront)
-        clauses.filterNot{ c =>
-        c.isInstanceOf[VerbClaus] ||
-        c.isInstanceOf[TimeClaus] ||
-        c.isInstanceOf[ModalVerbClaus]
-      }
-      else
-        clauses.filterNot{ c =>
-          c.isInstanceOf[VerbClaus] ||
-          c.isInstanceOf[TimeClaus]
-        }
-    val satzeWithoutModal = Satze(clauses.filterNot{_.isInstanceOf[ModalVerbClaus]})
-    val beginning = if (putModalVerbInFront){
-      modalVerb.map(_.render(this, -1)).getOrElse("") + " "
-    }
-    else ""
-
-    val endingVerb = rule.conjugation.conjugateVerb(
-      verbClaus.v.v, Wir, NoArtikel
-    )
-
-    val isNegate = clausesToRender.headOption == Some(NegateClaus)
-    val preVerbToken = if (isNegate) " nicht " else " "
-    
-    beginning + Satze.abbrev(clausesToRender.zipWithIndex.map{
-      case(c,i) => c.render(satzeWithoutModal, i).trim
-    }.mkString(" ")) + preVerbToken + endingVerb
-  }
-
-  private def renderSVO()(implicit rule: MasterRule) = {
-    implicit val conjugation = rule.conjugation
-    val putVerbInFront = time.isDefined
-    lazy val verbClaus = clauses
-      .collect{ case c @VerbClaus(_) => c.asInstanceOf[VerbClaus] }
-      .headOption
-    val (clausesToRender, beginning): (Seq[Claus], String) =
-      if (!putVerbInFront)
-        (clauses, "")
-      else{
-        val clausesNoVerb: Seq[Claus] = clauses.filterNot(_.isInstanceOf[VerbClaus])
-        val verbStr = verbClaus
-          // NOTE: Following render has to supply the full sentence with verbs
-          .map(_.render(Satze(clauses),-1) + " ")
-          .getOrElse("")
-
-        (clausesNoVerb, verbStr)
-      }
-    val satzeRef = this
-    
-    val isNegate = clausesToRender.headOption == Some(NegateClaus)
-    val ending = (if (isNegate) " nicht" else "") + verbClaus.map{" " + _.v.prefix}.getOrElse("")
-
-    beginning + Satze.abbrev(clausesToRender
-      .filterNot(_.isInstanceOf[TimeClaus])
-      .zipWithIndex.map{
-        case(c,i) => c.render(satzeRef, i).trim
-      }.mkString(" ")) + ending
-  }
-  
   override def toString = clauses.map(_.toString).mkString(" ")
 }
 
@@ -143,8 +116,19 @@ object Satze {
   private def parseVerb(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
     implicit val r = rule.conjugation
-    val newTokens = prevTokens :+ VerbClaus(Verb.toVerb(s.toLowerCase))
-    parse(others, newTokens)
+    // If haben already existed, then convert to a [[HabenVerbClaus]]
+    prevTokens.find(_.isInstanceOf[VerbClaus]) match {
+      case Some(prevHaben) 
+      if Set("seid","haben").contains(
+        r.deconjugateVerb(prevHaben.asInstanceOf[VerbClaus].v.v)) =>
+        val prevTokensOhneHaben = prevTokens.filterNot(_.isInstanceOf[VerbClaus])
+        val newTokens = prevTokensOhneHaben :+ HabenVerbClaus :+ VerbClaus(Verb.toVerb(s.toLowerCase))
+        parse(others, newTokens)
+
+      case None =>
+        val newTokens = prevTokens :+ VerbClaus(Verb.toVerb(s.toLowerCase))
+        parse(others, newTokens)
+    }
   }
 
   private def parsePronoun(prevTokens: Seq[Claus], others: Seq[String], s: String)
