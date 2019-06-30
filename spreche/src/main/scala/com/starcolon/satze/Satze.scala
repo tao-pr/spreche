@@ -46,7 +46,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
         Satze((Seq(time, modalVerb, subject) ++ allObjekts ++ Seq(negation, verb)).flatten)
 
       case (Some(_), _, _) =>
-        Satze((Seq(time, verb, subject) ++ allObjekts ++ Seq(negation)).flatten)
+        Satze((Seq(time, verb, subject) ++ allObjekts ++ Seq(negation) ++ ending).flatten)
 
       case (None, Some(_), None) =>
         Satze((Seq(subject, modalVerb) ++ allObjekts ++ Seq(negation, verb)).flatten)

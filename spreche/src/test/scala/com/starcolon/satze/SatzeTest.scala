@@ -250,15 +250,18 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
     it("should conjugate verbs into perfekt tense"){
       $("wir haben eine tasse kaufen") shouldBe(
-        "wir haben eine tasse gekauft")
+        "wir haben eine Tasse gekauft")
       $("sie hat ein frühstück machen") shouldBe(
-        "sie hat ein frühstück gemacht")
+        "sie hat ein Frühstück gemacht")
       $("sie hat ein frühstück machen nicht") shouldBe(
-        "sie hat ein frühstück nicht gemacht")
+        "sie hat ein Frühstück nicht gemacht")
     }
 
     it("should reform perfekt verbs into correct position"){
-
+      $("ich bin neben sein stadt gehen nicht") shouldBe(
+        "ich bin neben seinem Stadt nicht gegangen")
+      $("ich habe nicht gehen neben sein stadt") shouldBe(
+        "ich bin neben seinem Stadt nicht gegangen")
     }
 
     it("should render with modal verb"){
