@@ -766,5 +766,113 @@
     "ihr": "verlasst",
     "Sie": "verlassen",
     "perfekt": "habe verlassen"
+  },
+  "bestehe": {
+    "mean": "pass the assessment",
+    "ich": "bestehe",
+    "du": "bestehst",
+    "es": "besteht",
+    "sie": "besteht",
+    "er": "besteht",
+    "wir": "bestehen",
+    "ihr": "besteht",
+    "Sie": "bestehen",
+    "perfekt": "habe bestanden"
+  },
+  "funktionieren": {
+    "mean": "is functional",
+    "ich": "funktioniere",
+    "du": "funktionierst",
+    "es": "funktioniert",
+    "sie": "funktioniert",
+    "er": "funktioniert",
+    "wir": "funktionieren",
+    "ihr": "funktioniert",
+    "Sie": "funktionieren",
+    "perfekt": "habe funktioniert"
+  },
+  "hinterlassen": {
+    "mean": "leave something",
+    "ich": "hinterlasse",
+    "du": "hinterlässt",
+    "es": "hinterlässt",
+    "sie": "hinterlässt",
+    "er": "hinterlässt",
+    "wir": "hinterlassen",
+    "ihr": "hinterlasst",
+    "Sie": "hinterlassen",
+    "perfekt": "habe hinterlassen"
+  },
+  "erreichen": {
+    "mean": "achieve",
+    "ich": "erreiche",
+    "du": "erreichst",
+    "es": "erreichet",
+    "sie": "erreichet",
+    "er": "erreichet",
+    "wir": "erreichen",
+    "ihr": "erreichet",
+    "Sie": "erreichen",
+    "perfekt": "habe erreicht"
+  },
+  "bekommen": {
+    "mean": "receive",
+    "ich": "bekomme",
+    "du": "bekommst",
+    "es": "bekommt",
+    "sie": "bekommt",
+    "er": "bekommt",
+    "wir": "bekommen",
+    "ihr": "bekommt",
+    "Sie": "bekommen",
+    "perfekt": "habe bekommen"
+  },
+  "beschreiben": {
+    "mean": "describe",
+    "ich": "beschreibe",
+    "du": "beschreibst",
+    "es": "beschreibt",
+    "sie": "beschreibt",
+    "er": "beschreibt",
+    "wir": "beschreiben",
+    "ihr": "beschreibt",
+    "Sie": "beschreiben",
+    "perfekt": "habe beschrieben"
+  },
+  "verpassen": {
+    "mean": "miss something",
+    "ich": "verpasse",
+    "du": "verpasst",
+    "es": "verpasst",
+    "sie": "verpasst",
+    "er": "verpasst",
+    "wir": "verpassen",
+    "ihr": "verpasst",
+    "Sie": "verpassen",
+    "perfekt": "habe verpasst"
+  },
+  "vergessen": {
+    "mean": "forget",
+    "ich": "vergesse",
+    "du": "vergisst",
+    "es": "vergisst",
+    "sie": "vergisst",
+    "er": "vergisst",
+    "wir": "vergessen",
+    "ihr": "vergesst",
+    "Sie": "vergessen",
+    "perfekt": "habe vergessen"
+  },
+  "erinnern": {
+    "mean": "remember",
+    "ich": "erinnere",
+    "du": "erinnerst",
+    "es": "erinnert",
+    "sie": "erinnert",
+    "er": "erinnert",
+    "wir": "erinnern",
+    "ihr": "erinnert",
+    "Sie": "erinnern",
+    "perfekt": "habe erinnert"
   }
 }
