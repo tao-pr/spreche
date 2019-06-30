@@ -41,24 +41,28 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
     else Nil
     
     (time, modalVerb, haben) match {
+
+      // With time
       
-      case (Some(_), Some(_), _) =>
-        Satze((Seq(time, modalVerb, subject) ++ allObjekts ++ Seq(negation, verb)).flatten)
+      case (Some(_), Some(_), _) | (Some(_), _, Some(_)) =>
+        Satze({Seq(time, modalVerb, haben, subject) ++ allObjekts ++ Seq(negation, verb)}.flatten)
 
       case (Some(_), _, _) =>
-        Satze((Seq(time, verb, subject) ++ allObjekts ++ Seq(negation) ++ ending).flatten)
+        Satze({Seq(time, verb, subject) ++ allObjekts ++ Seq(negation) ++ ending}.flatten)
+
+      // Without time
 
       case (None, Some(_), None) =>
-        Satze((Seq(subject, modalVerb) ++ allObjekts ++ Seq(negation, verb)).flatten)
+        Satze({Seq(subject, modalVerb) ++ allObjekts ++ Seq(negation, verb)}.flatten)
 
       case (None, Some(_), Some(_)) =>
-        Satze((Seq(subject, haben, verb) ++ allObjekts ++ Seq(negation, modalVerb) ++ ending).flatten)
+        Satze({Seq(subject, haben, verb) ++ allObjekts ++ Seq(negation, modalVerb) ++ ending}.flatten)
 
       case (None, None, Some(_)) =>
-        Satze((Seq(subject, haben) ++ allObjekts ++ Seq(negation, verb)).flatten)
+        Satze({Seq(subject, haben) ++ allObjekts ++ Seq(negation, verb)}.flatten)
 
       case (None, None, None) =>
-        Satze((Seq(subject, verb) ++ allObjekts ++ Seq(negation) ++ ending).flatten)
+        Satze({Seq(subject, verb) ++ allObjekts ++ Seq(negation) ++ ending}.flatten)
     }
   }
 
