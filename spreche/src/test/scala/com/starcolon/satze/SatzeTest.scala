@@ -255,6 +255,8 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
         "sie hat ein Frühstück gemacht")
       $("sie hat ein frühstück machen nicht") shouldBe(
         "sie hat ein Frühstück nicht gemacht")
+      $("wir haben weiterempfehlen ihn ein neu buch") shouldBe(
+        "wir haben ihm ein neues Buch weiterempfohlen")
     }
 
     it("should reform perfekt verbs into correct position"){
@@ -264,12 +266,11 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
         "ich bin neben seinem Stadt nicht gegangen")
     }
 
-    it("should render with modal verb"){
-
-    }
-
     it("should render with time claus"){
-
+      $("dein vader und du um 7 hat zu mir gehen") shouldBe(
+        "um sieben Uhr sind dein Vader und du zu mir gegangen")
+      $("wir heute haben weiterempfehlen ihn ein neu buch") shouldBe(
+        "Heute haben wir ihm ein neues Buch weiterempfohlen")
     }
 
   }
