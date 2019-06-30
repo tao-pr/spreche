@@ -7,10 +7,12 @@ trait Claus {
   def render(satze: Satze, index: Int)(implicit rule: MasterRule): String = toString
 }
 
-case object NegateClaus extends Claus {
-  override def render(satze: Satze, index: Int)(implicit rule: MasterRule): String = "" 
+sealed trait NegateClaus extends Claus {
+  override def render(satze: Satze, index: Int)(implicit rule: MasterRule): String = "nicht" 
   override def toString = "nicht"
 }
+
+case object NegateClaus extends NegateClaus
 
 sealed trait PronounClaus {
   val ps: Seq[(Artikel,Adj,Pronoun)]
@@ -38,7 +40,7 @@ sealed trait PronounClaus {
     val (a,j,p) = pair
     val gender = rule.sache.findGender(p.s.capInitial)
     val stringArtikel = a.renderWith(gender, c)
-    val stringAdj     = j.renderWith(gender)
+    val stringAdj     = j.renderWith(gender, c, a)
     val stringPronoun = a match {
       case Plural => rule.sache.findPlural(p.s.capInitial).capInitial
       case _ => p.s.capInitial
@@ -78,36 +80,99 @@ with PronounClaus {
   override def toString = s"+ ${CYAN_B + BLACK}S${RESET}:${psToString}"
 }
 
-// TAOTODO: support gerne
+case class PrefixVerbClaus(v: Verb)
+extends Claus {
+  override def render(satze: Satze, index: Int)
+  (implicit rule: MasterRule) = {
+    implicit val conjugation = rule.conjugation
+    v.prefix
+  }
+}
+
 case class VerbClaus(v: Verb) 
 extends Claus {
   override def render(satze: Satze, index: Int)
   (implicit rule: MasterRule) = {
     implicit val conjugation = rule.conjugation
 
-    val subj = satze.subject.get
-    val obj = satze.objekt
+    implicit val satze_ = satze
+    lazy val subj = satze.subject.get
+    lazy val obj = satze.objekt
 
-    if (subj.isPlural || 
-        (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
-      rule.conjugation.conjugateVerb(v.v, Wir, NoArtikel).ohnePrefix
+    val (a,j,p) = if (isPluralVerb) (NoArtikel, Adj(Nil), Wir) else subj.ps.head
+
+    if (satze.isPerfekt){
+      rule.conjugation.conjugatePerfektVerb(v.v, p)._2
     }
-    else { 
-      val (a,j,p) = subj.ps.head
-      rule.conjugation.conjugateVerb(v.v, p, a).ohnePrefix
+    else {
+      // Present tense
+      if (isAfterObjekt){
+        // TAOTODO: If modal verb comes after verb, it wont convert to [wir]'s verb
+        println("after obj")
+        rule.conjugation.conjugateVerb(v.v, Wir, a)
+      }
+      else {
+        rule.conjugation.conjugateVerb(v.v, p, a).ohnePrefix
+      }
     }
   }
 
+  def prefix = PrefixVerbClaus(v)
+
+  def isAfterObjekt(implicit satze: Satze) = satze.isAfter[ObjectClaus, VerbClaus]
+
+  def isPluralVerb(implicit satze: Satze) = {
+    lazy val subj = satze.subject.get
+    lazy val obj = satze.objekt
+    lazy val verb = satze.verb.get
+
+    if (subj.isPlural) true
+    else if (verb.v.v == "seid" && obj.map{_.isPlural}.getOrElse(false)) true
+    else false
+  }
+
+  def isSeparable(implicit rule: MasterRule) = {
+    rule.conjugation.isSeparable(v.v)
+  }
+
   override def toString = s"+ ${YELLOW_B + BLACK}V${RESET}:${v.v}"
+
+  def isHaben()(implicit rule: MasterRule) = rule.conjugation.deconjugateVerb(v.v) == "haben"
 }
+
+trait HabenVerbClaus extends Claus {
+  override def render(satze: Satze, index: Int)
+  (implicit rule: MasterRule) = {
+    implicit val conjugation = rule.conjugation
+
+    val subj = satze.subject.get
+    val obj = satze.objekt
+    val verb = satze.verb.get
+
+    val (habenVerb, _) = if (subj.isPlural || 
+        (subj.isPositional && obj.map(_.isPlural).getOrElse(false))) {
+      conjugation.conjugatePerfektVerb(verb.v.v, Wir)
+    }
+    else { 
+      val (a,j,p) = subj.ps.head
+      conjugation.conjugatePerfektVerb(verb.v.v, p)
+    }
+
+    habenVerb
+  }
+
+  override def toString = s"${GREEN_B + BLACK}Seid/Haben${RESET}"
+}
+
+case object HabenVerbClaus extends HabenVerbClaus
 
 case class ModalVerbClaus(v: ModalVerb)
 extends Claus {
   override def render(satze: Satze, index: Int)
   (implicit rule: MasterRule) = satze.subject.get match {
     case SubjectClaus(ps,_) => ps match {
-      // Single subject
-      case ((a,j,p)) :: Nil => 
+      // Single subject, and modal verb is not placed at the end
+      case ((a,j,p)) :: Nil if index < satze.clauses.size-1 => 
         rule.conjugation.conjugateVerb(v.v, p, a)
 
       // Multiple subjects
@@ -137,7 +202,6 @@ with PronounClaus {
           else Nominativ
         )
         ps.map { case (a,j,p) => 
-          // TAOTODO: Take adj into account
           Pronoun.isInfinitiv(p) match {
             case true => renderInfinitiv(effectiveCase)((a,j,p))
             case false => renderSache(effectiveCase)((a,j,p))

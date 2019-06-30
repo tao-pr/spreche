@@ -37,10 +37,24 @@ case class Adj(s: Seq[String]) extends Token {
   def akkusativ: String = s.filterNot(_.isEmpty).mkString(" ")
   def dativ: String = s.filterNot(_.isEmpty).mkString(" ")
 
-  def renderWith(gender: String): String = {
-    // TAOTODO: conjugation
-    nominativ
-  }
+  def renderWith(gender: String, c: Case, a: Artikel): String = s.map{ n => 
+    c match {
+      case Nominativ => (gender, a) match {
+        case ("der",Ein) => n.ensureEnding("er")
+        case ("das",Ein) => n.ensureEnding("es")
+        case (_,Plural) => n.ensureEnding("en") // die
+        case _ => n.ensureEnding("e")
+      }
+
+      // TAOTODO: how about possessive artikels?
+      case _ => (gender,c) match {
+        case ("die",Akkusativ) => n.ensureEnding("e")
+        case ("das",Akkusativ) if a==Der => n.ensureEnding("e")
+        case ("das",Akkusativ) if a==Ein => n.ensureEnding("es")
+        case _ => n.ensureEnding("en")
+      }
+    }
+  }.mkString(" ")
 }
 
 case object Und extends Connector { override val s = " und " }
@@ -120,7 +134,6 @@ object ModalVerb extends TokenInstance {
 
 case class Preposition(s: String) extends Token {
   def getCase(v: Verb) = v match {
-    //case Verb("gehen") | Verb("kommen") => Akkusativ 
     case Verb("sein") => Akkusativ
     case _ => Preposition.getCase(s)
   }

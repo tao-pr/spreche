@@ -14,6 +14,11 @@ object Implicits {
      */
     def ohnePrefix(implicit rule: ConjugationRule): String = 
       rule.separate(s).map{_._2}.getOrElse(s)
+
+    def ensureEnding(ending: String = "en"): String = {
+      if (s.endsWith("e")) s.dropRight(1) + ending
+      else s + ending
+    }
   }
 }
   

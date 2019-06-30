@@ -2,7 +2,7 @@
 
 A weekend project helping myself learning basic German.
 
-### Build and Run
+## Build and Run
 
 Simply use sbt
 
@@ -11,11 +11,11 @@ Simply use sbt
   sbt spreche/run
 ```
 
-### Supported sentence structures
+## Supported sentence structures
 
 The project is continuously developed and following structures are supported so far.
 
-<b>Nominativ</b>
+### Nominativ
 
 ```
 Sagen Sie > er ist mein laptop
@@ -24,7 +24,7 @@ Output > er ist mein Laptop
 
 ```
 
-<b>Akkusativ</b>
+### Akkusativ
 
 ```
 Sagen Sie > du nehme die tram
@@ -39,7 +39,7 @@ Output > du sendest meine Lampe
 
 ```
 
-<b>Dativ</b>
+### Dativ
 
 ```
 Sagen Sie > meine Uhr steht auf der tisch
@@ -54,7 +54,7 @@ Output > wir sind im Zimmer
 
 ```
 
-<b>Mixed Dativ with Akkusativ</b>
+### Mixed Dativ with Akkusativ
 
 ```
 Sagen Sie > du bringst mich meinen bild
@@ -82,7 +82,7 @@ Output > ihr gebt uns keinen Schuh
 
 ```
 
-<b>Modal verb</b>
+### Modal verb
 
 ```
 Sagen Sie > ich will einen kugelschreiber kauft
@@ -97,7 +97,7 @@ Output > wir müssen ihm ein Becher bringen
 
 ```
 
-<b>Negation</b>
+### Negation
 
 ```
 Sagen Sie > wir mag nicht die musik
@@ -113,7 +113,7 @@ Output > ein Freund soll ins Cafe nicht kommen
 
 ```
 
-<b>Time</b>
+### Time
 
 ```
 Sagen Sie > das kind darf zu haus gehen um 15:30 uhr
@@ -127,3 +127,19 @@ Sagen Sie > wir will mit unser auto zu das kino fahren am montag
 Output > Montag wollen wir mit unserem Auto zum Kino fahren
 
 ```
+
+### Perfekt tense
+
+```
+Sagen Sie > mein freund und ich habt zu das groß kino komme
+
+Output > mein Freund und ich sind zum großen Kino gekommen
+
+---
+
+Sagen Sie > er hat kaufen dir ein neu buch
+
+Output > er hat dir ein neues Buch gekauft
+```
+
+
