@@ -67,6 +67,7 @@
   "Person": ["der","Personen"],
   "Hund": ["der","Hunde"],
   "Katze": ["die","Katzen"],
+  "Kunde": ["der","Kunden"],
 
   "Tee": ["der","Tees"],
   "Kaffee": ["der","Kaffees"],

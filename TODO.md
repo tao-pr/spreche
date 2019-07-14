@@ -6,6 +6,7 @@
 - [] für/seit 15 Monaten
 - [] Reflective verbs
 - [] Adv
+- [] Input conjugated form (netten instead of nett)
 
 
 # Wishlist of refactors

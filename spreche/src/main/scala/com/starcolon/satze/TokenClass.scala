@@ -396,7 +396,7 @@ object Artikel extends TokenInstance {
   override def isInstance(token: String)(implicit rule: MasterRule) = {
     val artikels = (Seq("die","das","eine","ein","kein","keine") ++ Seq("d","ein","kein").flatMap{(a) => 
       Seq("er","en","em").map(a + _)
-    }) ++ Seq("viel", "viele")
+    }) ++ Seq("viel", "viele","den","dem")
     def expand(p: Pronoun) = Seq("","e","en","em").map(p.possess + _)
     val possArtikels = Pronoun.infinitivPronouns.flatMap(expand)
     artikels.contains(token.toLowerCase) || possArtikels.contains(token.toLowerCase)
