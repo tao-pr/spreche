@@ -40,7 +40,10 @@ sealed trait PronounClaus {
     val (a,j,p) = pair
     val gender = rule.sache.findGender(p.s.capInitial)
     val stringArtikel = a.renderWith(gender, c)
-    val stringAdj     = j.renderWith(gender, c, a)
+    val stringAdj: String = p match {
+      case NP => j.s.mkString(" ")
+      case _  => j.renderWith(gender, c, a)
+    }
     val stringPronoun = a match {
       case Plural => rule.sache.findPlural(p.s.capInitial).capInitial
       case _ => p.s.capInitial
@@ -107,8 +110,6 @@ extends Claus {
     else {
       // Present tense
       if (isAfterObjekt){
-        // TAOTODO: If modal verb comes after verb, it wont convert to [wir]'s verb
-        println("after obj")
         rule.conjugation.conjugateVerb(v.v, Wir, a)
       }
       else {

@@ -131,9 +131,14 @@ case class AdjRule(
   adj: Map[String, AdjSubRule], 
   adv: Map[String, AdvSubRule]) 
 extends Rule {
+  lazy val allStemmed = (adj.keySet ++ adv.keySet).flatMap{ j => 
+    Set(j, j.ensureEnding("en"), j.ensureEnding("es"), j.ensureEnding("e"))
+  }.reduce(_ ++ _)
+
   override def toString = s"Adj : ${adj.keySet}\nAdv: ${adv.keySet}"
 
-  def contains(s: String) = adj.contains(s) || adv.contains(s)
+  // def contains(s: String) = adj.contains(s) || adv.contains(s)
+  def contains(s: String) = allStemmed.contains(s)
 }
 
 case class MasterRule(
