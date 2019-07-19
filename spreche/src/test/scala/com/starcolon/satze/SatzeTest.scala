@@ -58,6 +58,7 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
       $("Das sind nicht mein auto") shouldBe(
         "das ist mein Auto nicht")
     }
+
   }
 
   describe("Akkusativ"){
@@ -244,6 +245,15 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
         "wir kaufen das rote Glas")
     }
 
+    it("should not conjugate adjectives when the object is not present"){
+      $("wir sind alt") shouldBe(
+        "wir sind alt")
+      $("unser haus ist rot") shouldBe(
+        "unser Haus ist rot")
+      $("dein kugelschreiber ist dünnes") shouldBe(
+        "dein Kugelschreiber ist dünn")
+    }
+
   }
 
   describe("Perfekt tense"){
@@ -273,6 +283,10 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
         "Heute haben wir ihm ein neues Buch weiterempfohlen")
     }
 
+  }
+
+  describe("Reflective verbs"){
+    
   }
 
   describe("Hauptsatze und Nebensatze"){
