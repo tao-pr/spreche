@@ -48,6 +48,9 @@
   "Woche": ["die","Wochen"],
   "Jahr": ["das","Jahren"],
   "Zeit": ["die","Zeite"],
+  "Arbeit": ["die","Arbeiten"],
+  "Sprache": ["die","Sprachen"],
+  "Prüfung": ["die","Prüfungen"],
 
   "Mann": ["der","Männer"],
   "Frau": ["die","Fräuen"],
@@ -59,8 +62,12 @@
   "Kollege": ["der","Kollegen"],
   "Nachbar": ["der","Nachbarn"],
   "Benutzer": ["der","Benutzer"],
+  "Mitglied": ["das","Mitglied"],
   "Gast": ["der","Gäste"],
   "Person": ["der","Personen"],
+  "Hund": ["der","Hunde"],
+  "Katze": ["die","Katzen"],
+  "Kunde": ["der","Kunden"],
 
   "Tee": ["der","Tees"],
   "Kaffee": ["der","Kaffees"],

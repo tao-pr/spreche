@@ -396,7 +396,7 @@ object Artikel extends TokenInstance {
   override def isInstance(token: String)(implicit rule: MasterRule) = {
     val artikels = (Seq("die","das","eine","ein","kein","keine") ++ Seq("d","ein","kein").flatMap{(a) => 
       Seq("er","en","em").map(a + _)
-    }) ++ Seq("viel", "viele")
+    }) ++ Seq("viel", "viele","den","dem")
     def expand(p: Pronoun) = Seq("","e","en","em").map(p.possess + _)
     val possArtikels = Pronoun.infinitivPronouns.flatMap(expand)
     artikels.contains(token.toLowerCase) || possArtikels.contains(token.toLowerCase)
@@ -549,9 +549,11 @@ object Time extends TokenInstance {
 
 object Adj extends TokenInstance {
   override def isInstance(token: String)(implicit rule: MasterRule) = {
-    // TAOTODO: Check with unstemmed version too
-    rule.adj.contains(token.toLowerCase.trim) ||
     rule.adj.contains(token.toLowerCase.trim)
+  }
+
+  def deconjugate(s: String)(implicit rule: MasterRule) = {
+    rule.adj.inverseConjugateMap.getOrElse(s, s)
   }
 
   def empty = Adj(Nil)
