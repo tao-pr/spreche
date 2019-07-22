@@ -230,7 +230,9 @@ object Satze {
 
   private def parseAdj(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
-    val newPs = ((Ein,Adj(s :: Nil),NP)) :: Nil
+
+    val adj = Adj.deconjugate(s)
+    val newPs = ((Ein,Adj(adj :: Nil),NP)) :: Nil
 
     // NOTE: "Ihr" will also be counted as artikel initially
     val newTokens = prevTokens match {
@@ -245,10 +247,10 @@ object Satze {
           case Nil => newPs
 
           // P + artikel + [adj]
-          case ps0 :+ ((a0,Adj(Nil),NP)) => ps0 :+ ((a0,Adj(s :: Nil),NP))
+          case ps0 :+ ((a0,Adj(Nil),NP)) => ps0 :+ ((a0,Adj(adj :: Nil),NP))
 
           // P + artikel + adj + [adj]
-          case ps0 :+ ((a0,Adj(adjs0),NP)) => ps0 :+ ((a0,Adj(adjs0 :+ s),NP))
+          case ps0 :+ ((a0,Adj(adjs0),NP)) => ps0 :+ ((a0,Adj(adjs0 :+ adj),NP))
         }
 
         ns :+ SubjectClaus(ps_, c)
@@ -266,11 +268,11 @@ object Satze {
 
           p0 match {
             // prep + [adj]
-            case NP => ns :+ ObjectClaus(prep, ps0 :+ ((a0,Adj(j0 :+ s),NP)), c)
+            case NP => ns :+ ObjectClaus(prep, ps0 :+ ((a0,Adj(j0 :+ adj),NP)), c)
 
             // new object begins with adj
             // prep + P + [adj]
-            case _ => ns :+ ObjectClaus(prep, ps :+ ((Ein,Adj(s :: Nil),NP)), c)
+            case _ => ns :+ ObjectClaus(prep, ps :+ ((Ein,Adj(adj :: Nil),NP)), c)
 
           }
       }

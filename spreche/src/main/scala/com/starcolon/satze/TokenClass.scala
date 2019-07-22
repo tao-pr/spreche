@@ -555,5 +555,9 @@ object Adj extends TokenInstance {
     // rule.adj.contains(token.toLowerCase.trim) ||
   }
 
+  def deconjugate(s: String)(implicit rule: MasterRule) = {
+    rule.adj.inverseConjugateMap.getOrElse(s, s)
+  }
+
   def empty = Adj(Nil)
 }
