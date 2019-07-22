@@ -549,10 +549,7 @@ object Time extends TokenInstance {
 
 object Adj extends TokenInstance {
   override def isInstance(token: String)(implicit rule: MasterRule) = {
-    // TAOTODO: Check with unstemmed version too
     rule.adj.contains(token.toLowerCase.trim)
-    // rule.adj.contains(token.toLowerCase.trim) ||
-    // rule.adj.contains(token.toLowerCase.trim) ||
   }
 
   def deconjugate(s: String)(implicit rule: MasterRule) = {
