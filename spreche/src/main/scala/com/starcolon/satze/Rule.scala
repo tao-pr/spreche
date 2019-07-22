@@ -143,7 +143,6 @@ extends Rule {
 
   override def toString = s"Adj : ${adj.keySet}\nAdv: ${adv.keySet}"
 
-  // def contains(s: String) = adj.contains(s) || adv.contains(s)
   def contains(s: String) = allStemmed.contains(s)
 }
 
