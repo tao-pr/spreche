@@ -256,6 +256,15 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
   }
 
+  describe("Adverb"){
+
+    it("should add adverb to sentence"){
+      $("mein auto ist sehr schön") shouldBe(
+        "mein Auto ist seht schön")
+    }
+
+  }
+
   describe("Perfekt tense"){
 
     it("should conjugate verbs into perfekt tense"){

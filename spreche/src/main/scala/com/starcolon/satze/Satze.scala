@@ -228,6 +228,11 @@ object Satze {
     parse(others, newTokens)
   }
 
+  private def parseAdv(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+    ???
+  }
+
   private def parseAdj(prevTokens: Seq[Claus], others: Seq[String], s: String)
   (implicit rule: MasterRule) = {
 
@@ -404,6 +409,9 @@ object Satze {
         }
         else if (Adj.isInstance(s)) {
           parseAdj(prevTokens, others, s)
+        }
+        else if (Adv.isInstance(s)) {
+          parseAdv(prevTokens, others, s)
         }
         else {
           prevTokens match {

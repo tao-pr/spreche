@@ -105,5 +105,6 @@
   "Park": ["der","Parks"],
   "Kirche": ["die","Kirchen"],
   "Cafe": ["das","Cafe"],
-  "Disco": ["die","Disco"]
+  "Disco": ["die","Disco"],
+  "Supermarkt": ["der","Supermärkte"]
 }

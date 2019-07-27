@@ -7,6 +7,8 @@
 - [] Reflective verbs
 - [] Adv
 - [] Input conjugated form (netten instead of nett)
+- [] diese / dieser / diesem
+- [] input words without umlaut
 
 
 # Wishlist of refactors
