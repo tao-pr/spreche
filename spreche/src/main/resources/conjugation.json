@@ -874,5 +874,41 @@
     "ihr": "erinnert",
     "Sie": "erinnern",
     "perfekt": "habe erinnert"
+  },
+  "überraschen": {
+    "mean": "surprise",
+    "ich": "überrasche",
+    "du": "überraschst",
+    "es": "überrascht",
+    "sie": "überrascht",
+    "er": "überrascht",
+    "wir": "überraschen",
+    "ihr": "überrascht",
+    "Sie": "überraschen",
+    "perfekt": "habe überrascht"
+  },
+  "vergleichen": {
+    "mean": "compare",
+    "ich": "vergleiche",
+    "du": "vergleicht",
+    "es": "vergleicht",
+    "sie": "vergleicht",
+    "er": "vergleicht",
+    "wir": "vergleichen",
+    "ihr": "vergleicht",
+    "Sie": "vergleichen",
+    "perfekt": "habe vergleichen"
+  },
+  "hineinspringen": {
+    "mean": "jump in",
+    "ich": "hineinspringe",
+    "du": "hineinspringst",
+    "es": "hineinspringt",
+    "sie": "hineinspringt",
+    "er": "hineinspringt",
+    "wir": "hineinspringen",
+    "ihr": "hineinspringt",
+    "Sie": "hineinspringen",
+    "perfekt": "bin hineinsprugen"
   }
 }

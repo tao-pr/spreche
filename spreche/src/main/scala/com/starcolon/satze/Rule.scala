@@ -63,6 +63,8 @@ case object AbbrevRule {
 
 case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
 
+  val prefixes = Seq("ein","um","fern","aus","auf","an","durch","mit","hinein")
+
   lazy val reverseMap = m.toList.flatMap{ case (v, n) => 
     n.map{ case(_,w) => (w, v) }
   }.distinct.toMap
@@ -100,7 +102,7 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
   }
 
   def separate(v: String): Option[(String, String)] = {
-    Seq("ein","um","fern","aus","auf","an","durch","mit").find(v.startsWith(_)).map{ pref =>
+    prefixes.find(v.startsWith(_)).map{ pref =>
       (pref, v.drop(pref.length))
     }
   }

@@ -51,6 +51,9 @@
   "Arbeit": ["die","Arbeiten"],
   "Sprache": ["die","Sprachen"],
   "Prüfung": ["die","Prüfungen"],
+  "Flugzeug": ["das","Flugzeuge"],
+  "Eingang": ["der", "Eingänge"],
+  "Ausgang": ["der", "Ausgänge"],
 
   "Mann": ["der","Männer"],
   "Frau": ["die","Fräuen"],
@@ -89,6 +92,7 @@
   "Zitrone": ["die","Zitronen"],
   "Sprudel": ["der","Sprudel"],
   "Frühstück": ["das","Frühstück"],
+  "Wurst": ["die","Würste"],
 
   "Ausland": ["das","Ausland"],
   "Stadt": ["der","Städte"],
@@ -98,6 +102,7 @@
   "Schule": ["die","Schulen"],
   "Kino": ["das","Kinos"],
   "Büro": ["das","Büro"],
+  "Firma": ["die","Firmen"],
   "Bäckerei": ["das", "Bäckerei"],
   "Museum": ["das", "Museum"],
   "Theatre": ["das","Theatre"],
@@ -106,5 +111,7 @@
   "Kirche": ["die","Kirchen"],
   "Cafe": ["das","Cafe"],
   "Disco": ["die","Disco"],
-  "Supermarkt": ["der","Supermärkte"]
+  "Supermarkt": ["der","Supermärkte"],
+
+  "Körper": ["der","Körper"]
 }
