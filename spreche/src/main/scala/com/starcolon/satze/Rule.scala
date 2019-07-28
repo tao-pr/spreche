@@ -63,7 +63,7 @@ case object AbbrevRule {
 
 case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
 
-  val prefixes = Seq("ein","um","fern","aus","auf","an","durch","mit","hinein")
+  val prefixes = Seq("ein","um","fern","aus","auf","an","durch","mit","hinein","rein")
 
   lazy val reverseMap = m.toList.flatMap{ case (v, n) => 
     n.map{ case(_,w) => (w, v) }
