@@ -3,6 +3,7 @@
     "wirklich": {"mean": "really"},
     "bestimmt": {"mean": "of course"},
     "nämlich": {"mean": "indeed"},
+    "zwar": {"mean": "indeed"},
     "endlich": {"mean": "finally"},
     "zusammen": {"mean": "together"},
     "ingesamt": {"mean": "all included"},
@@ -20,6 +21,9 @@
     "miteinander": {"mean": "together"},
     "normalerweise": {"mean": "normally"},
     "irgendwie": {"mean": "somehow"},
+    "raus": {"mean": "out"},
+    "selbst": {"mean": "by themselves"},
+    "trotzdem": {"mean": "nevertheless"},
 
     "nur": {"mean": "just"},
     "mehr": {"mean": "more"},
@@ -78,6 +82,7 @@
     "nützlich": {"mean": "useful"},
     "nervös": {"mean": "nervous"},
     "lustig": {"mean": "funny"},
+    "giftig": {"mean": "toxic"},
 
     "flüssig": {"mean": "liquidic"},
     "fett": {"mean": "fat"},
@@ -102,6 +107,8 @@
     "lila": {"mean": "purple"},
     "orange": {"mean": "orange"},
     "braun": {"mean": "brown"},
-    "bunt": {"mean": "colourful"}
+    "bunt": {"mean": "colourful"},
+    "durchsichtig": {"mean": "transparent"},
+    "solid": {"mean": "solid"}
   }
 }

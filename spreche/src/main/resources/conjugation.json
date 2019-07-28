@@ -909,6 +909,78 @@
     "wir": "hineinspringen",
     "ihr": "hineinspringt",
     "Sie": "hineinspringen",
-    "perfekt": "bin hineinsprugen"
+    "perfekt": "bin hineingesprugen"
+  },
+  "hineinkommen": {
+    "mean": "enter",
+    "ich": "hineinkomme",
+    "du": "hineinkommst",
+    "es": "hineinkommt",
+    "sie": "hineinkommt",
+    "er": "hineinkommt",
+    "wir": "hineinkommen",
+    "ihr": "hineinkommt",
+    "Sie": "hineinkommen",
+    "perfekt": "bin hineingekommen"
+  },
+  "reinkommen": {
+    "mean": "come in",
+    "ich": "reinkomme",
+    "du": "reinkommst",
+    "es": "reinkommt",
+    "sie": "reinkommt",
+    "er": "reinkommt",
+    "wir": "reinkommen",
+    "ihr": "reinkommt",
+    "Sie": "reinkommen",
+    "perfekt": "bin reingekommen"
+  },
+  "trennen": {
+    "mean": "separate",
+    "ich": "trenne",
+    "du": "trennt",
+    "es": "trennt",
+    "sie": "trennt",
+    "er": "trennt",
+    "wir": "trennen",
+    "ihr": "trennt",
+    "Sie": "trennen",
+    "perfekt": "habe getrennt"
+  },
+  "sammeln": {
+    "mean": "collect",
+    "ich": "sammle",
+    "du": "sammelst",
+    "es": "sammelt",
+    "sie": "sammelt",
+    "er": "sammelt",
+    "wir": "sammeln",
+    "ihr": "sammelt",
+    "Sie": "sammeln",
+    "perfekt": "habe gesammelt"
+  },
+  "aufpassen": {
+    "mean": "watch cautiously",
+    "ich": "aufpasse",
+    "du": "aufpasst",
+    "es": "aufpasst",
+    "sie": "aufpasst",
+    "er": "aufpasst",
+    "wir": "aufpassen",
+    "ihr": "aufpasst",
+    "Sie": "aufpassen",
+    "perfekt": "habe aufgepasst"
+  },
+  "werfen": {
+    "mean": "throw",
+    "ich": "werfe",
+    "du": "wirfst",
+    "es": "wirft",
+    "sie": "wirft",
+    "er": "wirft",
+    "wir": "werfen",
+    "ihr": "werlft",
+    "Sie": "werfen",
+    "perfekt": "habe geworfen"
   }
 }
