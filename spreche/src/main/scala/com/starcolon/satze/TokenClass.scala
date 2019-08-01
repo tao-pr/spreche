@@ -33,10 +33,6 @@ sealed trait Time extends Token {
 
 // Classes and Objects
 
-case class Adv(s: String) extends Token {
-
-}
-
 case class Adj(s: Seq[String]) extends Token {
   def nominativ: String = s.filterNot(_.isEmpty).mkString(" ")
   def akkusativ: String = s.filterNot(_.isEmpty).mkString(" ")

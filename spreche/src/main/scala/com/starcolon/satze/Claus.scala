@@ -266,6 +266,13 @@ with PronounClaus {
   override def toString = s"-${CYAN_B + BLACK}O${RESET}:${prep.map(_.s).getOrElse("")} ${psToString}"
 }
 
+case class AdvClaus(s: String)
+extends Claus {
+  override def render(satze: Satze, index: Int)(implicit rule: MasterRule) = s
+
+  override def toString = s"+ ${CYAN_B + BLACK}ADV${RESET}:${s}"
+}
+
 case class TimeClaus(am: Option[Am], um: Option[Um])
 extends Claus {
   override def render(satze: Satze, index: Int)(implicit rule: MasterRule) = {

@@ -58,6 +58,7 @@
     "jetztige": {"mean": "current"},
     "erste": {"mean": "first"},
     "letzte": {"mean": "last"},
+    "nächst": {"mean": "next,nearest"},
     "abgebrochen": {"mean": "discontinuedly"},
     "neu": {"mean": "new"},
     "alt": {"mean": "old"},

@@ -982,5 +982,29 @@
     "ihr": "werlft",
     "Sie": "werfen",
     "perfekt": "habe geworfen"
+  },
+  "bleiben": {
+    "mean": "stay",
+    "ich": "bleibe",
+    "du": "bleibst",
+    "es": "bleibt",
+    "sie": "bleibt",
+    "er": "bleibt",
+    "wir": "bleiben",
+    "ihr": "bleibt",
+    "Sie": "bleiben",
+    "perfekt": "habe gebleiben"
+  },
+  "übrigbleiben": {
+    "mean": "remain",
+    "ich": "übrigbleibe",
+    "du": "übrigbleibst",
+    "es": "übrigbleibt",
+    "sie": "übrigbleibt",
+    "er": "übrigbleibt",
+    "wir": "übrigbleiben",
+    "ihr": "übrigbleibt",
+    "Sie": "übrigbleiben",
+    "perfekt": "habe übriggebleiben"
   }
 }
