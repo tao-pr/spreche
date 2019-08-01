@@ -260,7 +260,14 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
     it("should add adverb to sentence"){
       $("mein auto ist sehr schön") shouldBe(
-        "mein Auto ist seht schön")
+        "mein Auto ist sehr schön")
+      $("unser auto liege dabei neben den park") shouldBe(
+        "unser Auto liegt dabei neben dem Park")
+    }
+
+    it("should add adverbs to complicated sentence"){
+      $("um 8 uhr am montag wir leider haben keinen neuen termin mit unser kunde") shouldBe(
+        "am Montag um acht Uhr leider haben wir keinen neuen Termin mit unserem Kunde")
     }
 
   }
