@@ -14,6 +14,7 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
   def time: Option[TimeClaus]           = clauses.find(_.isInstanceOf[TimeClaus]).map(_.asInstanceOf[TimeClaus])
   def negation: Option[NegateClaus]     = clauses.find(_.isInstanceOf[NegateClaus]).map(_.asInstanceOf[NegateClaus])
   def haben: Option[HabenVerbClaus]     = clauses.find(_.isInstanceOf[HabenVerbClaus]).map(_.asInstanceOf[HabenVerbClaus])
+  def adv: Option[AdvClaus]             = clauses.find(_.isInstanceOf[AdvClaus]).map(_.asInstanceOf[AdvClaus])
   def allObjekts: Seq[Option[ObjectClaus]] = clauses.collect{ case obj@ObjectClaus(_,_,_) => Some(obj) }.toSeq
 
   def isPerfekt = clauses.find(_ == HabenVerbClaus).isDefined
@@ -45,24 +46,24 @@ case class Satze(clauses: Seq[Claus]) extends Claus {
       // With time
       
       case (Some(_), Some(_), _) | (Some(_), _, Some(_)) =>
-        Satze({Seq(time, modalVerb, haben, subject) ++ allObjekts ++ Seq(negation, verb)}.flatten)
+        Satze({Seq(time, adv, modalVerb, haben, subject) ++ allObjekts ++ Seq(negation, verb)}.flatten)
 
       case (Some(_), _, _) =>
-        Satze({Seq(time, verb, subject) ++ allObjekts ++ Seq(negation) ++ ending}.flatten)
+        Satze({Seq(time, adv, verb, subject) ++ allObjekts ++ Seq(negation) ++ ending}.flatten)
 
       // Without time
 
       case (None, Some(_), None) =>
-        Satze({Seq(subject, modalVerb) ++ allObjekts ++ Seq(negation, verb)}.flatten)
+        Satze({Seq(subject, modalVerb, adv) ++ allObjekts ++ Seq(negation, verb)}.flatten)
 
       case (None, Some(_), Some(_)) =>
-        Satze({Seq(subject, haben, verb) ++ allObjekts ++ Seq(negation, modalVerb) ++ ending}.flatten)
+        Satze({Seq(subject, haben, adv, verb) ++ allObjekts ++ Seq(negation, modalVerb) ++ ending}.flatten)
 
       case (None, None, Some(_)) =>
-        Satze({Seq(subject, haben) ++ allObjekts ++ Seq(negation, verb)}.flatten)
+        Satze({Seq(subject, haben, adv) ++ allObjekts ++ Seq(negation, verb)}.flatten)
 
       case (None, None, None) =>
-        Satze({Seq(subject, verb) ++ allObjekts ++ Seq(negation) ++ ending}.flatten)
+        Satze({Seq(subject, verb, adv) ++ allObjekts ++ Seq(negation) ++ ending}.flatten)
     }
   }
 
@@ -175,6 +176,11 @@ object Satze {
             ns :+ ObjectClaus(prep, ps :+ ((Ein,Adj(Nil),p)), c)
         }
       }
+
+      // _ + [P] as a subject
+      // TAODEBUG
+      case _ if !prevTokens.find(_.isInstanceOf[SubjectClaus]).isDefined => 
+        prevTokens :+ SubjectClaus((Ein,Adj(Nil),p) :: Nil)
       
       // _ + [P]
       case _ => 
@@ -221,11 +227,20 @@ object Satze {
         }
       }
 
+      // _ + [artikel] (as first subject)
+      case _ if !prevTokens.find(_.isInstanceOf[SubjectClaus]).isDefined => 
+        prevTokens :+ SubjectClaus(newPs)
+
       // _ + [artikel]
       case _ => 
         prevTokens :+ ObjectClaus(None, newPs)
     }
     parse(others, newTokens)
+  }
+
+  private def parseAdv(prevTokens: Seq[Claus], others: Seq[String], s: String)
+  (implicit rule: MasterRule) = {
+    parse(others, prevTokens :+ AdvClaus(s))
   }
 
   private def parseAdj(prevTokens: Seq[Claus], others: Seq[String], s: String)
@@ -404,6 +419,9 @@ object Satze {
         }
         else if (Adj.isInstance(s)) {
           parseAdj(prevTokens, others, s)
+        }
+        else if (Adv.isInstance(s)) {
+          parseAdv(prevTokens, others, s)
         }
         else {
           prevTokens match {
