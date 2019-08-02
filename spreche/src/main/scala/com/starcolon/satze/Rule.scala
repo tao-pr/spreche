@@ -63,6 +63,10 @@ case object AbbrevRule {
 
 case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
 
+  val prefixes = Seq(
+    "ein","um","fern","aus","auf","an",
+    "durch","mit","hinein","rein","übrig")
+
   lazy val reverseMap = m.toList.flatMap{ case (v, n) => 
     n.map{ case(_,w) => (w, v) }
   }.distinct.toMap
@@ -100,7 +104,7 @@ case class ConjugationRule(m: Map[String, Map[String, String]]) extends Rule {
   }
 
   def separate(v: String): Option[(String, String)] = {
-    Seq("ein","um","fern","aus","auf","an","durch","mit").find(v.startsWith(_)).map{ pref =>
+    prefixes.find(v.startsWith(_)).map{ pref =>
       (pref, v.drop(pref.length))
     }
   }
@@ -131,7 +135,8 @@ case class AdjRule(
   adj: Map[String, AdjSubRule], 
   adv: Map[String, AdvSubRule]) 
 extends Rule {
-  lazy val allStemmed = (adj.keySet ++ adv.keySet).flatMap{ j => 
+
+  lazy val adjStemmed = adj.keySet.flatMap{ j => 
     Set(j, j.ensureEnding("en"), j.ensureEnding("es"), j.ensureEnding("e"))
   }.reduce(_ ++ _)
 
@@ -143,7 +148,7 @@ extends Rule {
 
   override def toString = s"Adj : ${adj.keySet}\nAdv: ${adv.keySet}"
 
-  def contains(s: String) = allStemmed.contains(s)
+  def contains(s: String) = adjStemmed.contains(s)
 }
 
 case class MasterRule(

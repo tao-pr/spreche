@@ -32,6 +32,7 @@ sealed trait Time extends Token {
 
 
 // Classes and Objects
+
 case class Adj(s: Seq[String]) extends Token {
   def nominativ: String = s.filterNot(_.isEmpty).mkString(" ")
   def akkusativ: String = s.filterNot(_.isEmpty).mkString(" ")
@@ -557,4 +558,10 @@ object Adj extends TokenInstance {
   }
 
   def empty = Adj(Nil)
+}
+
+object Adv extends TokenInstance {
+  override def isInstance(token: String)(implicit rule: MasterRule) = {
+    rule.adj.adv.keySet.contains(token.toLowerCase.trim)
+  }
 }
