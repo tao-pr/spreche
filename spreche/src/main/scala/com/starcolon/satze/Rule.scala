@@ -55,7 +55,8 @@ case object AbbrevRule {
     "zu dem" -> "zum",
     "zu der" -> "zur",
     "von dem" -> "vom",
-    "an dem" -> "am"
+    "an dem" -> "am",
+    "bei dem" -> "beim"
   )
   def foldLeft(sentence: String)(folder: (String, Tuple2[String, String]) => String) = 
     map.foldLeft(sentence)(folder)

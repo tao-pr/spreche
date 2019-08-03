@@ -10,7 +10,6 @@
     "oben": {"mean": "above"},
     "unten": {"mean": "below"},
     "hinten": {"mean": "behind"},
-
     
     "leider": {"mean": "unfortunately"},
     "zuvor": {"mean": "previously"},
@@ -39,7 +38,7 @@
     "ziemlich": {"mean": "kind of"},
     "bald": {"mean": "soon"},
     "inzwischen": {"mean": "meanwhile"},
-    "bereits": {"mean": "already"},
+    "bereits": {"mean": "already"}
   },  
   "adj" : {
     "langsam": {"mean": "slow"},
@@ -55,7 +54,7 @@
     "definitiv": {"mean": "surely"},
     "prima": {"mean": "super"},
     "aktuell": {"mean": "current"},
-    "jetztige": {"mean": "current"},
+    "jetztig": {"mean": "current"},
     "erste": {"mean": "first"},
     "letzte": {"mean": "last"},
     "nächst": {"mean": "next,nearest"},
@@ -84,6 +83,8 @@
     "nervös": {"mean": "nervous"},
     "lustig": {"mean": "funny"},
     "giftig": {"mean": "toxic"},
+    "früh": {"mean": "early"},
+    "spät": {"mean": "late"},
 
     "flüssig": {"mean": "liquidic"},
     "fett": {"mean": "fat"},

@@ -47,7 +47,6 @@ case class Adj(s: Seq[String]) extends Token {
         case _ => n.ensureEnding("e")
       }
 
-      // TAOTODO: how about possessive artikels?
       case _ => (gender,c) match {
         case ("die",Akkusativ) => n.ensureEnding("e")
         case ("das",Akkusativ) if a==Der => n.ensureEnding("e")

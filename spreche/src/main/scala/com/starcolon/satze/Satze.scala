@@ -178,7 +178,6 @@ object Satze {
       }
 
       // _ + [P] as a subject
-      // TAODEBUG
       case _ if !prevTokens.find(_.isInstanceOf[SubjectClaus]).isDefined => 
         prevTokens :+ SubjectClaus((Ein,Adj(Nil),p) :: Nil)
       
