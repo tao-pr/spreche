@@ -113,6 +113,9 @@
   "Cafe": ["das","Cafe"],
   "Disco": ["die","Disco"],
   "Supermarkt": ["der","Supermärkte"],
+  "Restaurant": ["das","Restaurants"],
 
-  "Körper": ["der","Körper"]
+  "Körper": ["der","Körper"],
+  "Hand": ["das","Hände"],
+  "Kopf": ["der","Köpfe"]
 }

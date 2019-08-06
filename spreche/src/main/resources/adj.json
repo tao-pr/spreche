@@ -10,6 +10,11 @@
     "oben": {"mean": "above"},
     "unten": {"mean": "below"},
     "hinten": {"mean": "behind"},
+
+    "oft": {"mean": "often"},
+    "manchmal": {"mean": "sometimes"},
+    "immer": {"mean": "always"},
+    "inzwischen": {"mean": "meanwhile"},
     
     "leider": {"mean": "unfortunately"},
     "zuvor": {"mean": "previously"},
@@ -37,7 +42,6 @@
     "schon": {"mean": "already"},
     "ziemlich": {"mean": "kind of"},
     "bald": {"mean": "soon"},
-    "inzwischen": {"mean": "meanwhile"},
     "bereits": {"mean": "already"}
   },  
   "adj" : {
@@ -85,6 +89,7 @@
     "giftig": {"mean": "toxic"},
     "früh": {"mean": "early"},
     "spät": {"mean": "late"},
+    "sauber": {"mean": "clean"},
 
     "flüssig": {"mean": "liquidic"},
     "fett": {"mean": "fat"},
