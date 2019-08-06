@@ -1006,5 +1006,53 @@
     "ihr": "übrigbleibt",
     "Sie": "übrigbleiben",
     "perfekt": "habe übriggebleiben"
+  },
+  "aufschauen": {
+    "mean": "look up",
+    "ich": "aufschaue",
+    "du": "aufschaust",
+    "es": "aufschaut",
+    "sie": "aufschaut",
+    "er": "aufschaut",
+    "wir": "aufschauen",
+    "ihr": "aufschaut",
+    "Sie": "aufschauen",
+    "perfekt": "habe aufgeschaut"
+  },
+  "anschauen": {
+    "mean": "watch",
+    "ich": "anschaue",
+    "du": "anschaust",
+    "es": "anschaut",
+    "sie": "anschaut",
+    "er": "anschaut",
+    "wir": "anschauen",
+    "ihr": "anschaut",
+    "Sie": "anschauen",
+    "perfekt": "habe angeschaut"
+  },
+  "merken": {
+    "mean": "notice/realise",
+    "ich": "merke",
+    "du": "merkst",
+    "es": "merkt",
+    "sie": "merkt",
+    "er": "merkt",
+    "wir": "merken",
+    "ihr": "merkt",
+    "Sie": "merken",
+    "perfekt": "habe gemerkt"
+  },
+  "bewegen": {
+    "mean": "move",
+    "ich": "bewege",
+    "du": "bewegst",
+    "es": "bewegt",
+    "sie": "bewegt",
+    "er": "bewegt",
+    "wir": "bewegen",
+    "ihr": "bewegt",
+    "Sie": "bewegt",
+    "perfekt": "habe bewogen"
   }
 }
