@@ -154,6 +154,9 @@ case object NoArtikel extends Artikel {
 }
 
 case object Diese extends Artikel {
+  override def matchWith(s: String) = {
+    Seq("diese","diesen","dieser","diesem").contains(s.toLowerCase)
+  }
   override def renderWith(gender: String, c: Case) = c match {
     case Nominativ => gender match {
       case "der" => "dieser"
@@ -168,9 +171,9 @@ case object Diese extends Artikel {
       case _ => ""
     }
     case Dativ => gender match {
-      case "der" => "disem"
+      case "der" => "diesem"
       case "die" => "diesen"
-      case "das" => "deisem"
+      case "das" => "diesem"
       case _ => ""
     }
   } 
@@ -411,7 +414,7 @@ case object Euer extends Artikel {
 object Artikel extends TokenInstance {
   
   def toArtikel(s: String)(implicit rule: MasterRule): Artikel = {
-    Seq(Ein,Der,Plural,Kein,Mein,Dein,Sein,Unser,Ihre,Euer).find(
+    Seq(Ein,Der,Plural,Kein,Mein,Dein,Sein,Unser,Ihre,Euer,Diese).find(
       _.matchWith(s)
     ).getOrElse(Ein)
   }

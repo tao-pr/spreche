@@ -301,6 +301,17 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
 
   }
 
+  describe("Diese conjugation"){
+    it("should conjugate diese by nominativ"){
+      $("diese mann kennst du nicht") shouldBe(
+        "dieser Mann kennt dich nicht")
+      $("dieser frau soll zu der schule gehen") shouldBe(
+        "diese Frau soll zur Schule gehen")
+      $("diese glas ist sehr schön") shouldBe(
+        "dieses Glas ist sehr schön")
+    }
+  }
+
   describe("Reflective verbs"){
     
   }
