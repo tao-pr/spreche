@@ -153,6 +153,29 @@ case object NoArtikel extends Artikel {
   override def renderWith(gender: String, c: Case) = ""
 }
 
+case object Diese extends Artikel {
+  override def renderWith(gender: String, c: Case) = c match {
+    case Nominativ => gender match {
+      case "der" => "dieser"
+      case "die" => "diese"
+      case "das" => "dieses"
+      case _ => ""
+    }
+    case Akkusativ => gender match {
+      case "der" => "diesen"
+      case "die" => "diese"
+      case "das" => "dieses"
+      case _ => ""
+    }
+    case Dativ => gender match {
+      case "der" => "disem"
+      case "die" => "diesen"
+      case "das" => "deisem"
+      case _ => ""
+    }
+  } 
+}
+
 case object Ein extends Artikel {
   override def matchWith(s: String) = {
     Seq("ein","eine","einer","einem","einen").contains(s.toLowerCase)
@@ -394,9 +417,11 @@ object Artikel extends TokenInstance {
   }
 
   override def isInstance(token: String)(implicit rule: MasterRule) = {
-    val artikels = (Seq("die","das","eine","ein","kein","keine") ++ Seq("d","ein","kein").flatMap{(a) => 
-      Seq("er","en","em").map(a + _)
-    }) ++ Seq("viel", "viele","den","dem")
+    val artikels = (
+      Seq("die","das","eine","ein","kein","keine","diese") ++ 
+      Seq("d","ein","kein","dies").flatMap{(a) => 
+        Seq("er","en","em").map(a + _)
+      }) ++ Seq("viel", "viele","den","dem")
     def expand(p: Pronoun) = Seq("","e","en","em").map(p.possess + _)
     val possArtikels = Pronoun.infinitivPronouns.flatMap(expand)
     artikels.contains(token.toLowerCase) || possArtikels.contains(token.toLowerCase)
