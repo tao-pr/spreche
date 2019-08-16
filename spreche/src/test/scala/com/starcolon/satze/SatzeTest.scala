@@ -310,6 +310,15 @@ class SatzeTest extends FunSpec with Matchers with BeforeAndAfterAll {
       $("diese glas ist sehr schön") shouldBe(
         "dieses Glas ist sehr schön")
     }
+
+    it("should conjugate diese by akkusativ"){
+      $("diese mann braucht diese orangensaft") shouldBe(
+        "dieser Mann braucht diesen Orangensaft")
+      $("diese bahn fährt durch diese Schule") shouldBe(
+        "diese Bahn fährt durch diese Schule")
+      $("diese Papier liegt in diese Zimmer") shouldBe(
+        "dieses Papier liegt in diesem Zimmer")
+    }
   }
 
   describe("Reflective verbs"){

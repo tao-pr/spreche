@@ -55,6 +55,8 @@
   "Eingang": ["der", "Eingänge"],
   "Ausgang": ["der", "Ausgänge"],
   "Aufgabe": ["die","Aufgaben"],
+  "Bahnsteig": ["der","Bahnsteige"],
+  "Aufzug": ["der","Aufzüge"],
 
   "Mann": ["der","Männer"],
   "Frau": ["die","Fräuen"],
