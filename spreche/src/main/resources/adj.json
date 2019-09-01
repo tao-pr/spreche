@@ -90,6 +90,8 @@
     "früh": {"mean": "early"},
     "spät": {"mean": "late"},
     "sauber": {"mean": "clean"},
+    "gemeinsam": {"mean": "common/joint"},
+    "besonder": {"mean": "special"},
 
     "flüssig": {"mean": "liquidic"},
     "fett": {"mean": "fat"},
