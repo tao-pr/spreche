@@ -92,6 +92,7 @@
     "sauber": {"mean": "clean"},
     "gemeinsam": {"mean": "common/joint"},
     "besonder": {"mean": "special"},
+    "bescheuert": {"mean": "stupid"},
 
     "flüssig": {"mean": "liquidic"},
     "fett": {"mean": "fat"},
